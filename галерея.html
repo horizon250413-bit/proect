@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<title>Библиотека — все арты</title>
+<style>
+  :root { color-scheme: dark; }
+  body {
+    margin: 0;
+    padding: 32px 28px 56px;
+    background: radial-gradient(ellipse 90% 70% at 50% 0%, #33201600 0%, #0d0705 78%), #100a07;
+    color: #eadcc4;
+    font-family: Georgia, 'Times New Roman', serif;
+  }
+  h1 { font-size: 26px; font-weight: 400; letter-spacing: .02em; margin: 0 0 6px; color: #e0b25c; }
+  .lead { color: #a89078; font-size: 14px; margin: 0 0 26px; }
+  h2 { font-size: 17px; font-weight: 400; color: #e0b25c; margin: 32px 0 14px; border-bottom: 1px solid rgba(224,178,92,.25); padding-bottom: 8px; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 18px; }
+  figure { margin: 0; background: rgba(36,24,18,.7); border: 1px solid rgba(224,178,92,.28); border-radius: 10px; overflow: hidden; }
+  figure img { display: block; width: 100%; aspect-ratio: 1 / 1; object-fit: cover; }
+  figcaption { padding: 10px 12px 12px; font-size: 13px; line-height: 1.35; }
+  figcaption b { display: block; font-size: 14px; color: #f0e2c8; font-weight: 400; margin-bottom: 3px; }
+  figcaption span { color: #a89078; font-size: 12px; }
+  .wide figure img { aspect-ratio: 1 / 1; }
+</style>
+</head>
+<body>
+<h1>Библиотека — все арты</h1>
+<p class="lead">Пять персонажей и семь концовок. Портреты — те, что в диалогах, концовки — те, что на финальном экране.</p>
+
+<h2>Персонажи</h2>
+<div class="grid">
+  <figure><img src="картинки/библиотекарша.jpg" alt="Вера"><figcaption><b>Вера</b><span>библиотекарша, абонемент</span></figcaption></figure>
+  <figure><img src="картинки/портрет-клара.jpg" alt="Клара"><figcaption><b>Клара</b><span>буфетчица</span></figcaption></figure>
+  <figure><img src="картинки/портрет-егор.jpg" alt="Егор"><figcaption><b>Егор</b><span>программист, компьютерный класс</span></figcaption></figure>
+  <figure><img src="картинки/портрет-миша.jpg" alt="Миша"><figcaption><b>Миша</b><span>школьник, универсальный зал</span></figcaption></figure>
+  <figure><img src="картинки/портрет-гриша.jpg" alt="Гриша"><figcaption><b>Гриша</b><span>уборщик, архив</span></figcaption></figure>
+</div>
+
+<h2>Концовки</h2>
+<div class="grid">
+  <figure><img src="картинки/концовка-открытая.jpg" alt="Открытая книга"><figcaption><b>1. Открытая книга</b><span>все пять историй, последнюю страницу дописывают они</span></figcaption></figure>
+  <figure><img src="картинки/концовка-чужой-почерк.jpg" alt="Чужой почерк"><figcaption><b>2. Чужой почерк</b><span>все пять историй, финал вписан самому</span></figcaption></figure>
+  <figure><img src="картинки/концовка-перекрёсток.jpg" alt="Библиотека на перекрёстке"><figcaption><b>3. Библиотека на перекрёстке</b><span>помог 2–4 персонажам</span></figcaption></figure>
+  <figure><img src="картинки/концовка-одна-страница.jpg" alt="Книга одного"><figcaption><b>4. Книга одного</b><span>помог одному</span></figcaption></figure>
+  <figure><img src="картинки/концовка-тихий-читатель.jpg" alt="Тихий читатель"><figcaption><b>5. Тихий читатель</b><span>никому не помог, остался читать</span></figcaption></figure>
+  <figure><img src="картинки/концовка-пустая-обложка.jpg" alt="Пустая обложка"><figcaption><b>6. Пустая обложка</b><span>никому не помог и ушёл</span></figcaption></figure>
+  <figure><img src="картинки/концовка-восьмая-полка.jpg" alt="Восьмая полка"><figcaption><b>7. Восьмая полка</b><span>секретная, через Аду после пяти историй</span></figcaption></figure>
+</div>
+</body>
+</html>
