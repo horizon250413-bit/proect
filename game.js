@@ -1544,7 +1544,7 @@ function wrapText(text, x, y, maxW, lineH, maxLines) {
   shown.forEach((l, i) => ctx.fillText(l, x, startY + i * lineH));
 }
 
-function drawCat(p) {
+function drawCatLegacy(p) {
   const t = performance.now();
   const moving = p.moving;
   const bounce = moving ? Math.abs(Math.sin(p.step)) * 3 : 0;
@@ -1808,6 +1808,243 @@ function drawCat(p) {
   ctx.beginPath();
   ctx.arc(0, hy + hr * 0.48, hr * 0.18, 0.15 * Math.PI, 0.85 * Math.PI);
   ctx.stroke();
+
+  ctx.restore();
+}
+
+function drawCat(p) {
+  const t = performance.now();
+  const moving = p.moving;
+  const bounce = moving ? Math.abs(Math.sin(p.step)) * 3 : 0;
+  const breathe = moving ? 0 : Math.sin(t / 520) * 0.35;
+  const r = PLAYER_R;
+
+  ctx.save();
+  ctx.translate(p.x, p.y - bounce);
+  ctx.scale(p.face, 1);
+
+  ctx.fillStyle = 'rgba(0,0,0,.34)';
+  ctx.beginPath();
+  ctx.ellipse(0, r + bounce + 3, r * 0.92, 4.2, 0, 0, Math.PI * 2);
+  ctx.fill();
+
+  if (moving) {
+    const dust = 0.5 + Math.sin(p.step * 2) * 0.5;
+    ctx.fillStyle = `rgba(218,194,158,${(0.05 + dust * 0.035).toFixed(3)})`;
+    ctx.beginPath();
+    ctx.ellipse(-r * 0.5 - dust * 4, r + bounce + 2, 4 + dust * 3, 1.6, 0, 0, Math.PI * 2);
+    ctx.ellipse(r * 0.5 + dust * 3, r + bounce + 3, 3 + dust * 2, 1.4, 0, 0, Math.PI * 2);
+    ctx.fill();
+  }
+
+  const stepSwing = moving ? Math.sin(p.step) : 0;
+  const armSwing = moving ? stepSwing * r * 0.3 : breathe * 0.6;
+  const legSwing = moving ? -stepSwing * r * 0.26 : 0;
+
+  // ноги: тёмные колготки и туфельки
+  ctx.strokeStyle = '#4a3038';
+  ctx.lineWidth = 4.6;
+  ctx.lineCap = 'round';
+  ctx.beginPath();
+  ctx.moveTo(-r * 0.26, r * 0.5);
+  ctx.lineTo(-r * 0.28 + legSwing, r * 0.92);
+  ctx.moveTo(r * 0.26, r * 0.5);
+  ctx.lineTo(r * 0.28 - legSwing, r * 0.92);
+  ctx.stroke();
+
+  ctx.fillStyle = '#3a2418';
+  ctx.beginPath();
+  ctx.ellipse(-r * 0.3 + legSwing, r * 0.97, r * 0.23, r * 0.12, 0, 0, Math.PI * 2);
+  ctx.ellipse(r * 0.3 - legSwing, r * 0.97, r * 0.23, r * 0.12, 0, 0, Math.PI * 2);
+  ctx.fill();
+  ctx.fillStyle = 'rgba(255,235,210,.22)';
+  ctx.beginPath();
+  ctx.ellipse(-r * 0.34 + legSwing, r * 0.93, r * 0.07, r * 0.035, 0, 0, Math.PI * 2);
+  ctx.ellipse(r * 0.34 - legSwing, r * 0.93, r * 0.07, r * 0.035, 0, 0, Math.PI * 2);
+  ctx.fill();
+
+  // длинное пальто цвета бутылочного стекла
+  const coat = ctx.createLinearGradient(0, -r * 0.5, 0, r * 0.7);
+  coat.addColorStop(0, '#3b6b56');
+  coat.addColorStop(0.65, '#2c5243');
+  coat.addColorStop(1, '#1e3d31');
+  ctx.fillStyle = coat;
+  ctx.beginPath();
+  ctx.moveTo(-r * 0.52, r * 0.6);
+  ctx.quadraticCurveTo(-r * 0.62, r * 0.02, -r * 0.44, -r * 0.58);
+  ctx.lineTo(r * 0.44, -r * 0.58);
+  ctx.quadraticCurveTo(r * 0.62, r * 0.02, r * 0.52, r * 0.6);
+  ctx.quadraticCurveTo(0, r * 0.72, -r * 0.52, r * 0.6);
+  ctx.closePath();
+  ctx.fill();
+
+  // запах пальто и пуговицы
+  ctx.strokeStyle = 'rgba(20,40,32,.55)';
+  ctx.lineWidth = 1.2;
+  ctx.beginPath();
+  ctx.moveTo(0, -r * 0.5);
+  ctx.lineTo(0, r * 0.58);
+  ctx.stroke();
+  ctx.fillStyle = PALETTE.brass;
+  for (let i = 0; i < 3; i++) {
+    ctx.beginPath();
+    ctx.arc(-r * 0.1, -r * 0.2 + i * r * 0.26, 1.4, 0, Math.PI * 2);
+    ctx.fill();
+  }
+
+  // шарф
+  ctx.fillStyle = '#d9a45c';
+  ctx.beginPath();
+  ctx.moveTo(-r * 0.3, -r * 0.58);
+  ctx.quadraticCurveTo(0, -r * 0.44 + breathe * 0.2, r * 0.3, -r * 0.58);
+  ctx.quadraticCurveTo(r * 0.26, -r * 0.4, 0, -r * 0.36 + breathe * 0.2);
+  ctx.quadraticCurveTo(-r * 0.26, -r * 0.4, -r * 0.3, -r * 0.58);
+  ctx.closePath();
+  ctx.fill();
+  ctx.fillStyle = 'rgba(120,70,30,.35)';
+  ctx.fillRect(-r * 0.06, -r * 0.44, r * 0.12, r * 0.1);
+
+  // руки
+  for (const s of [-1, 1]) {
+    const swing = s === 1 ? armSwing : -armSwing;
+    ctx.strokeStyle = s === 1 ? '#2c5243' : '#3b6b56';
+    ctx.lineWidth = 4.2;
+    ctx.lineCap = 'round';
+    ctx.beginPath();
+    ctx.moveTo(s * r * 0.46, -r * 0.36);
+    ctx.quadraticCurveTo(s * r * 0.64, -r * 0.1, s * r * 0.66 + swing * 0.2, r * 0.34 + swing);
+    ctx.stroke();
+    ctx.fillStyle = '#ecc8a8';
+    ctx.beginPath();
+    ctx.arc(s * r * 0.66 + swing * 0.2, r * 0.34 + swing, r * 0.13, 0, Math.PI * 2);
+    ctx.fill();
+  }
+
+  // сумка с книгой через плечо
+  ctx.strokeStyle = '#5a3422';
+  ctx.lineWidth = 2.4;
+  ctx.beginPath();
+  ctx.moveTo(-r * 0.4, -r * 0.5);
+  ctx.quadraticCurveTo(-r * 0.1, -r * 0.05, r * 0.36, r * 0.18);
+  ctx.stroke();
+  ctx.fillStyle = '#6b3a22';
+  roundRect(r * 0.12, r * 0.06, r * 0.46, r * 0.4, r * 0.09);
+  ctx.fill();
+  ctx.fillStyle = '#8a4c2c';
+  roundRect(r * 0.12, r * 0.06, r * 0.46, r * 0.12, r * 0.07);
+  ctx.fill();
+  ctx.fillStyle = '#f2e4c6';
+  ctx.fillRect(r * 0.15, r * 0.02, r * 0.16, r * 0.11);
+  ctx.fillStyle = PALETTE.brass;
+  ctx.fillRect(r * 0.33, r * 0.17, r * 0.05, r * 0.05);
+
+  // голова и волосы
+  const hy = -r * 1.02;
+  const hr = r * 0.6;
+
+  ctx.fillStyle = '#8a4a2a';
+  ctx.beginPath();
+  ctx.ellipse(0, hy + hr * 0.16, hr * 1.06, hr * 1.02, 0, 0, Math.PI * 2);
+  ctx.fill();
+
+  const headGrad = ctx.createRadialGradient(-hr * 0.3, hy - hr * 0.3, hr * 0.15, 0, hy, hr * 1.1);
+  headGrad.addColorStop(0, '#f4d6b8');
+  headGrad.addColorStop(0.7, '#e8c3a0');
+  headGrad.addColorStop(1, '#d2a880');
+  ctx.fillStyle = headGrad;
+  ctx.beginPath();
+  ctx.arc(0, hy, hr, 0, Math.PI * 2);
+  ctx.fill();
+
+  // причёска: объём сверху и длинные пряди по бокам
+  ctx.fillStyle = '#8a4a2a';
+  ctx.beginPath();
+  ctx.ellipse(0, hy - hr * 0.36, hr * 1.02, hr * 0.7, 0, Math.PI, Math.PI * 2);
+  ctx.fill();
+  ctx.beginPath();
+  ctx.moveTo(-hr * 0.98, hy - hr * 0.2);
+  ctx.quadraticCurveTo(-hr * 0.72, hy - hr * 0.78, -hr * 0.2, hy - hr * 0.62);
+  ctx.quadraticCurveTo(-hr * 0.62, hy - hr * 0.32, -hr * 0.86, hy + hr * 0.36);
+  ctx.quadraticCurveTo(-hr * 1.14, hy + hr * 0.5, -hr * 0.92, hy + hr * 0.16);
+  ctx.closePath();
+  ctx.fill();
+  ctx.beginPath();
+  ctx.moveTo(hr * 0.98, hy - hr * 0.2);
+  ctx.quadraticCurveTo(hr * 0.72, hy - hr * 0.78, hr * 0.2, hy - hr * 0.62);
+  ctx.quadraticCurveTo(hr * 0.62, hy - hr * 0.32, hr * 0.86, hy + hr * 0.36);
+  ctx.quadraticCurveTo(hr * 1.14, hy + hr * 0.5, hr * 0.92, hy + hr * 0.16);
+  ctx.closePath();
+  ctx.fill();
+  ctx.fillStyle = 'rgba(255,220,180,.2)';
+  ctx.beginPath();
+  ctx.ellipse(-hr * 0.2, hy - hr * 0.56, hr * 0.44, hr * 0.12, -0.4, 0, Math.PI * 2);
+  ctx.fill();
+
+  // брови, глаза с ресницами, нос, улыбка, румянец
+  ctx.strokeStyle = 'rgba(90,52,34,.8)';
+  ctx.lineWidth = 1.1;
+  ctx.lineCap = 'round';
+  ctx.beginPath();
+  ctx.moveTo(-hr * 0.56, hy - hr * 0.26);
+  ctx.quadraticCurveTo(-hr * 0.38, hy - hr * 0.34, -hr * 0.2, hy - hr * 0.28);
+  ctx.moveTo(hr * 0.2, hy - hr * 0.28);
+  ctx.quadraticCurveTo(hr * 0.38, hy - hr * 0.34, hr * 0.56, hy - hr * 0.26);
+  ctx.stroke();
+
+  const blink = Math.sin(t / 900) > 0.985;
+  const ex = hr * 0.34, ey = hy + hr * 0.1;
+  if (blink) {
+    ctx.strokeStyle = '#3a2b20';
+    ctx.lineWidth = 1.3;
+    for (const s of [-1, 1]) {
+      ctx.beginPath();
+      ctx.moveTo(s * ex - hr * 0.13, ey);
+      ctx.quadraticCurveTo(s * ex, ey + hr * 0.08, s * ex + hr * 0.13, ey);
+      ctx.stroke();
+    }
+  } else {
+    for (const s of [-1, 1]) {
+      ctx.fillStyle = 'rgba(255,250,240,.8)';
+      ctx.beginPath();
+      ctx.ellipse(s * ex, ey, hr * 0.15, hr * 0.18, 0, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.fillStyle = '#4a3428';
+      ctx.beginPath();
+      ctx.ellipse(s * ex, ey, hr * 0.1, hr * 0.13, 0, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.fillStyle = 'rgba(255,255,255,.6)';
+      ctx.beginPath();
+      ctx.arc(s * ex - hr * 0.035, ey - hr * 0.05, hr * 0.03, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.strokeStyle = 'rgba(70,40,28,.75)';
+      ctx.lineWidth = 0.9;
+      ctx.beginPath();
+      ctx.moveTo(s * ex + s * hr * 0.12, ey - hr * 0.11);
+      ctx.lineTo(s * ex + s * hr * 0.22, ey - hr * 0.2);
+      ctx.moveTo(s * ex + s * hr * 0.03, ey - hr * 0.15);
+      ctx.lineTo(s * ex + s * hr * 0.08, ey - hr * 0.27);
+      ctx.stroke();
+    }
+  }
+
+  ctx.strokeStyle = 'rgba(150,90,60,.45)';
+  ctx.lineWidth = 0.9;
+  ctx.beginPath();
+  ctx.moveTo(0, hy + hr * 0.3);
+  ctx.lineTo(-hr * 0.03, hy + hr * 0.4);
+  ctx.stroke();
+
+  ctx.strokeStyle = '#a0453f';
+  ctx.lineWidth = 1.1;
+  ctx.beginPath();
+  ctx.arc(0, hy + hr * 0.47, hr * 0.17, 0.15 * Math.PI, 0.85 * Math.PI);
+  ctx.stroke();
+  ctx.fillStyle = 'rgba(220,120,110,.18)';
+  for (const s of [-1, 1]) {
+    ctx.beginPath();
+    ctx.ellipse(s * hr * 0.6, hy + hr * 0.36, hr * 0.18, hr * 0.09, 0, 0, Math.PI * 2);
+    ctx.fill();
+  }
 
   ctx.restore();
 }
