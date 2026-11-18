@@ -43,6 +43,7 @@ addEventListener('resize', resizeCanvas);
 const MARGIN = 40;
 const PLAYER_R = 12;
 const NPC_SCALE = 1.34;
+const NPC_CUSTOM_ART_SCALE = 0.78;
 const PLAYER_SPEED = 220;
 const INTERACT_DIST = 55;
 const DOOR_W = 70;
@@ -251,7 +252,7 @@ if (hashRoom && rooms[hashRoom]) {
 }
 
 const items = [
-  { id: 'pass', room: 'vestibule', x: 790, y: 92, label: 'Пропуск' }
+  { id: 'pass', room: 'vestibule', x: 790, y: 138, label: 'Пропуск' }
 ];
 const INITIAL_ITEMS = items.map(it => ({ ...it }));
 
@@ -279,7 +280,7 @@ const npcs = [
   { room: 'computer_class', x: 760, y: 230, name: 'Егор', arc: 'egor', skin: '#e8bd98', hair: '#2f2a28', outfit: '#4f6d7a', trim: '#36505a', style: 0, glasses: true, prop: 'tablet', quote: 'Егор не отрывается от планшета: «Книги? Это медленный интерфейс. У меня каталог падает третий день»' },
   { room: 'buffet', x: 460, y: 230, name: 'Клара', arc: 'klara', skin: '#c98a5a', hair: '#3a2a22', outfit: '#a05a6a', trim: '#7a3e4c', style: 2, scarf: '#c9a23a', prop: 'tray', quote: 'Клара вытирает руки: «У меня потерялись страницы из книги рецептов. Внучка говорит, что я всё равно всё помню. А я уже не уверена»' },
   { room: 'abonement', x: 740, y: 250, name: 'Библиотекарша Вера', arc: 'vera', skin: '#f0c9a6', hair: '#a05a6a', outfit: '#c9a23a', trim: '#8a6a24', style: 3, scarf: '#8a3a4a', prop: 'books', quote: 'Вера перебирает формуляры: «Редкую книгу просит мальчик. А я не могу её отдать — это единственный экземпляр»' },
-  { room: 'hall_universal', x: 760, y: 360, name: 'Миша', arc: 'misha', scale: 0.82, skin: '#f3d2b2', hair: '#6a4a2a', outfit: '#3f6fb5', trim: '#2f4f7a', style: 0, prop: 'book', quote: 'Миша сидит с телефоном: «Книги — это скучно. Там надо долго. А тут всё быстро»' },
+  { room: 'hall_universal', x: 760, y: 360, name: 'Миша', arc: 'misha', scale: 0.9, skin: '#f3d2b2', hair: '#6a4a2a', outfit: '#3f6fb5', trim: '#2f4f7a', style: 0, prop: 'book', quote: 'Миша сидит с телефоном: «Книги — это скучно. Там надо долго. А тут всё быстро»' },
   { room: 'archive', x: 690, y: 300, name: 'Гриша', arc: 'grisha', skin: '#d9a982', hair: '#8a8078', outfit: '#7a5a3a', trim: '#5a4028', style: 0, beard: true, prop: 'folder', quote: 'Гриша подметает у стеллажей: «Я тут просто убираю. Истории — не моё. Я и в школе-то не дочитал ни одной»' },
   { room: 'admin', x: 740, y: 280, name: 'Заведующая Ада', secret: true, skin: '#e6c2a2', hair: '#6a6a72', outfit: '#5a3a4a', trim: '#3e2632', style: 3, glasses: true, scarf: '#b08a52', prop: 'folder', quote: 'Ада смотрит поверх очков: «В каталоге пять историй. Но у библиотеки есть и восьмая полка. Она не для читателей»' }
 ];
@@ -322,7 +323,7 @@ const ARCS = {
     ]
   },
   vera: {
-    name: 'Библиотекарша Вера', role: 'библиотекарь', page: 'Страница выбора', color: '#d98a8a',
+    name: 'Библиотекарша Вера', role: 'библиотекарь', page: 'Страница доверия', color: '#d98a8a',
     intro: 'Вера перебирает формуляры и говорит тише обычного: «Мальчик просит книгу из сейфа. Единственный экземпляр. Я не сплю из-за этого». Она явно хочет объяснить больше, но не решается.',
     goal: 'Цель: найти формуляр Миши и его письмо, чтобы понять, почему эта книга важна именно ему — и решить, можно ли ею рискнуть.',
     details: 'Вера работает здесь дольше, чем помнит себя. Она знает каждую полку и боится, что библиотека умрёт вместе с ней. В сейфе лежит редкая книга, которую просит Миша. Вера не отдаёт её не из злости: она боится, что ребёнок потеряет или порвёт единственный экземпляр. Но за стеклом книга тоже молчит.',
@@ -354,7 +355,7 @@ const ARCS = {
     ]
   },
   grisha: {
-    name: 'Гриша', role: 'уборщик', page: 'Страница памяти', color: '#b08a52',
+    name: 'Гриша', role: 'уборщик', page: 'Страница имени', color: '#b08a52',
     intro: 'Гриша подметает у стеллажей и говорит, не поднимая головы: «Я тут просто убираю. Истории — не моё. Я и в школе-то не дочитал ни одной». Но когда ты спрашиваешь о тетради, метла замирает.',
     goal: 'Цель: найти вырванную страницу в мастерских и тетрадь в климат-контроле — и помочь Грише решиться назвать себя автором.',
     details: 'Гриша убирает библиотеку сорок лет. Он видел, как сюда приходили за книгами, как их возвращали, как читали детям. Он записывал эти истории в тетрадь, но никогда не подписывал её. «Кто я такой? Уборщик». Теперь тетрадь потерялась, и без неё пропадает память о людях, которых уже нет.',
@@ -373,23 +374,23 @@ const ARCS = {
 
 const storyItemDefs = [
   { arc: 'egor', room: 'computer_class', x: 300, y: 220, icon: 'screen', title: 'Флешка с черновиком', mode: 'click', text: 'На ней папка «Не трогать. Проект, который я бросил».',
-    task: 'sequence', taskTitle: 'Починить каталог', taskHint: 'Кликни записи в порядке от старой к новой',
+    task: 'sequence', taskTitle: 'Починить каталог', taskHint: 'Кликни записи в порядке от старой к новой', taskGoal: 'Разложи три записи по датам: сначала самая старая, потом новее.',
     taskCards: ['2021 — починил вручную', '2019 — каталог падал раз в день', '2026 — всё снова работает'], taskOrder: [1, 0, 2] },
   { arc: 'egor', room: 'multifunc', x: 700, y: 190, icon: 'screen', title: 'Старый серверный лог', mode: 'taps', text: 'В логе — сотни попыток починить каталог. И ни одной записи «сдался».' },
   { arc: 'klara', room: 'buffet', x: 220, y: 300, icon: 'menu', title: 'Страница рецепта', mode: 'steady', text: '«Пирог с яблоками. Печь 40 минут. Не отвлекаться на телефон».',
-    task: 'pick3', taskTitle: 'Собрать рецепт', taskHint: 'Выбери три верных ингредиента',
+    task: 'pick3', taskTitle: 'Собрать рецепт', taskHint: 'Выбери три верных ингредиента', taskGoal: 'Собери рецепт яблочного пирога: отметь три ингредиента из шести.',
     taskCards: ['Мука', 'Сахарная пудра', 'Яблоки', 'Гвоздика', 'Корица', 'Соль'], taskCorrect: [0, 2, 4] },
   { arc: 'klara', room: 'hall', x: 300, y: 300, icon: 'menu', title: 'Бабушкин рецепт', mode: 'choice', choicePrompt: 'На полях — пятна от теста и подпись «Маме. С любовью». Какой это почерк?', choices: ['Ровный, без единой помарки', 'С пятнами от теста и тёплой подписью', 'Напечатанный на принтере'], correct: 1, text: 'На полях — пятна от теста и чья-то подпись: «Маме. С любовью».' },
   { arc: 'vera', room: 'abonement', x: 600, y: 400, icon: 'guestbook', title: 'Читательский формуляр', mode: 'choice', text: 'Формуляр Миши. Книга числится «не выдана» уже три недели.',
-    task: 'select', taskTitle: 'Сверить формуляры', taskHint: 'Выбери тот, что принадлежит Мише',
+    task: 'select', taskTitle: 'Сверить формуляры', taskHint: 'Выбери тот, что принадлежит Мише', taskGoal: 'Найди формуляр Миши Ковалёва — книга не выдана три недели.',
     taskCards: ['Мария Сергеева — книга возвращена', 'Миша Ковалёв — не выдана три недели', 'Формуляр без имени — пустой'], taskCorrect: 1 },
   { arc: 'vera', room: 'archive', x: 500, y: 390, icon: 'guestbook', title: 'Письмо читателя', mode: 'hold', text: '«Я хочу прочитать её с мамой. Она теперь редко бывает дома».' },
   { arc: 'misha', room: 'hall_universal', x: 700, y: 420, icon: 'book', title: 'Забытая книга', mode: 'steady', text: 'Обложка потрёпана. На полях — рисунки динозавров.',
-    task: 'trace', taskTitle: 'Дорисовать комикс', taskHint: 'Зажми ЛКМ на полосе и веди слева направо' },
+    task: 'trace', taskTitle: 'Дорисовать комикс', taskHint: 'Зажми ЛКМ на полосе и веди слева направо', taskGoal: 'Проведи линию по всей полосе, чтобы дорисовать последний кадр.' },
   { arc: 'misha', room: 'multifunc', x: 720, y: 430, icon: 'book', title: 'Комикс без конца', mode: 'taps', text: 'Последняя страница вырвана. Кто-то очень хотел узнать, что дальше.' },
   { arc: 'grisha', room: 'workshops', x: 760, y: 250, icon: 'guestbook', title: 'Вырванная страница', mode: 'hold', text: '«...и тогда она впервые засмеялась над книгой». Дальше — пусто.' },
   { arc: 'grisha', room: 'climate', x: 350, y: 430, icon: 'guestbook', title: 'Тетрадь с историями', mode: 'choice', text: 'Тонкая тетрадь. На первой странице: «Истории, которые я услышал». Без имени.',
-    task: 'sign', taskTitle: 'Подписать тетрадь', taskHint: 'Зажми ЛКМ на строке и выведи подпись' }
+    task: 'sign', taskTitle: 'Подписать тетрадь', taskHint: 'Зажми ЛКМ на строке и выведи подпись', taskGoal: 'Зажми кнопку мыши на строке и веди, пока подпись не заполнит её.' }
 ];
 
 const story = {};
@@ -454,7 +455,7 @@ function shuffleCopy(arr) {
 }
 
 const BOOK_COUNT = 18;
-const bookSpots = shuffleCopy(SHELF_SPOTS).slice(0, Math.min(BOOK_COUNT, BOOK_QUOTES.length));
+const bookSpots = shuffleCopy(SHELF_SPOTS).slice(0, Math.min(SHELF_SPOTS.length, BOOK_QUOTES.length));
 const bookQuotes = shuffleCopy(BOOK_QUOTES);
 bookSpots.forEach((spot, i) => {
   const q = bookQuotes[i];
@@ -492,6 +493,383 @@ const UI = {
 const TOAST_MS = 2600;
 let toastUntil = 0;
 let fade = 0;
+
+/* ---------- экраны, сохранения и настройки ---------- */
+
+const SAVE_KEY = 'library_saves_v1';
+const SETTINGS_KEY = 'library_settings_v1';
+const SAVE_SLOTS = 12;
+const BRIGHTNESS_MIN = 60;
+const BRIGHTNESS_MAX = 140;
+const DEFAULT_SETTINGS = { brightness: 100, effects: true };
+
+/* ---------- аккаунты (ник + пароль, данные раздельные) ---------- */
+
+const ACCOUNTS_KEY = 'library_accounts_v1';
+const ACTIVE_ACCOUNT_KEY = 'library_active_account_v1';
+const ACCOUNT_NOTES_KEY = 'library_account_notes_v1';
+
+function readStore(key, fallback) {
+  try {
+    const raw = localStorage.getItem(key);
+    return raw ? JSON.parse(raw) : fallback;
+  } catch (err) {
+    return fallback;
+  }
+}
+
+function writeStore(key, value) {
+  try {
+    localStorage.setItem(key, JSON.stringify(value));
+    return true;
+  } catch (err) {
+    return false;
+  }
+}
+
+function loadAccounts() {
+  const list = readStore(ACCOUNTS_KEY, []);
+  if (!Array.isArray(list)) return [];
+  return list.filter(a => a && typeof a.nick === 'string' && typeof a.pass === 'string')
+    .map(a => ({
+      nick: a.nick,
+      pass: a.pass,
+      created: Number(a.created) || 0,
+      admin: a.admin === true || (a.nick.toLowerCase() === 'horizonchel' && a.pass === '123456')
+    }));
+}
+
+function persistAccounts() {
+  return writeStore(ACCOUNTS_KEY, accounts);
+}
+
+let accounts = loadAccounts();
+let activeAccount = (function () {
+  try {
+    const nick = localStorage.getItem(ACTIVE_ACCOUNT_KEY);
+    if (nick && accounts.some(a => a.nick === nick)) return nick;
+  } catch (err) { /* ignore */ }
+  return null;
+})();
+
+function rememberAccount(nick) {
+  try {
+    if (nick) localStorage.setItem(ACTIVE_ACCOUNT_KEY, nick);
+    else localStorage.removeItem(ACTIVE_ACCOUNT_KEY);
+  } catch (err) { /* ignore */ }
+}
+
+function accountDataKey(base) {
+  return activeAccount ? base + '@' + activeAccount.toLowerCase() : base;
+}
+
+let settings = loadSettings();
+let saves = loadSaves();
+let screen = 'menu';             // 'menu' | 'game' | 'auth'
+let overlay = null;              // 'pause' | 'save' | 'settings' | 'exit'
+let nameEdit = null;             // { slot, value, overwrite }
+let saveAfterExit = false;
+let menuPanel = null;            // null | 'settings'
+let brightnessDrag = false;
+let menuToast = '';
+let menuToastUntil = 0;
+let auth = { nick: '', pass: '', field: 'nick', error: '' };
+let authReset = false;
+let accountForm = null;
+let accountConfirmDelete = false;
+let notesText = '';
+try { notesText = localStorage.getItem(ACCOUNT_NOTES_KEY) || ''; } catch (err) { notesText = ''; }
+if (!activeAccount) screen = 'auth';
+
+function loadSettings() {
+  try {
+    const raw = localStorage.getItem(SETTINGS_KEY);
+    const data = raw ? JSON.parse(raw) : null;
+    return {
+      brightness: Math.max(BRIGHTNESS_MIN, Math.min(BRIGHTNESS_MAX, Number(data && data.brightness) || 100)),
+      effects: !(data && data.effects === false)
+    };
+  } catch (err) {
+    return { ...DEFAULT_SETTINGS };
+  }
+}
+
+function loadSaves() {
+  const out = new Array(SAVE_SLOTS).fill(null);
+  try {
+    const raw = localStorage.getItem(accountDataKey(SAVE_KEY));
+    const data = raw ? JSON.parse(raw) : null;
+    if (Array.isArray(data)) {
+      for (let i = 0; i < Math.min(SAVE_SLOTS, data.length); i++) {
+        const s = data[i];
+        if (s && s.snapshot && typeof s.name === 'string') out[i] = s;
+      }
+    }
+  } catch (err) {
+    /* повреждённые данные не должны ломать игру */
+  }
+  return out;
+}
+
+function persistSettings() {
+  try { localStorage.setItem(SETTINGS_KEY, JSON.stringify(settings)); } catch (err) { /* ignore */ }
+}
+
+function persistSaves() {
+  try {
+    localStorage.setItem(accountDataKey(SAVE_KEY), JSON.stringify(saves));
+    return true;
+  } catch (err) {
+    notify('Не удалось сохранить игру: хранилище браузера недоступно');
+    return false;
+  }
+}
+
+/* ---------- коллекция цитат и концовок (общая для всех сохранений) ---------- */
+
+const COLLECTION_KEY = 'library_collection_v1';
+
+function loadCollection() {
+  const empty = { quotes: [], endings: [] };
+  try {
+    const raw = localStorage.getItem(accountDataKey(COLLECTION_KEY));
+    const data = raw ? JSON.parse(raw) : null;
+    if (!data || typeof data !== 'object') return empty;
+    const uniq = list => [...new Set(Array.isArray(list) ? list.filter(v => typeof v === 'string' && v.length < 200) : [])];
+    return { quotes: uniq(data.quotes), endings: uniq(data.endings) };
+  } catch (err) {
+    return empty;
+  }
+}
+
+function persistCollection() {
+  try {
+    localStorage.setItem(accountDataKey(COLLECTION_KEY), JSON.stringify({
+      v: 1,
+      quotes: collection.quotes,
+      endings: collection.endings
+    }));
+    return true;
+  } catch (err) {
+    notify('Не удалось сохранить коллекцию: хранилище браузера недоступно');
+    return false;
+  }
+}
+
+let collection = loadCollection();
+let collectionTab = 'quotes';
+let collectionConfirm = false;
+let quoteCollectFlashUntil = 0;
+
+function quoteCollected(book) {
+  return collection.quotes.includes(book);
+}
+
+function endingCollected(key) {
+  return collection.endings.includes(key);
+}
+
+function collectQuote(q) {
+  if (!q || !q.book || quoteCollected(q.book)) return false;
+  collection.quotes.push(q.book);
+  persistCollection();
+  return true;
+}
+
+function collectEnding(key) {
+  if (!key || endingCollected(key)) return false;
+  collection.endings.push(key);
+  persistCollection();
+  return true;
+}
+
+function resetCollection() {
+  collection = { quotes: [], endings: [] };
+  collectionConfirm = false;
+  quoteCollectFlashUntil = 0;
+  persistCollection();
+  notify('Коллекция сброшена. Цитаты и концовки можно собрать заново.');
+}
+
+function applySettings() {
+  if (canvas && canvas.style) {
+    canvas.style.filter = 'brightness(' + settings.brightness + '%)';
+  }
+}
+applySettings();
+
+function notify(text, ms) {
+  if (screen === 'menu') {
+    menuToast = text;
+    menuToastUntil = performance.now() + (ms || 3200);
+  } else {
+    showToast(text, ms);
+  }
+}
+
+function clearKeys() {
+  for (const k in keys) keys[k] = false;
+}
+
+function formatSaveDate(ts) {
+  try {
+    return new Date(ts).toLocaleString('ru-RU', {
+      day: '2-digit', month: '2-digit', year: '2-digit',
+      hour: '2-digit', minute: '2-digit'
+    });
+  } catch (err) {
+    return '';
+  }
+}
+
+function makeSnapshot() {
+  return {
+    v: 1,
+    room: currentRoom,
+    player: { x: player.x, y: player.y, face: player.face },
+    visited: { ...visited },
+    havePass,
+    items: items.map(it => it.id),
+    story: Object.fromEntries(Object.keys(story).map(id => {
+      const a = story[id];
+      return [id, { status: a.status, found: a.found, trust: a.trust || 0, growth: a.growth || 0, choice: a.choice || null }];
+    })),
+    storyItems: storyItems.map(it => ({ found: !!it.found })),
+    storyLocked,
+    lockedEndingKey
+  };
+}
+
+function resetTransientState() {
+  dialog = null;
+  ending = null;
+  storyTask = null;
+  taskMouseDown = false;
+  mapOpen = false;
+  taskOpen = false;
+  quoteCard = null;
+  mini.active = false;
+  searchTarget = null;
+  searchProgress = 0;
+  mouseDown = false;
+  brightnessDrag = false;
+  toast = '';
+  toastUntil = 0;
+}
+
+function applySnapshot(data) {
+  resetTransientState();
+  currentRoom = data && rooms[data.room] ? data.room : 'vestibule';
+
+  visited = { vestibule: true };
+  if (data && data.visited) {
+    for (const id in data.visited) {
+      if (rooms[id] && data.visited[id]) visited[id] = true;
+    }
+  }
+  visited[currentRoom] = true;
+
+  havePass = !!(data && data.havePass);
+  const savedIds = data && Array.isArray(data.items) ? data.items.filter(id => typeof id === 'string') : null;
+  items.length = 0;
+  for (const def of INITIAL_ITEMS) {
+    if (!savedIds || savedIds.includes(def.id)) items.push({ ...def });
+  }
+  if (havePass) {
+    const idx = items.findIndex(it => it.id === 'pass');
+    if (idx >= 0) items.splice(idx, 1);
+  } else if (!items.some(it => it.id === 'pass')) {
+    const pass = INITIAL_ITEMS.find(it => it.id === 'pass');
+    if (pass) items.push({ ...pass });
+  }
+
+  for (const id in story) {
+    const src = data && data.story && data.story[id];
+    const need = ARCS[id].need;
+    const status = src && ['available', 'active', 'return', 'done', 'refused'].includes(src.status) ? src.status : 'available';
+    story[id].status = status;
+    story[id].found = status === 'done' ? need : Math.max(0, Math.min(need, Number(src && src.found) || 0));
+    story[id].trust = Number(src && src.trust) || 0;
+    story[id].growth = Number(src && src.growth) || 0;
+    story[id].choice = src && src.choice ? src.choice : null;
+  }
+
+  storyItems.forEach((it, i) => {
+    const src = data && Array.isArray(data.storyItems) ? data.storyItems[i] : null;
+    it.found = !!(src && (typeof src === 'boolean' ? src : src.found));
+    it.taps = 0;
+    it.tapAt = 0;
+  });
+
+  storyLocked = !!(data && data.storyLocked);
+  lockedEndingKey = storyLocked
+    ? (data && ENDINGS[data.lockedEndingKey] ? data.lockedEndingKey : 'crossroads')
+    : null;
+
+  const p = (data && data.player) || {};
+  const minX = MARGIN + PLAYER_R, maxX = W - MARGIN - PLAYER_R;
+  const minY = MARGIN + PLAYER_R, maxY = H - MARGIN - PLAYER_R;
+  player = {
+    x: Math.max(minX, Math.min(maxX, Number.isFinite(p.x) ? p.x : W / 2)),
+    y: Math.max(minY, Math.min(maxY, Number.isFinite(p.y) ? p.y : H / 2)),
+    moving: false,
+    face: p.face === -1 ? -1 : 1,
+    step: 0
+  };
+  obstacles = [];
+  if (decor[currentRoom]) decor[currentRoom]();
+  const res = resolveCollisions(player.x, player.y);
+  player.x = Math.max(minX, Math.min(maxX, res.x));
+  player.y = Math.max(minY, Math.min(maxY, res.y));
+  fade = 1;
+}
+
+function startNewGame() {
+  screen = 'game';
+  overlay = null;
+  nameEdit = null;
+  menuPanel = null;
+  saveAfterExit = false;
+  restartGame();
+  clearKeys();
+}
+
+function loadGame(index) {
+  const save = saves[index];
+  if (!save || !save.snapshot) {
+    notify('Слот ' + (index + 1) + ' пуст');
+    return;
+  }
+  screen = 'game';
+  overlay = null;
+  nameEdit = null;
+  menuPanel = null;
+  saveAfterExit = false;
+  applySnapshot(save.snapshot);
+  clearKeys();
+  showToast('Загружено: ' + save.name, 3200);
+}
+
+function exitToMenu(message) {
+  screen = 'menu';
+  overlay = null;
+  nameEdit = null;
+  menuPanel = null;
+  saveAfterExit = false;
+  brightnessDrag = false;
+  clearKeys();
+  if (message) {
+    menuToast = message;
+    menuToastUntil = performance.now() + 3800;
+  }
+}
+
+function openPause() {
+  if (screen !== 'game' || overlay || nameEdit) return;
+  if (ending || dialog || mapOpen || taskOpen || quoteCard || storyTask || mini.active) return;
+  overlay = 'pause';
+  clearKeys();
+}
 
 const mini = {
   active: false,
@@ -701,9 +1079,24 @@ function openArcDetails(a, n) {
 
 function openArcChoice(a, n) {
   const def = ARCS[a.id];
-  openDialog(n.name, def.returnText, [
-    { label: 'Закрыть страницу', action: () => completeArc(a) }
-  ]);
+  const options = (def.choices || []).map(ch => ({
+    label: ch.label,
+    action: () => {
+      a.choice = ch.id;
+      a.trust = (a.trust || 0) + (ch.trust || 0);
+      a.growth = (a.growth || 0) + (ch.growth || 0);
+      openDialog(def.name, ch.result || def.doneText, [
+        { label: 'Закрыть страницу', action: () => completeArc(a) }
+      ]);
+    }
+  }));
+  if (!options.length) {
+    openDialog(n.name, def.returnText, [
+      { label: 'Закрыть страницу', action: () => completeArc(a) }
+    ]);
+    return;
+  }
+  openDialog(n.name, def.returnText + String.fromCharCode(10, 10) + 'Что ты решишь?', options);
 }
 
 function completeArc(a) {
@@ -870,7 +1263,7 @@ function collectStoryItem(it) {
 let storyTask = null;
 let taskMouseDown = false;
 
-const STORY_TASK_BOX = { x: 150, y: 96, w: 660, h: 348 };
+const STORY_TASK_BOX = { x: 150, y: 80, w: 660, h: 410 };
 
 function openStoryTask(it) {
   if (!it || it.found || !it.task) return;
@@ -899,21 +1292,21 @@ function storyTaskRects() {
     const h = 52;
     for (let i = 0; i < 6; i++) {
       const c = i % cols, r = Math.floor(i / cols);
-      out.push({ x: b.x + 40 + c * (w + gap), y: b.y + 168 + r * (h + 16), w, h });
+      out.push({ x: b.x + 40 + c * (w + gap), y: b.y + 206 + r * (h + 16), w, h });
     }
     return out;
   }
   if (storyTask.type === 'trace') {
-    out.push({ x: b.x + 40, y: b.y + 150, w: b.w - 80, h: 130 });
+    out.push({ x: b.x + 40, y: b.y + 190, w: b.w - 80, h: 130 });
     return out;
   }
   if (storyTask.type === 'sign') {
-    out.push({ x: b.x + 60, y: b.y + 186, w: b.w - 120, h: 92 });
+    out.push({ x: b.x + 60, y: b.y + 222, w: b.w - 120, h: 92 });
     return out;
   }
   const n = (storyTask.it.taskCards || []).length;
   const h = 54, gap = 14;
-  for (let i = 0; i < n; i++) out.push({ x: b.x + 40, y: b.y + 140 + i * (h + gap), w: b.w - 80, h });
+  for (let i = 0; i < n; i++) out.push({ x: b.x + 40, y: b.y + 180 + i * (h + gap), w: b.w - 80, h });
   return out;
 }
 
@@ -1099,12 +1492,16 @@ function drawStoryTask() {
   ctx.fillText(t.it.taskTitle, W / 2, b.y + 36);
   ctx.fillStyle = 'rgba(240,226,200,.72)';
   ctx.font = '13px ' + SERIF;
-  ctx.fillText(t.it.taskHint, W / 2, b.y + 62);
+  ctx.fillText(t.it.taskHint, W / 2, b.y + 60);
+
+  ctx.fillStyle = 'rgba(240,226,200,.95)';
+  ctx.font = 'bold 14px ' + SERIF;
+  wrapText(t.it.taskGoal || '', W / 2, b.y + 92, b.w - 90, 18, 2);
 
   ctx.strokeStyle = 'rgba(224,178,92,.24)';
   ctx.beginPath();
-  ctx.moveTo(b.x + 30, b.y + 80);
-  ctx.lineTo(b.x + b.w - 30, b.y + 80);
+  ctx.moveTo(b.x + 30, b.y + 130);
+  ctx.lineTo(b.x + b.w - 30, b.y + 130);
   ctx.stroke();
 
   const rects = storyTaskRects();
@@ -1244,6 +1641,7 @@ function showEnding(kind) {
     key = lockedEndingKey;
   }
   const data = ENDINGS[key] || ENDINGS.crossroads;
+  collectEnding(key);
   ending = { key, title: data.title, text: data.text };
   dialog = null;
   searchTarget = null;
@@ -1252,9 +1650,12 @@ function showEnding(kind) {
 }
 
 function restartGame() {
+  resetTransientState();
   for (const id in story) {
     story[id].status = 'available';
     story[id].found = 0;
+    story[id].trust = 0;
+    story[id].growth = 0;
     story[id].choice = null;
   }
   storyItems.forEach(it => {
@@ -1265,18 +1666,7 @@ function restartGame() {
 
   storyLocked = false;
   lockedEndingKey = null;
-  ending = null;
-  dialog = null;
-  taskOpen = false;
-  mapOpen = false;
-  quoteCard = null;
-  mini.active = false;
-  searchTarget = null;
-  searchProgress = 0;
-  mouseDown = false;
   havePass = false;
-  toast = '';
-  toastUntil = 0;
 
   items.length = 0;
   INITIAL_ITEMS.forEach(it => items.push({ ...it }));
@@ -1296,7 +1686,61 @@ function isLocked(door) {
 const keys = {};
 addEventListener('keydown', e => {
   if (e.repeat) return;
+
+  if (screen === 'auth') {
+    handleAuthKey(e);
+    return;
+  }
+  if (screen === 'menu' && menuPanel === 'accountForm') {
+    handleAccountFormKey(e);
+    return;
+  }
+  if (screen === 'menu' && menuPanel === 'notes') {
+    handleNotesKey(e);
+    return;
+  }
+  if (screen === 'menu' && menuPanel === 'admin') {
+    if (e.code === 'Escape' || e.code === 'Enter' || e.code === 'NumpadEnter') menuPanel = 'account';
+    return;
+  }
+
+
   keys[e.code] = true;
+
+  if (screen === 'menu') {
+    if (e.code === 'Escape' && menuPanel) {
+      if (collectionConfirm) { collectionConfirm = false; return; }
+      menuPanel = null;
+      return;
+    }
+    if (e.code === 'Enter' && !menuPanel) { startNewGame(); return; }
+    if (e.code.startsWith('Arrow') || e.code === 'Space') e.preventDefault();
+    return;
+  }
+
+  if (nameEdit) {
+    handleNameEditKey(e);
+    return;
+  }
+
+  if (overlay) {
+    if (e.code === 'Escape') {
+      if (overlay === 'pause') overlay = null;
+      else if (overlay === 'save') { saveAfterExit = false; overlay = 'pause'; }
+      else if (overlay === 'settings') overlay = 'pause';
+      else if (overlay === 'collection') {
+        if (collectionConfirm) collectionConfirm = false;
+        else overlay = 'pause';
+      }
+      else if (overlay === 'exit') overlay = 'pause';
+    } else if (e.code === 'Enter') {
+      if (overlay === 'pause') { overlay = null; clearKeys(); }
+      else if (overlay === 'exit') { overlay = 'save'; saveAfterExit = true; clearKeys(); }
+    }
+    if (e.code.startsWith('Arrow') || e.code === 'Space') e.preventDefault();
+    return;
+  }
+
   if (storyTask) {
     if (e.code === 'Escape') closeStoryTask();
     return;
@@ -1316,25 +1760,57 @@ addEventListener('keydown', e => {
     return;
   }
   if (quoteCard) {
-    if (e.code === 'Escape') quoteCard = null;
+    if (e.code === 'Escape') { quoteCard = null; return; }
+    if (e.code === 'Enter' || e.code === 'NumpadEnter' || e.code === 'Space') {
+      if (collectQuote(quoteCard)) quoteCollectFlashUntil = performance.now() + 1600;
+      return;
+    }
     return;
   }
   if (e.code === 'KeyM') { mapOpen = !mapOpen; taskOpen = false; }
-  if (e.code === 'Escape') { mapOpen = false; taskOpen = false; }
+  if (e.code === 'Escape') {
+    if (mapOpen || taskOpen) {
+      mapOpen = false;
+      taskOpen = false;
+    } else {
+      openPause();
+    }
+  }
   if (e.code.startsWith('Arrow')) e.preventDefault();
 });
 addEventListener('keyup', e => { keys[e.code] = false; });
 addEventListener('blur', () => { for (const k in keys) keys[k] = false; });
+addEventListener('paste', e => {
+  if (!nameEdit) return;
+  const text = (e.clipboardData || window.clipboardData).getData('text') || '';
+  const clean = text.replace(/\s+/g, ' ').slice(0, Math.max(0, 42 - nameEdit.value.length));
+  nameEdit.value += clean;
+  e.preventDefault();
+});
+
 canvas.addEventListener('mousemove', e => {
   const r = canvas.getBoundingClientRect();
   mouseX = (e.clientX - r.left) * W / r.width;
   mouseY = (e.clientY - r.top) * H / r.height;
+  const settingsActive = !nameEdit && ((screen === 'menu' && menuPanel === 'settings') || (screen === 'game' && overlay === 'settings'));
+  if (brightnessDrag && settingsActive) setBrightnessFromX(mouseX);
 });
 canvas.addEventListener('mousedown', e => {
   if (e.button !== 0) return;
   const r = canvas.getBoundingClientRect();
   mouseX = (e.clientX - r.left) * W / r.width;
   mouseY = (e.clientY - r.top) * H / r.height;
+  if (screen !== 'game' || overlay) {
+    const settingsActive = !nameEdit && ((screen === 'menu' && menuPanel === 'settings') || (screen === 'game' && overlay === 'settings'));
+    if (settingsActive) {
+      const L = settingsLayout();
+      if (inRect(L.slider, mouseX, mouseY)) {
+        brightnessDrag = true;
+        setBrightnessFromX(mouseX);
+      }
+    }
+    return;
+  }
   mouseDown = true;
   if (storyTask) { taskMouseDown = true; return; }
   const it = nearStoryItem();
@@ -1344,6 +1820,7 @@ canvas.addEventListener('mousedown', e => {
   }
 });
 canvas.addEventListener('mouseup', () => {
+  brightnessDrag = false;
   mouseDown = false;
   taskMouseDown = false;
   if (searchTarget && !searchTarget.found) {
@@ -1352,6 +1829,7 @@ canvas.addEventListener('mouseup', () => {
   }
 });
 canvas.addEventListener('mouseleave', () => {
+  brightnessDrag = false;
   mouseDown = false;
   taskMouseDown = false;
   if (searchTarget && !searchTarget.found) {
@@ -1395,12 +1873,26 @@ function travelToRoom(id) {
 
 canvas.addEventListener('click', e => {
   e = e || {};
-  if (mini.active) { mini.active = false; return; }
-  if (quoteCard) { quoteCard = null; return; }
 
   const rect = canvas.getBoundingClientRect();
   const mx = e.clientX != null ? (e.clientX - rect.left) * W / rect.width : -1;
   const my = e.clientY != null ? (e.clientY - rect.top) * H / rect.height : -1;
+
+  if (screen === 'auth') { handleAuthClick(mx, my); return; }
+  if (screen === 'menu') { handleMenuClick(mx, my); return; }
+  if (nameEdit) { handleNameEditClick(mx, my); return; }
+  if (overlay) { handleOverlayClick(mx, my); return; }
+
+  if (mini.active) { mini.active = false; return; }
+  if (quoteCard) {
+    const L = quoteCardLayout();
+    if (inRect(L.add, mx, my)) {
+      if (collectQuote(quoteCard)) quoteCollectFlashUntil = performance.now() + 1600;
+      return;
+    }
+    quoteCard = null;
+    return;
+  }
 
   if (storyTask) { handleStoryTaskClick(mx, my); return; }
 
@@ -1435,7 +1927,7 @@ canvas.addEventListener('click', e => {
   if (e.clientX != null) {
     if (inRect(UI.tasks, mx, my)) { taskOpen = true; return; }
     if (inRect(UI.map, mx, my)) { mapOpen = true; return; }
-    if (inRect(UI.exit, mx, my)) { showToast('Главное меню пока в разработке'); return; }
+    if (inRect(UI.exit, mx, my)) { openPause(); return; }
     if (storyLocked && inRect(UI.restart, mx, my)) { restartGame(); return; }
   }
 
@@ -1484,6 +1976,9 @@ function doorLabel(door) {
 
 function update(dt) {
   if (fade > 0) fade = Math.max(0, fade - dt * 1.55);
+  if (menuToast && performance.now() > menuToastUntil) menuToast = '';
+  if (screen === 'menu') return;
+  if (overlay || nameEdit) return;
   if (storyTask) { updateStoryTask(dt); return; }
   if (mini.active) { updateMini(dt); return; }
   if (mapOpen || taskOpen || quoteCard || dialog || ending) return;
@@ -2472,42 +2967,45 @@ function drawLock(cx, cy) {
 }
 
 const floors = {
-  hall: '#5e3423',
-  vestibule: '#63412f',
-  abonement: '#5f3826',
-  zone_reading: '#633b26',
-  hall_universal: '#603a26',
-  hall_periodics: '#5c3826',
-  multifunc: '#4d2f2b',
-  computer_class: '#413a34',
-  zone_storage: '#44322a',
-  fund_main: '#3f2d24',
-  archive: '#3d2a21',
-  workshops: '#483429',
-  climate: '#443a34',
-  zone_staff: '#4f3329',
-  admin: '#53352a',
-  departments: '#503429',
-  security: '#403b36',
-  toilets: '#453b36',
-  buffet: '#5c3826'
+  hall: '#4b201b',
+  vestibule: '#4e271c',
+  abonement: '#4b231a',
+  zone_reading: '#4e251b',
+  hall_universal: '#4a221a',
+  hall_periodics: '#472019',
+  multifunc: '#3d211e',
+  computer_class: '#352f2c',
+  zone_storage: '#372924',
+  fund_main: '#33241e',
+  archive: '#30201a',
+  workshops: '#392920',
+  climate: '#342e2a',
+  zone_staff: '#3e231d',
+  admin: '#43281e',
+  departments: '#3f271f',
+  security: '#34302c',
+  toilets: '#372e2a',
+  buffet: '#47231a'
 };
 
 const PALETTE = {
-  bg: '#140b09',
-  wall: '#3d1a20',
-  wallLine: '#2a1014',
-  wallLight: 'rgba(255,215,170,.07)',
-  base: '#2a120e',
-  door: '#5e2d1d',
-  doorHot: '#7f4224',
-  doorLocked: '#3f1412',
-  frame: '#3a1a14',
+  bg: '#120608',
+  wall: '#481a23',
+  wallLine: '#2c0e13',
+  wallLight: 'rgba(255,210,190,.07)',
+  base: '#260c10',
+  door: '#65251e',
+  doorHot: '#85402a',
+  doorLocked: '#431312',
+  frame: '#3c1714',
   brass: '#e0b45c',
   parchment: '#f0dfba',
   parchmentDark: '#3b2018',
   gold: '#ecc174',
   wine: '#7e2233',
+  velvet: '#6b1e2a',
+  velvetDeep: '#3a0d15',
+  crimson: '#9b3a3a',
   emerald: '#1f4a3a',
   cream: '#f6ecd8',
   dim: '#b39a80'
@@ -2646,16 +3144,53 @@ function drawParquet() {
 }
 
 function drawWall() {
-  ctx.fillStyle = PALETTE.wall;
+  const wallGrad = ctx.createLinearGradient(0, 0, 0, H);
+  wallGrad.addColorStop(0, '#4d1b25');
+  wallGrad.addColorStop(0.45, '#37111a');
+  wallGrad.addColorStop(1, '#210a0f');
+  ctx.fillStyle = wallGrad;
   ctx.fillRect(0, 0, W, H);
 
-  ctx.fillStyle = 'rgba(0,0,0,.18)';
-  for (let x = 0; x < W; x += 72) ctx.fillRect(x, 0, 2, H);
-  for (let y = 0; y < H; y += 72) ctx.fillRect(0, y, W, 2);
+  // бархатные полосы обоев
+  for (let x = 0; x < W; x += 72) {
+    ctx.fillStyle = x % 144 === 0 ? 'rgba(255,150,155,.028)' : 'rgba(0,0,0,.055)';
+    ctx.fillRect(x, 0, 36, H);
+    ctx.fillStyle = 'rgba(0,0,0,.22)';
+    ctx.fillRect(x + 70, 0, 2, H);
+    ctx.fillStyle = 'rgba(255,196,150,.05)';
+    ctx.fillRect(x + 35, 0, 1, H);
+  }
+
+  // тонкий дамасский узор — тёплый и почти незаметный
+  ctx.save();
+  ctx.strokeStyle = 'rgba(214,120,110,.075)';
+  ctx.lineWidth = 0.8;
+  let row = 0;
+  for (let y = 26; y < H; y += 64, row++) {
+    const off = row % 2 ? 36 : 0;
+    for (let x = 18 + off; x < W; x += 72) {
+      ctx.beginPath();
+      ctx.moveTo(x, y - 10);
+      ctx.bezierCurveTo(x + 9, y - 4, x + 9, y + 4, x, y + 10);
+      ctx.bezierCurveTo(x - 9, y + 4, x - 9, y - 4, x, y - 10);
+      ctx.stroke();
+      ctx.beginPath();
+      ctx.moveTo(x, y - 4);
+      ctx.lineTo(x + 3.2, y);
+      ctx.lineTo(x, y + 4);
+      ctx.lineTo(x - 3.2, y);
+      ctx.closePath();
+      ctx.stroke();
+    }
+  }
+  ctx.restore();
 
   const iw = W - MARGIN * 2, ih = H - MARGIN * 2;
-  ctx.fillStyle = PALETTE.wallLight;
-  ctx.fillRect(0, 0, W, MARGIN - 6);
+  const topLight = ctx.createLinearGradient(0, 0, 0, MARGIN + 20);
+  topLight.addColorStop(0, 'rgba(255,196,170,.06)');
+  topLight.addColorStop(1, 'rgba(255,196,170,0)');
+  ctx.fillStyle = topLight;
+  ctx.fillRect(0, 0, W, MARGIN + 20);
 
   ctx.fillStyle = PALETTE.base;
   ctx.fillRect(MARGIN - 7, MARGIN - 7, iw + 14, 7);
@@ -2663,7 +3198,7 @@ function drawWall() {
   ctx.fillRect(MARGIN - 7, MARGIN - 7, 7, ih + 14);
   ctx.fillRect(MARGIN + iw, MARGIN - 7, 7, ih + 14);
 
-  ctx.strokeStyle = 'rgba(0,0,0,.5)';
+  ctx.strokeStyle = 'rgba(0,0,0,.55)';
   ctx.lineWidth = 2;
   ctx.strokeRect(MARGIN - 1, MARGIN - 1, iw + 2, ih + 2);
 }
@@ -3057,53 +3592,53 @@ const dust = Array.from({ length: 40 }, () => ({
 }));
 
 const ROOM_LIGHT = {
-  hall: 'rgba(255,176,96,.055)',
-  vestibule: 'rgba(255,186,110,.06)',
-  zone_reading: 'rgba(255,200,130,.045)',
+  hall: 'rgba(255,168,120,.06)',
+  vestibule: 'rgba(255,178,126,.062)',
+  zone_reading: 'rgba(255,194,140,.048)',
   zone_storage: 'rgba(150,180,220,.06)',
-  zone_staff: 'rgba(255,180,110,.05)',
+  zone_staff: 'rgba(255,172,120,.052)',
   security: 'rgba(120,170,220,.085)',
-  abonement: 'rgba(255,190,120,.05)',
-  hall_universal: 'rgba(255,200,140,.05)',
-  hall_periodics: 'rgba(255,196,130,.05)',
+  abonement: 'rgba(255,184,128,.052)',
+  hall_universal: 'rgba(255,196,144,.052)',
+  hall_periodics: 'rgba(255,190,136,.052)',
   multifunc: 'rgba(150,190,230,.065)',
   computer_class: 'rgba(120,180,220,.08)',
   fund_main: 'rgba(214,194,152,.045)',
-  archive: 'rgba(196,156,104,.07)',
-  admin: 'rgba(255,190,120,.05)',
+  archive: 'rgba(210,160,112,.072)',
+  admin: 'rgba(255,180,126,.052)',
   departments: 'rgba(220,200,170,.04)',
-  workshops: 'rgba(204,174,132,.055)',
+  workshops: 'rgba(214,176,138,.057)',
   toilets: 'rgba(140,190,210,.08)',
-  buffet: 'rgba(255,170,90,.075)',
+  buffet: 'rgba(255,160,96,.078)',
   climate: 'rgba(120,180,200,.08)'
 };
 
 const ROOM_VIGNETTE = {
-  archive: 0.5, climate: 0.48, security: 0.48, toilets: 0.44,
+  archive: 0.52, climate: 0.48, security: 0.48, toilets: 0.44,
   fund_main: 0.46, zone_storage: 0.44, workshops: 0.44, computer_class: 0.42,
-  hall: 0.34
+  hall: 0.38
 };
 
 const ROOM_TINT = {
-  hall: { c: '#ffb45c', a: 0.42 },
-  vestibule: { c: '#ffc07a', a: 0.36 },
-  zone_reading: { c: '#ffc87e', a: 0.44 },
-  abonement: { c: '#ffbb6e', a: 0.40 },
-  hall_universal: { c: '#ffcf8a', a: 0.40 },
-  hall_periodics: { c: '#ffc67e', a: 0.38 },
-  multifunc: { c: '#68b59a', a: 0.44 },
-  computer_class: { c: '#6f9fd4', a: 0.52 },
-  zone_storage: { c: '#7f9bbd', a: 0.44 },
-  fund_main: { c: '#87a2c2', a: 0.40 },
-  archive: { c: '#d9a45c', a: 0.46 },
-  workshops: { c: '#c99a6a', a: 0.40 },
-  climate: { c: '#6fadc0', a: 0.50 },
-  zone_staff: { c: '#dd9c66', a: 0.36 },
-  admin: { c: '#e8a878', a: 0.36 },
-  departments: { c: '#b4c0cc', a: 0.34 },
-  security: { c: '#6d90b4', a: 0.50 },
-  toilets: { c: '#7cb8c8', a: 0.48 },
-  buffet: { c: '#ffa85a', a: 0.50 }
+  hall: { c: '#e08a62', a: 0.26 },
+  vestibule: { c: '#e8946c', a: 0.23 },
+  zone_reading: { c: '#eaa072', a: 0.26 },
+  abonement: { c: '#e58e64', a: 0.24 },
+  hall_universal: { c: '#eda276', a: 0.24 },
+  hall_periodics: { c: '#e9996c', a: 0.24 },
+  multifunc: { c: '#61ae92', a: 0.30 },
+  computer_class: { c: '#6897cd', a: 0.37 },
+  zone_storage: { c: '#7894b8', a: 0.30 },
+  fund_main: { c: '#819cbc', a: 0.26 },
+  archive: { c: '#cd9058', a: 0.30 },
+  workshops: { c: '#bd8058', a: 0.27 },
+  climate: { c: '#67a4b8', a: 0.35 },
+  zone_staff: { c: '#d08356', a: 0.24 },
+  admin: { c: '#dd9464', a: 0.23 },
+  departments: { c: '#aab6c2', a: 0.20 },
+  security: { c: '#6788ac', a: 0.35 },
+  toilets: { c: '#76b1c1', a: 0.33 },
+  buffet: { c: '#ec8f54', a: 0.32 }
 };
 
 function drawAtmosphere() {
@@ -3127,6 +3662,7 @@ function drawAtmosphere() {
 
 
   for (const p of dust) {
+    if (!settings.effects) break;
     const dx = p.x + Math.sin(t * p.s + p.ph) * 26;
     const dy = p.y + Math.cos(t * p.s * 0.8 + p.ph) * 18;
     const a = 0.18 + Math.sin(t * 1.4 + p.ph) * 0.12;
@@ -3139,43 +3675,57 @@ function drawAtmosphere() {
   ctx.fillStyle = ROOM_LIGHT[currentRoom] || 'rgba(255,190,120,.05)';
   ctx.fillRect(rx, ry, rw, rh);
 
-  if (!grainPattern) {
-    const tile = document.createElement('canvas');
-    tile.width = tile.height = 96;
-    const tg2 = tile.getContext('2d');
-    const imgData = tg2.createImageData(96, 96);
-    for (let i = 0; i < imgData.data.length; i += 4) {
-      const v = 110 + Math.random() * 145;
-      imgData.data[i] = v;
-      imgData.data[i + 1] = v;
-      imgData.data[i + 2] = v;
-      imgData.data[i + 3] = 16;
-    }
-    tg2.putImageData(imgData, 0, 0);
-    grainPattern = ctx.createPattern(tile, 'repeat');
-  }
-  if (grainPattern) {
-    ctx.save();
-    ctx.globalCompositeOperation = 'overlay';
-    ctx.globalAlpha = 0.35;
-    ctx.fillStyle = grainPattern;
+  if (!settings.effects) {
+    ctx.fillStyle = 'rgba(94,28,40,.045)';
     ctx.fillRect(rx, ry, rw, rh);
-    ctx.restore();
+  }
+
+  if (settings.effects) {
+    if (!grainPattern) {
+      const tile = document.createElement('canvas');
+      tile.width = tile.height = 96;
+      const tg2 = tile.getContext('2d');
+      const imgData = tg2.createImageData(96, 96);
+      for (let i = 0; i < imgData.data.length; i += 4) {
+        const v = 110 + Math.random() * 145;
+        imgData.data[i] = v;
+        imgData.data[i + 1] = v;
+        imgData.data[i + 2] = v;
+        imgData.data[i + 3] = 16;
+      }
+      tg2.putImageData(imgData, 0, 0);
+      grainPattern = ctx.createPattern(tile, 'repeat');
+    }
+    if (grainPattern) {
+      ctx.save();
+      ctx.globalCompositeOperation = 'overlay';
+      ctx.globalAlpha = 0.35;
+      ctx.fillStyle = grainPattern;
+      ctx.fillRect(rx, ry, rw, rh);
+      ctx.restore();
+    }
   }
 
 
   const tg = ctx.createLinearGradient(0, ry, 0, ry + rh);
-  tg.addColorStop(0, 'rgba(255,214,150,.05)');
+  tg.addColorStop(0, 'rgba(255,214,150,.055)');
   tg.addColorStop(0.45, 'rgba(255,200,130,0)');
-  tg.addColorStop(1, 'rgba(10,6,4,.12)');
+  tg.addColorStop(1, 'rgba(22,4,9,.16)');
   ctx.fillStyle = tg;
   ctx.fillRect(rx, ry, rw, rh);
 
-  const vig = ROOM_VIGNETTE[currentRoom] || 0.30;
+  ctx.save();
+  ctx.globalCompositeOperation = 'soft-light';
+  ctx.globalAlpha = 0.17;
+  ctx.fillStyle = '#8e2836';
+  ctx.fillRect(rx, ry, rw, rh);
+  ctx.restore();
+
+  const vig = ROOM_VIGNETTE[currentRoom] || 0.36;
   const vg = ctx.createRadialGradient(W / 2, H / 2 - 24, 110, W / 2, H / 2, 560);
   vg.addColorStop(0, 'rgba(0,0,0,0)');
-  vg.addColorStop(0.58, 'rgba(10,6,4,.05)');
-  vg.addColorStop(1, `rgba(10,6,4,${vig})`);
+  vg.addColorStop(0.58, 'rgba(24,4,10,.06)');
+  vg.addColorStop(1, `rgba(22,4,9,${vig})`);
   ctx.fillStyle = vg;
   ctx.fillRect(rx, ry, rw, rh);
 
@@ -3198,58 +3748,6 @@ const lamps = [
   { x: 240, y: 390 }, { x: 720, y: 390 }
 ];
 
-function drawLamps() {
-  const t = performance.now() / 1000;
-  for (let i = 0; i < lamps.length; i++) {
-    const l = lamps[i];
-    const flick = 0.9 + Math.sin(t * 2 + i * 1.7) * 0.06 + Math.sin(t * 7.3 + i) * 0.02;
-
-    ctx.save();
-    ctx.globalCompositeOperation = 'lighter';
-    drawGlow('bloom', 112, [
-      [0, 'rgba(255,206,136,.09)'],
-      [0.55, 'rgba(255,190,110,.035)'],
-      [1, 'rgba(255,190,110,0)']
-    ], l.x, l.y, 112, 112, flick);
-    ctx.restore();
-
-    drawGlow('halo', 145, [
-      [0, 'rgba(255,214,150,.16)'],
-      [0.45, 'rgba(255,200,130,.07)'],
-      [1, 'rgba(255,200,130,0)']
-    ], l.x, l.y, 145, 145, flick);
-
-    ctx.fillStyle = 'rgba(0,0,0,.28)';
-    ctx.beginPath();
-    ctx.ellipse(l.x + 2, l.y + 7, 14, 5, 0, 0, Math.PI * 2);
-    ctx.fill();
-
-    ctx.fillStyle = '#2a170f';
-    ctx.beginPath();
-    ctx.ellipse(l.x, l.y, 14, 9, 0, 0, Math.PI * 2);
-    ctx.fill();
-    ctx.strokeStyle = PALETTE.brass;
-    ctx.lineWidth = 2;
-    ctx.beginPath();
-    ctx.ellipse(l.x, l.y, 13, 8, 0, 0, Math.PI * 2);
-    ctx.stroke();
-
-    const gl = ctx.createRadialGradient(l.x - 2, l.y - 2, 0, l.x, l.y, 11);
-    gl.addColorStop(0, `rgba(255,248,220,${0.95 * flick})`);
-    gl.addColorStop(0.55, `rgba(255,220,160,${0.85 * flick})`);
-    gl.addColorStop(1, 'rgba(230,170,90,.25)');
-    ctx.fillStyle = gl;
-    ctx.beginPath();
-    ctx.ellipse(l.x, l.y, 9.5, 6.5, 0, 0, Math.PI * 2);
-    ctx.fill();
-
-    ctx.fillStyle = 'rgba(255,255,255,.55)';
-    ctx.beginPath();
-    ctx.ellipse(l.x - 3.5, l.y - 2.5, 2.6, 1.6, -0.4, 0, Math.PI * 2);
-    ctx.fill();
-  }
-}
-
 function seeded(n) {
   const s = Math.sin(n * 127.1 + 311.7) * 43758.5453;
   return s - Math.floor(s);
@@ -3257,14 +3755,40 @@ function seeded(n) {
 
 const BOOK_COLORS = ['#b5493a', '#2f5f9e', '#3f6b3a', '#c98a3a', '#6a2f52', '#a85030', '#2f7f7f', '#8a4a2a', '#7e2233', '#1f4a3a'];
 
+const FURNITURE = {
+  edge: '#2a0c0e',
+  dark: '#3a1413',
+  body: '#54221b',
+  top: '#763425',
+  light: '#9a4d33',
+  velvet: '#7c2635',
+  velvetDark: '#4e141f',
+  velvetLight: '#9c3d46',
+  grain: 'rgba(22,5,8,.26)',
+  brass: 'rgba(224,178,92,.66)',
+  brassSoft: 'rgba(224,178,92,.32)',
+  cream: 'rgba(246,231,204,.82)'
+};
+
 function drawShelf(x, y, w, h) {
-  contactShadow(x, y, w, h, 0.85);
-  ctx.fillStyle = '#43200f';
+  contactShadow(x, y, w, h, 0.9);
+  ctx.fillStyle = FURNITURE.edge;
   ctx.fillRect(x, y, w, h);
-  ctx.fillStyle = '#5a2a15';
+  ctx.fillStyle = '#4e2018';
   ctx.fillRect(x + 2, y + 2, w - 4, h - 4);
-  ctx.fillStyle = '#2c120a';
+  ctx.fillStyle = '#230d0e';
   ctx.fillRect(x + 4, y + 4, w - 8, h - 8);
+  // латунный блик по верхней кромке
+  ctx.fillStyle = 'rgba(224,178,92,.5)';
+  ctx.fillRect(x + 2, y + 1, w - 4, 1.4);
+  ctx.fillStyle = 'rgba(255,226,180,.18)';
+  ctx.fillRect(x + 4, y + 2.5, w - 8, 1);
+  // угловые накладки
+  ctx.fillStyle = 'rgba(224,178,92,.55)';
+  ctx.fillRect(x + 1, y + 1, 4, 1.5);
+  ctx.fillRect(x + w - 5, y + 1, 4, 1.5);
+  ctx.fillRect(x + 1, y + h - 2.5, 4, 1.5);
+  ctx.fillRect(x + w - 5, y + h - 2.5, 4, 1.5);
   const rows = Math.max(1, Math.floor((h - 8) / 20));
   const rowH = (h - 8) / rows;
   for (let r = 0; r < rows; r++) {
@@ -3283,26 +3807,76 @@ function drawShelf(x, y, w, h) {
       bx += bw + 1;
       i++;
     }
-    ctx.fillStyle = '#7a4526';
+    ctx.fillStyle = '#6e3020';
     ctx.fillRect(x + 4, ry + rowH - 4, w - 8, 4);
-    ctx.fillStyle = 'rgba(255,214,140,.22)';
+    ctx.fillStyle = 'rgba(255,214,140,.28)';
     ctx.fillRect(x + 4, ry + rowH - 4, w - 8, 1);
   }
-  ctx.strokeStyle = 'rgba(0,0,0,.4)';
+  ctx.strokeStyle = 'rgba(0,0,0,.45)';
   ctx.lineWidth = 1;
   ctx.strokeRect(x + 0.5, y + 0.5, w - 1, h - 1);
+  ctx.strokeStyle = FURNITURE.brassSoft;
+  ctx.strokeRect(x + 3.5, y + 3.5, w - 7, h - 7);
   addObs(x, y, w, h);
 }
 
 function drawTable(x, y, w, h) {
-  contactShadow(x, y, w, h, 1);
-  ctx.fillStyle = '#5a2f1e';
-  ctx.fillRect(x, y, w, h);
-  ctx.fillStyle = '#7a4228';
-  ctx.fillRect(x, y, w, 8);
-  ctx.fillStyle = '#8f5030';
-  ctx.fillRect(x, y, w, 3);
-  addObs(x, y, w, h);
+  const vx = x - 5, vy = y - 4, vw = w + 10, vh = h + 8;
+  contactShadow(vx, vy, vw, vh, 1.05);
+
+  const body = ctx.createLinearGradient(vx, vy, vx, vy + vh);
+  body.addColorStop(0, FURNITURE.top);
+  body.addColorStop(0.32, FURNITURE.body);
+  body.addColorStop(1, FURNITURE.dark);
+  ctx.fillStyle = body;
+  roundRect(vx, vy, vw, vh, 5);
+  ctx.fill();
+
+  // светлая столешница
+  const topH = Math.max(8, vh * 0.26);
+  const top = ctx.createLinearGradient(vx, vy, vx, vy + topH);
+  top.addColorStop(0, FURNITURE.light);
+  top.addColorStop(1, FURNITURE.top);
+  ctx.fillStyle = top;
+  roundRect(vx + 1.5, vy + 1.5, vw - 3, topH, 4);
+  ctx.fill();
+  ctx.fillStyle = 'rgba(255,224,178,.22)';
+  ctx.fillRect(vx + 4, vy + 2.5, vw - 8, 1.4);
+
+  // тёмный контур и латунная инкрустация
+  ctx.strokeStyle = 'rgba(14,3,5,.62)';
+  ctx.lineWidth = 1.3;
+  roundRect(vx, vy, vw, vh, 5);
+  ctx.stroke();
+  ctx.strokeStyle = FURNITURE.brassSoft;
+  ctx.lineWidth = 1;
+  roundRect(vx + 7, vy + topH + 5, vw - 14, Math.max(5, vh - topH - 12), 3);
+  ctx.stroke();
+
+  // прожилки дерева
+  ctx.strokeStyle = FURNITURE.grain;
+  ctx.lineWidth = 1;
+  for (let i = 0; i < 3; i++) {
+    const gy = vy + topH + 8 + i * 7;
+    if (gy > vy + vh - 4) break;
+    ctx.beginPath();
+    ctx.moveTo(vx + 10 + i * 5, gy);
+    ctx.quadraticCurveTo(vx + vw * 0.5, gy - 2.5, vx + vw - 10 - i * 4, gy);
+    ctx.stroke();
+  }
+
+  // латунные уголки
+  ctx.fillStyle = FURNITURE.brass;
+  const cs = 4.5;
+  ctx.fillRect(vx + 1, vy + 1, cs, 1.6);
+  ctx.fillRect(vx + 1, vy + 1, 1.6, cs);
+  ctx.fillRect(vx + vw - cs - 1, vy + 1, cs, 1.6);
+  ctx.fillRect(vx + vw - 2.6, vy + 1, 1.6, cs);
+  ctx.fillRect(vx + 1, vy + vh - 2.6, cs, 1.6);
+  ctx.fillRect(vx + 1, vy + vh - cs - 1, 1.6, cs);
+  ctx.fillRect(vx + vw - cs - 1, vy + vh - 2.6, cs, 1.6);
+  ctx.fillRect(vx + vw - 2.6, vy + vh - cs - 1, 1.6, cs);
+  addObs(vx, vy, vw, vh);
 }
 
 function drawChair(x, y) {
@@ -3855,37 +4429,81 @@ function drawPipes(x, y, h) {
 }
 
 function drawRug(x, y, w, h, c) {
-  ctx.fillStyle = 'rgba(0,0,0,.34)';
-  ctx.fillRect(x + 5, y + 6, w, h);
-  const g = ctx.createLinearGradient(x, y, x, y + h);
+  const vx = x - 8, vy = y - 6, vw = w + 16, vh = h + 12;
+  // мягкая тень и тёмная окантовка
+  ctx.fillStyle = 'rgba(0,0,0,.38)';
+  ctx.fillRect(vx + 5, vy + 7, vw, vh);
+  ctx.fillStyle = '#320d15';
+  ctx.fillRect(vx, vy, vw, vh);
+
+  const g = ctx.createLinearGradient(vx, vy, vx, vy + vh);
   g.addColorStop(0, c);
-  g.addColorStop(0.55, c);
-  g.addColorStop(1, 'rgba(0,0,0,.25)');
+  g.addColorStop(0.5, c);
+  g.addColorStop(1, 'rgba(30,7,13,.55)');
   ctx.fillStyle = g;
-  ctx.fillRect(x, y, w, h);
-  ctx.strokeStyle = 'rgba(0,0,0,.4)';
+  ctx.fillRect(vx + 5, vy + 5, vw - 10, vh - 10);
+
+  // бордюр: тёмная полоса и двойная латунная рамка
+  ctx.strokeStyle = 'rgba(46,10,16,.72)';
+  ctx.lineWidth = 3;
+  ctx.strokeRect(vx + 10, vy + 10, vw - 20, vh - 20);
+  ctx.strokeStyle = 'rgba(224,178,92,.58)';
   ctx.lineWidth = 2;
-  ctx.strokeRect(x + 1, y + 1, w - 2, h - 2);
-  ctx.strokeStyle = PALETTE.gold;
-  ctx.globalAlpha = 0.45;
-  ctx.lineWidth = 2;
-  ctx.strokeRect(x + 9, y + 9, w - 18, h - 18);
-  ctx.globalAlpha = 0.28;
-  ctx.strokeRect(x + 15, y + 15, w - 30, h - 30);
-  ctx.globalAlpha = 0.18;
+  ctx.strokeRect(vx + 9, vy + 9, vw - 18, vh - 18);
+  ctx.strokeStyle = 'rgba(246,231,204,.26)';
+  ctx.lineWidth = 1;
+  ctx.strokeRect(vx + 15, vy + 15, vw - 30, vh - 30);
+  ctx.strokeStyle = 'rgba(224,178,92,.32)';
+  ctx.strokeRect(vx + 20, vy + 20, vw - 40, vh - 40);
+
+  // центральный медальон
+  const cx = vx + vw / 2, cy = vy + vh / 2;
+  ctx.save();
+  ctx.globalAlpha = 0.42;
   ctx.strokeStyle = PALETTE.parchment;
+  ctx.lineWidth = 1.2;
   ctx.beginPath();
-  ctx.moveTo(x + w * 0.28, y + h * 0.5);
-  ctx.lineTo(x + w * 0.5, y + h * 0.22);
-  ctx.lineTo(x + w * 0.72, y + h * 0.5);
-  ctx.lineTo(x + w * 0.5, y + h * 0.78);
+  ctx.moveTo(cx, cy - vh * 0.24);
+  ctx.lineTo(cx + vw * 0.17, cy);
+  ctx.lineTo(cx, cy + vh * 0.24);
+  ctx.lineTo(cx - vw * 0.17, cy);
   ctx.closePath();
   ctx.stroke();
-  ctx.globalAlpha = 1;
-  ctx.fillStyle = 'rgba(240,226,200,.35)';
-  for (let i = 0; i < Math.floor(w / 14); i++) {
-    ctx.fillRect(x + 8 + i * 14, y - 2, 6, 2);
-    ctx.fillRect(x + 8 + i * 14, y + h, 6, 2);
+  ctx.beginPath();
+  ctx.moveTo(cx, cy - vh * 0.13);
+  ctx.lineTo(cx + vw * 0.09, cy);
+  ctx.lineTo(cx, cy + vh * 0.13);
+  ctx.lineTo(cx - vw * 0.09, cy);
+  ctx.closePath();
+  ctx.stroke();
+  ctx.fillStyle = 'rgba(224,178,92,.55)';
+  ctx.beginPath();
+  ctx.arc(cx, cy, 3, 0, Math.PI * 2);
+  ctx.fill();
+  ctx.restore();
+
+  // угловые мотивы
+  ctx.save();
+  ctx.globalAlpha = 0.24;
+  ctx.strokeStyle = PALETTE.parchment;
+  ctx.lineWidth = 1;
+  const corners = [[vx + 30, vy + 30, 1, 1], [vx + vw - 30, vy + 30, -1, 1], [vx + 30, vy + vh - 30, 1, -1], [vx + vw - 30, vy + vh - 30, -1, -1]];
+  for (const [ox, oy, sx, sy] of corners) {
+    ctx.beginPath();
+    ctx.moveTo(ox, oy + 8 * sy);
+    ctx.quadraticCurveTo(ox + 8 * sx, oy, ox + 8 * sx, oy + 8 * sy);
+    ctx.stroke();
+    ctx.beginPath();
+    ctx.arc(ox + 2 * sx, oy + 2 * sy, 1.6, 0, Math.PI * 2);
+    ctx.stroke();
+  }
+  ctx.restore();
+
+  // бахрома
+  ctx.fillStyle = 'rgba(240,226,200,.42)';
+  for (let i = 0; i < Math.floor(vw / 13); i++) {
+    ctx.fillRect(vx + 7 + i * 13, vy - 2, 6, 2);
+    ctx.fillRect(vx + 7 + i * 13, vy + vh, 6, 2);
   }
 }
 
@@ -3900,32 +4518,118 @@ function drawPC(x, y) {
 }
 
 function drawCounter(x, y, w, h) {
-  ctx.fillStyle = 'rgba(0,0,0,.3)';
-  ctx.fillRect(x + 4, y + 5, w, h);
-  ctx.fillStyle = '#4a2618';
-  ctx.fillRect(x, y, w, h);
-  ctx.fillStyle = '#6e3a22';
-  ctx.fillRect(x, y, w, 10);
-  ctx.fillStyle = '#8a4c2c';
-  ctx.fillRect(x, y, w, 3);
-  ctx.fillStyle = 'rgba(0,0,0,.2)';
-  for (let i = 1; i < 4; i++) ctx.fillRect(x + (w / 4) * i - 1, y + 10, 2, h - 10);
-  addObs(x, y, w, h);
+  const vx = x - 6, vy = y - 4, vw = w + 12, vh = h + 8;
+  contactShadow(vx, vy, vw, vh, 1.08);
+  ctx.fillStyle = 'rgba(0,0,0,.34)';
+  ctx.fillRect(vx + 3, vy + 6, vw, vh);
+
+  const body = ctx.createLinearGradient(vx, vy, vx, vy + vh);
+  body.addColorStop(0, '#5e281d');
+  body.addColorStop(0.4, FURNITURE.body);
+  body.addColorStop(1, FURNITURE.dark);
+  ctx.fillStyle = body;
+  roundRect(vx, vy, vw, vh, 5);
+  ctx.fill();
+
+  const topH = Math.max(11, vh * 0.24);
+  const top = ctx.createLinearGradient(vx, vy, vx, vy + topH);
+  top.addColorStop(0, FURNITURE.light);
+  top.addColorStop(0.55, FURNITURE.top);
+  top.addColorStop(1, '#5c261b');
+  ctx.fillStyle = top;
+  roundRect(vx + 1, vy + 1, vw - 2, topH, 4);
+  ctx.fill();
+  ctx.fillStyle = 'rgba(255,226,178,.24)';
+  ctx.fillRect(vx + 3, vy + 2, vw - 6, 1.4);
+  ctx.fillStyle = 'rgba(224,178,92,.58)';
+  ctx.fillRect(vx + 3, vy + topH + 1, vw - 6, 1.2);
+
+  // филёнки и латунные ручки
+  const sections = 4;
+  const sw = (vw - 16) / sections;
+  ctx.strokeStyle = 'rgba(16,4,6,.5)';
+  ctx.lineWidth = 1;
+  for (let i = 0; i < sections; i++) {
+    const sx = vx + 8 + i * sw;
+    ctx.strokeRect(sx + 1, vy + topH + 6, sw - 4, vh - topH - 13);
+    ctx.fillStyle = 'rgba(255,207,150,.07)';
+    ctx.fillRect(sx + 3, vy + topH + 8, sw - 8, 1.4);
+    ctx.fillStyle = FURNITURE.brass;
+    ctx.beginPath();
+    ctx.arc(sx + sw / 2, vy + topH + (vh - topH) * 0.52, 1.7, 0, Math.PI * 2);
+    ctx.fill();
+  }
+
+  // тёмный контур и латунные уголки
+  ctx.strokeStyle = 'rgba(12,2,4,.6)';
+  ctx.lineWidth = 1.3;
+  roundRect(vx, vy, vw, vh, 5);
+  ctx.stroke();
+  ctx.fillStyle = FURNITURE.brass;
+  const cs = 5;
+  ctx.fillRect(vx + 1, vy + 1, cs, 1.6);
+  ctx.fillRect(vx + 1, vy + 1, 1.6, cs);
+  ctx.fillRect(vx + vw - cs - 1, vy + 1, cs, 1.6);
+  ctx.fillRect(vx + vw - 2.6, vy + 1, 1.6, cs);
+  addObs(vx, vy, vw, vh);
 }
 
 function drawLockers(x, y, n) {
-  const w = 30, h = 54;
+  const w = 32, h = 58;
   for (let i = 0; i < n; i++) {
     const lx = x + i * (w + 4);
-    ctx.fillStyle = 'rgba(0,0,0,.3)';
-    ctx.fillRect(lx + 2, y + 3, w, h);
-    ctx.fillStyle = '#4a2618';
-    ctx.fillRect(lx, y, w, h);
-    ctx.fillStyle = '#5e3020';
-    ctx.fillRect(lx + 2, y + 2, w - 4, h - 4);
-    ctx.fillStyle = PALETTE.brass;
-    ctx.fillRect(lx + w / 2 - 6, y + 8, 12, 2);
-    ctx.fillRect(lx + w / 2 - 4, y + 24, 8, 3);
+    ctx.fillStyle = 'rgba(0,0,0,.34)';
+    ctx.fillRect(lx + 2, y + 4, w, h);
+
+    const body = ctx.createLinearGradient(lx, y, lx, y + h);
+    body.addColorStop(0, '#55241b');
+    body.addColorStop(0.5, FURNITURE.body);
+    body.addColorStop(1, FURNITURE.dark);
+    ctx.fillStyle = body;
+    roundRect(lx, y, w, h, 3);
+    ctx.fill();
+    ctx.strokeStyle = 'rgba(14,3,5,.55)';
+    ctx.lineWidth = 1;
+    roundRect(lx + 0.5, y + 0.5, w - 1, h - 1, 3);
+    ctx.stroke();
+
+    // филёнка
+    ctx.strokeStyle = 'rgba(255,206,150,.14)';
+    ctx.strokeRect(lx + 3.5, y + 3.5, w - 7, h - 7);
+    ctx.fillStyle = 'rgba(255,219,166,.08)';
+    ctx.fillRect(lx + 3, y + 3, w - 6, 1.3);
+
+    // верхняя латунная накладка и номер
+    ctx.fillStyle = FURNITURE.brass;
+    ctx.fillRect(lx + w / 2 - 7, y + 6, 14, 2);
+    ctx.fillStyle = 'rgba(24,7,10,.72)';
+    roundRect(lx + w / 2 - 6, y + 10, 12, 9, 1.5);
+    ctx.fill();
+    ctx.fillStyle = FURNITURE.cream;
+    ctx.font = 'bold 6.5px ' + SERIF;
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.fillText(String(i + 1).padStart(2, '0'), lx + w / 2, y + 15);
+
+    // вентиляционные прорези
+    ctx.fillStyle = 'rgba(20,6,8,.4)';
+    for (let v = 0; v < 3; v++) ctx.fillRect(lx + 9, y + 25 + v * 3.2, w - 18, 1.2);
+
+    // ручка-скоба
+    ctx.strokeStyle = FURNITURE.brass;
+    ctx.lineWidth = 1.5;
+    ctx.beginPath();
+    ctx.moveTo(lx + w / 2 - 4, y + 39);
+    ctx.lineTo(lx + w / 2 + 4, y + 39);
+    ctx.stroke();
+    ctx.fillStyle = FURNITURE.brass;
+    ctx.beginPath();
+    ctx.arc(lx + w / 2, y + 39, 1.4, 0, Math.PI * 2);
+    ctx.fill();
+
+    // нижняя планка
+    ctx.fillStyle = 'rgba(224,178,92,.2)';
+    ctx.fillRect(lx + 4, y + h - 6, w - 8, 1.2);
   }
   addObs(x, y, n * (w + 4) - 4, h);
 }
@@ -3985,78 +4689,157 @@ function drawTiles(x, y, w, h, step) {
 }
 
 function drawSofa(x, y, w, h) {
-  softShadow(x + w / 2 + 3, y + h * 0.9, w * 0.56, h * 0.46, 0.34);
-  ctx.fillStyle = '#3c180f';
-  roundRect(x, y, w, h, 6);
-  ctx.fill();
-  ctx.fillStyle = '#5e2a1d';
-  roundRect(x + 2, y + 2, w - 4, h - 4, 5);
-  ctx.fill();
+  const vx = x - 5, vy = y - 4, vw = w + 10, vh = h + 8;
+  softShadow(vx + vw / 2 + 3, vy + vh * 0.95, vw * 0.56, vh * 0.48, 0.36);
 
-  ctx.fillStyle = '#713522';
-  roundRect(x + 4, y + 3, w - 8, h * 0.36, 4);
+  // деревянный каркас
+  const frame = ctx.createLinearGradient(vx, vy, vx, vy + vh);
+  frame.addColorStop(0, FURNITURE.top);
+  frame.addColorStop(0.34, FURNITURE.body);
+  frame.addColorStop(1, FURNITURE.edge);
+  ctx.fillStyle = frame;
+  roundRect(vx, vy, vw, vh, 7);
   ctx.fill();
-  ctx.fillStyle = 'rgba(224,178,92,.28)';
-  for (let bx = x + 20; bx < x + w - 14; bx += 26) {
+  ctx.strokeStyle = 'rgba(10,2,4,.6)';
+  ctx.lineWidth = 1.3;
+  roundRect(vx, vy, vw, vh, 7);
+  ctx.stroke();
+
+  // спинка из бордового бархата
+  const backH = vh * 0.38;
+  const back = ctx.createLinearGradient(vx, vy, vx, vy + backH);
+  back.addColorStop(0, FURNITURE.velvetLight);
+  back.addColorStop(0.5, FURNITURE.velvet);
+  back.addColorStop(1, FURNITURE.velvetDark);
+  ctx.fillStyle = back;
+  roundRect(vx + 4, vy + 3, vw - 8, backH, 5);
+  ctx.fill();
+  ctx.strokeStyle = 'rgba(224,178,92,.5)';
+  ctx.lineWidth = 1;
+  roundRect(vx + 4.5, vy + 3.5, vw - 9, backH - 1, 4.5);
+  ctx.stroke();
+
+  // капитоне на спинке
+  ctx.fillStyle = 'rgba(224,178,92,.62)';
+  for (let bx = vx + 20; bx < vx + vw - 14; bx += 26) {
     ctx.beginPath();
-    ctx.arc(bx, y + 6 + h * 0.14, 1.6, 0, Math.PI * 2);
+    ctx.arc(bx, vy + 6 + backH * 0.32, 1.5, 0, Math.PI * 2);
     ctx.fill();
   }
 
-  const n = Math.max(2, Math.round((w - 16) / 48));
-  const cw = (w - 16) / n;
+  // сиденья
+  const n = Math.max(2, Math.round((vw - 18) / 50));
+  const cw = (vw - 18) / n;
   for (let i = 0; i < n; i++) {
-    const cx0 = x + 8 + i * cw;
-    ctx.fillStyle = i % 2 ? '#8d4a30' : '#95503a';
-    roundRect(cx0, y + h * 0.42, cw - 4, h * 0.46, 4);
+    const cx0 = vx + 9 + i * cw;
+    const pad = ctx.createLinearGradient(cx0, vy + vh * 0.44, cx0, vy + vh - 4);
+    pad.addColorStop(0, FURNITURE.velvetLight);
+    pad.addColorStop(0.45, FURNITURE.velvet);
+    pad.addColorStop(1, FURNITURE.velvetDark);
+    ctx.fillStyle = pad;
+    roundRect(cx0, vy + vh * 0.44, cw - 4, vh * 0.47, 5);
     ctx.fill();
-    ctx.strokeStyle = 'rgba(0,0,0,.22)';
+    ctx.strokeStyle = 'rgba(14,3,6,.42)';
     ctx.lineWidth = 1;
     ctx.stroke();
+    ctx.fillStyle = 'rgba(246,231,204,.12)';
+    ctx.fillRect(cx0 + 4, vy + vh * 0.49, cw - 11, 1.2);
   }
 
-  ctx.fillStyle = '#4a1f16';
-  roundRect(x + 1, y + 5, 9, h - 10, 4);
-  ctx.fill();
-  roundRect(x + w - 10, y + 5, 9, h - 10, 4);
-  ctx.fill();
+  // подлокотники: дерево с латунным кантом
+  for (const ax of [vx + 1, vx + vw - 11]) {
+    const arm = ctx.createLinearGradient(ax, vy + 5, ax + 10, vy + 5);
+    arm.addColorStop(0, FURNITURE.top);
+    arm.addColorStop(1, FURNITURE.edge);
+    ctx.fillStyle = arm;
+    roundRect(ax, vy + 5, 10, vh - 11, 5);
+    ctx.fill();
+    ctx.strokeStyle = 'rgba(10,2,4,.5)';
+    ctx.lineWidth = 1;
+    ctx.stroke();
+    ctx.fillStyle = FURNITURE.brass;
+    ctx.fillRect(ax + 2, vy + 7, 6, 1.6);
+  }
 
-  ctx.fillStyle = '#2a1610';
-  ctx.fillRect(x + 6, y + h - 3, 5, 5);
-  ctx.fillRect(x + w - 11, y + h - 3, 5, 5);
-  addObs(x, y, w, h);
+  // ножки с латунными наконечниками
+  ctx.fillStyle = '#240c0d';
+  ctx.fillRect(vx + 6, vy + vh - 3, 5, 5);
+  ctx.fillRect(vx + vw - 11, vy + vh - 3, 5, 5);
+  ctx.fillStyle = 'rgba(224,178,92,.5)';
+  ctx.fillRect(vx + 6, vy + vh + 1, 5, 1.2);
+  ctx.fillRect(vx + vw - 11, vy + vh + 1, 5, 1.2);
+  addObs(vx, vy, vw, vh + 2);
 }
 
 function drawArmchair(x, y) {
-  softShadow(x + 2, y + 12, 24, 12, 0.34);
-  ctx.fillStyle = '#3c180f';
-  roundRect(x - 16, y - 15, 32, 32, 7);
-  ctx.fill();
-  ctx.fillStyle = '#5e2a1d';
-  roundRect(x - 14, y - 13, 28, 28, 6);
-  ctx.fill();
+  softShadow(x + 2, y + 15, 27, 13, 0.36);
+  const vx = x - 18, vy = y - 17, vw = 36, vh = 36;
 
-  ctx.fillStyle = '#713522';
-  roundRect(x - 13, y - 12, 26, 10, 4);
+  // деревянный каркас
+  const frame = ctx.createLinearGradient(vx, vy, vx, vy + vh);
+  frame.addColorStop(0, FURNITURE.top);
+  frame.addColorStop(0.4, FURNITURE.body);
+  frame.addColorStop(1, FURNITURE.edge);
+  ctx.fillStyle = frame;
+  roundRect(vx, vy, vw, vh, 8);
   ctx.fill();
-  ctx.fillStyle = '#95503a';
-  roundRect(x - 10, y - 3, 20, 13, 4);
+  ctx.strokeStyle = 'rgba(10,2,4,.6)';
+  ctx.lineWidth = 1.3;
+  roundRect(vx, vy, vw, vh, 8);
+  ctx.stroke();
+
+  // спинка
+  const backH = vh * 0.34;
+  const back = ctx.createLinearGradient(vx, vy, vx, vy + backH);
+  back.addColorStop(0, FURNITURE.velvetLight);
+  back.addColorStop(0.55, FURNITURE.velvet);
+  back.addColorStop(1, FURNITURE.velvetDark);
+  ctx.fillStyle = back;
+  roundRect(vx + 3, vy + 3, vw - 6, backH, 5);
   ctx.fill();
-  ctx.fillStyle = 'rgba(224,178,92,.3)';
+  ctx.strokeStyle = 'rgba(224,178,92,.5)';
+  ctx.lineWidth = 1;
+  roundRect(vx + 3.5, vy + 3.5, vw - 7, backH - 1, 4.5);
+  ctx.stroke();
+  ctx.fillStyle = 'rgba(224,178,92,.62)';
   ctx.beginPath();
-  ctx.arc(x, y - 7, 1.6, 0, Math.PI * 2);
+  ctx.arc(x, vy + 5 + backH * 0.35, 1.7, 0, Math.PI * 2);
   ctx.fill();
 
-  ctx.fillStyle = '#4a1f16';
-  roundRect(x - 15, y - 10, 6, 21, 3);
+  // сиденье
+  const pad = ctx.createLinearGradient(x - 12, vy + vh * 0.4, x + 12, vy + vh - 4);
+  pad.addColorStop(0, FURNITURE.velvetLight);
+  pad.addColorStop(0.5, FURNITURE.velvet);
+  pad.addColorStop(1, FURNITURE.velvetDark);
+  ctx.fillStyle = pad;
+  roundRect(x - 12, vy + vh * 0.4, 24, vh * 0.48, 5);
   ctx.fill();
-  roundRect(x + 9, y - 10, 6, 21, 3);
-  ctx.fill();
+  ctx.strokeStyle = 'rgba(14,3,6,.42)';
+  ctx.lineWidth = 1;
+  ctx.stroke();
+  ctx.fillStyle = 'rgba(246,231,204,.12)';
+  ctx.fillRect(x - 8, vy + vh * 0.45, 16, 1.2);
 
-  ctx.fillStyle = '#2a1610';
-  ctx.fillRect(x - 12, y + 14, 4, 4);
-  ctx.fillRect(x + 8, y + 14, 4, 4);
-  addObs(x - 16, y - 15, 32, 32);
+  // подлокотники
+  for (const ax of [vx + 1, vx + vw - 9]) {
+    const arm = ctx.createLinearGradient(ax, vy + 8, ax + 8, vy + 8);
+    arm.addColorStop(0, FURNITURE.top);
+    arm.addColorStop(1, FURNITURE.edge);
+    ctx.fillStyle = arm;
+    roundRect(ax, vy + 8, 8, vh - 16, 4);
+    ctx.fill();
+    ctx.strokeStyle = 'rgba(10,2,4,.5)';
+    ctx.lineWidth = 1;
+    ctx.stroke();
+    ctx.fillStyle = FURNITURE.brass;
+    ctx.fillRect(ax + 1.5, vy + 10, 5, 1.4);
+  }
+
+  // ножки
+  ctx.fillStyle = '#240c0d';
+  ctx.fillRect(x - 13, vy + vh - 2, 4, 4);
+  ctx.fillRect(x + 9, vy + vh - 2, 4, 4);
+  addObs(vx, vy, vw, vh + 2);
 }
 
 function drawCart(x, y) {
@@ -4386,22 +5169,61 @@ function drawTurnstile(x, y) {
 }
 
 function drawBench(x, y, w, h) {
-  contactShadow(x, y, w, h, 0.9);
-  ctx.fillStyle = '#3c1b11';
-  ctx.fillRect(x, y, w, h);
-  ctx.fillStyle = '#6b3a22';
-  ctx.fillRect(x + 2, y + 2, w - 4, h - 4);
-  ctx.fillStyle = '#8a4c2c';
-  const n = Math.max(2, Math.round(w / 34));
+  const vx = x - 4, vy = y - 3, vw = w + 8, vh = h + 6;
+  contactShadow(vx, vy, vw, vh, 0.95);
+
+  // деревянный каркас
+  const frame = ctx.createLinearGradient(vx, vy, vx, vy + vh);
+  frame.addColorStop(0, FURNITURE.top);
+  frame.addColorStop(1, FURNITURE.edge);
+  ctx.fillStyle = frame;
+  roundRect(vx, vy, vw, vh, 5);
+  ctx.fill();
+  ctx.strokeStyle = 'rgba(12,2,4,.55)';
+  ctx.lineWidth = 1.2;
+  ctx.stroke();
+
+  // бархатная подушка
+  const pad = ctx.createLinearGradient(vx, vy + 3, vx, vy + vh - 3);
+  pad.addColorStop(0, FURNITURE.velvetLight);
+  pad.addColorStop(0.55, FURNITURE.velvet);
+  pad.addColorStop(1, FURNITURE.velvetDark);
+  ctx.fillStyle = pad;
+  roundRect(vx + 4, vy + 4, vw - 8, vh - 8, 4);
+  ctx.fill();
+  ctx.strokeStyle = 'rgba(224,178,92,.55)';
+  ctx.lineWidth = 1;
+  roundRect(vx + 4.5, vy + 4.5, vw - 9, vh - 9, 3.5);
+  ctx.stroke();
+
+  // капитоне: пуговицы и ромбы
+  const n = Math.max(2, Math.round((vw - 20) / 34));
   for (let i = 0; i < n; i++) {
-    ctx.fillRect(x + 3 + i * (w - 6) / n, y + 4, (w - 6) / n - 3, h - 8);
+    const bx = vx + 14 + i * (vw - 28) / Math.max(1, n - 1);
+    ctx.fillStyle = 'rgba(224,178,92,.7)';
+    ctx.beginPath();
+    ctx.arc(bx, vy + vh / 2, 1.6, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.strokeStyle = 'rgba(36,7,12,.28)';
+    ctx.lineWidth = 0.8;
+    ctx.beginPath();
+    ctx.moveTo(bx, vy + 6);
+    ctx.lineTo(bx + 8, vy + vh / 2);
+    ctx.lineTo(bx, vy + vh - 6);
+    ctx.lineTo(bx - 8, vy + vh / 2);
+    ctx.closePath();
+    ctx.stroke();
   }
-  ctx.fillStyle = 'rgba(0,0,0,.22)';
-  for (let i = 1; i < n; i++) ctx.fillRect(x + i * (w - 6) / n, y + 3, 1.5, h - 6);
-  ctx.fillStyle = '#2a1610';
-  ctx.fillRect(x + 4, y + h - 2, 4, 4);
-  ctx.fillRect(x + w - 8, y + h - 2, 4, 4);
-  addObs(x, y, w, h);
+
+  // деревянные торцы
+  ctx.fillStyle = FURNITURE.dark;
+  roundRect(vx + 1, vy + 1, 4, vh - 2, 2);
+  ctx.fill();
+  roundRect(vx + vw - 5, vy + 1, 4, vh - 2, 2);
+  ctx.fill();
+  ctx.fillStyle = 'rgba(255,220,170,.18)';
+  ctx.fillRect(vx + 2, vy + 2, vw - 4, 1);
+  addObs(vx, vy, vw, vh);
 }
 
 function drawChandelier(cx, cy) {
@@ -5811,19 +6633,63 @@ function drawNpcBubble(n, scale) {
   }
 }
 
+const NPC_SILHOUETTES = {};
+function npcSilhouette(n) {
+  const key = n.arc;
+  if (!key) return null;
+  if (NPC_SILHOUETTES[key]) return NPC_SILHOUETTES[key];
+  const art = NPC_CUSTOM_ART[key];
+  if (!art) return null;
+  const size = 220, ox = 110, oy = 165;
+  const c = document.createElement('canvas');
+  c.width = size;
+  c.height = size;
+  const g = c.getContext('2d');
+  g.translate(ox, oy);
+  const real = ctx;
+  ctx = g;
+  try {
+    art(n, 0.6);
+  } catch (err) {
+    ctx = real;
+    return null;
+  }
+  ctx = real;
+  g.setTransform(1, 0, 0, 1, 0, 0);
+  g.globalCompositeOperation = 'source-in';
+  g.fillStyle = 'rgba(16,9,6,.96)';
+  g.fillRect(0, 0, size, size);
+
+  const light = document.createElement('canvas');
+  light.width = size;
+  light.height = size;
+  const lg = light.getContext('2d');
+  lg.drawImage(c, 0, 0);
+  lg.globalCompositeOperation = 'source-in';
+  const grad = lg.createLinearGradient(0, 0, 0, size);
+  grad.addColorStop(0, 'rgba(255,222,168,.5)');
+  grad.addColorStop(0.42, 'rgba(255,198,132,.14)');
+  grad.addColorStop(0.75, 'rgba(40,20,12,0)');
+  lg.fillStyle = grad;
+  lg.fillRect(0, 0, size, size);
+
+  NPC_SILHOUETTES[key] = { canvas: c, ox, oy, size, light };
+  return NPC_SILHOUETTES[key];
+}
+
 function drawNpc(n, hot) {
   const customArt = NPC_CUSTOM_ART[n.arc];
   if (customArt) {
     const t = performance.now() / 1000;
-    const scale = (n.scale || 1) * NPC_SCALE;
+    const scale = (n.scale || 1) * NPC_CUSTOM_ART_SCALE * NPC_SCALE;
     const bob = Math.sin(t * 2.1 + n.x * 0.05) * 0.8;
     const x = n.x, y = n.y + bob;
     softShadow(n.x + 1, n.y + 3, 16 * scale, 5.4 * scale, 0.34);
     drawGlow('npcglow', 44, [
-      [0, 'rgba(255,216,164,.12)'],
-      [0.6, 'rgba(255,200,140,.05)'],
+      [0, 'rgba(255,216,164,.07)'],
+      [0.6, 'rgba(255,200,140,.03)'],
       [1, 'rgba(255,200,140,0)']
-    ], x, y - 26 * scale, 44 * scale, 40 * scale, 1);
+    ], x, y - 26 * scale, 38 * scale, 34 * scale, 1);
     if (hot) {
       const g = ctx.createRadialGradient(x, y - 28 * scale, 4, x, y - 28 * scale, 44 * scale);
       g.addColorStop(0, 'rgba(224,178,92,.2)');
@@ -5833,11 +6699,27 @@ function drawNpc(n, hot) {
       ctx.arc(x, y - 28 * scale, 44 * scale, 0, Math.PI * 2);
       ctx.fill();
     }
+    const sil = npcSilhouette(n);
+    if (sil) {
+      const sk = scale * 1.05;
+      ctx.save();
+      ctx.globalAlpha = 0.42;
+      ctx.drawImage(sil.canvas, x - sil.ox * sk, y - sil.oy * sk, sil.size * sk, sil.size * sk);
+      ctx.restore();
+    }
     ctx.save();
     ctx.translate(x, y);
     ctx.scale(scale, scale);
+    if (ctx.filter !== undefined) ctx.filter = 'saturate(.87) sepia(.10) brightness(.99)';
     customArt(n, t);
     ctx.restore();
+
+    if (sil && sil.light) {
+      ctx.save();
+      ctx.globalAlpha = 0.32;
+      ctx.drawImage(sil.light, x - sil.ox * scale, y - sil.oy * scale, sil.size * scale, sil.size * scale);
+      ctx.restore();
+    }
     if (hot) drawNpcBubble(n, scale);
     return;
   }
@@ -5988,7 +6870,7 @@ function drawNpcMarker(n) {
   else if (a.status === 'return' || (a.status === 'active' && a.found >= ARCS[n.arc].need)) mark = '?';
   else if (a.status === 'active') mark = '…';
   if (!mark) return;
-  const scale = (n.scale || 1) * NPC_SCALE;
+  const scale = (n.scale || 1) * (NPC_CUSTOM_ART[n.arc] ? NPC_CUSTOM_ART_SCALE : 1) * NPC_SCALE;
   const x = n.x + 19 * scale;
   const y = n.y - 58 * scale;
   const pulse = 0.5 + Math.sin(performance.now() / 220 + n.x) * 0.5;
@@ -6128,8 +7010,10 @@ const decor = {
   vestibule() {
     drawRug(170, 265, 250, 140, '#84442c');
     drawLockers(180, 64, 5);
-    drawSecretary(742, 54, 0.72);
-    drawCounter(640, 70, 160, 44);
+    drawSecretary(742, 112, 0.72);
+    drawCounter(640, 116, 160, 44);
+    ctx.save();
+    ctx.translate(0, 46);
     ctx.fillStyle = '#3a2a20';
     roundRect(652, 86, 66, 15, 2); ctx.fill();
     ctx.strokeStyle = 'rgba(224,178,92,.55)';
@@ -6164,6 +7048,7 @@ const decor = {
       ctx.lineTo(777 - i * 5, 84 + i * 5);
       ctx.stroke();
     }
+    ctx.restore();
     drawCounter(140, 160, 150, 44);
     ctx.fillStyle = '#f3e3c2';
     ctx.fillRect(170, 150, 30, 13);
@@ -6433,7 +7318,49 @@ const decor = {
   }
 };
 
+function drawDoorMat(d, r) {
+  const gap = 12;
+  let x = 0, y = 0, w = 0, h = 0;
+  const cx = r.x + r.w / 2, cy = r.y + r.h / 2;
+  if (d.side === 'top') { w = 74; h = 16; x = cx - w / 2; y = r.y + r.h + gap; }
+  else if (d.side === 'bottom') { w = 74; h = 16; x = cx - w / 2; y = r.y - gap - 16; }
+  else if (d.side === 'left') { w = 16; h = 74; x = r.x + r.w + gap; y = cy - h / 2; }
+  else { w = 16; h = 74; x = r.x - gap - 16; y = cy - h / 2; }
+
+  ctx.save();
+  ctx.fillStyle = 'rgba(0,0,0,.28)';
+  roundRect(x + 2, y + 3, w, h, 4);
+  ctx.fill();
+  ctx.fillStyle = '#4f2a1c';
+  roundRect(x, y, w, h, 3);
+  ctx.fill();
+  ctx.strokeStyle = 'rgba(224,178,92,.28)';
+  ctx.lineWidth = 1;
+  roundRect(x + 0.5, y + 0.5, w - 1, h - 1, 3);
+  ctx.stroke();
+  ctx.strokeStyle = 'rgba(255,214,160,.10)';
+  const horiz = w > h;
+  const step = 6;
+  if (horiz) {
+    for (let i = x + 6; i < x + w - 4; i += step) {
+      ctx.beginPath();
+      ctx.moveTo(i, y + 4);
+      ctx.lineTo(i, y + h - 4);
+      ctx.stroke();
+    }
+  } else {
+    for (let i = y + 6; i < y + h - 4; i += step) {
+      ctx.beginPath();
+      ctx.moveTo(x + 4, i);
+      ctx.lineTo(x + w - 4, i);
+      ctx.stroke();
+    }
+  }
+  ctx.restore();
+}
+
 function drawDoor(d, r, hot, locked) {
+  drawDoorMat(d, r);
   ctx.fillStyle = PALETTE.frame;
   ctx.fillRect(r.x - 3, r.y - 3, r.w + 6, r.h + 6);
 
@@ -6512,24 +7439,137 @@ const FLOOR_STYLE = {
 
 const FLOOR_TONES = {
   tiles: {
-    computer_class: ['#4b4a44', '#45443e'],
-    zone_storage: ['#4a4038', '#443a33'],
-    fund_main: ['#474036', '#413a31'],
-    workshops: ['#4e4438', '#483e33'],
-    climate: ['#465153', '#404a4c'],
-    security: ['#454b4e', '#3f4548'],
-    toilets: ['#465255', '#404c4f'],
-    buffet: ['#5b493b', '#554336']
+    computer_class: ['#3d3c37', '#373631'],
+    zone_storage: ['#3a332d', '#342d27'],
+    fund_main: ['#38322b', '#322c25'],
+    workshops: ['#3e352c', '#382f27'],
+    climate: ['#394346', '#333d40'],
+    security: ['#3a3f42', '#34393c'],
+    toilets: ['#3b4548', '#353f42'],
+    buffet: ['#4a2b22', '#44251d']
   },
   stone: {
-    vestibule: ['#6b5343', '#644d3e'],
-    archive: ['#4c3b30', '#46352a']
+    vestibule: ['#583b2e', '#513428'],
+    archive: ['#3d2c23', '#37261d']
   }
 };
 
 const ROOM_BG_CACHE = new Map();
 const ROOM_BG_MAX = 4;
 const BG_SS = 2;
+
+function drawFloorWear(id) {
+  const x0 = MARGIN, y0 = MARGIN, w = W - MARGIN * 2, h = H - MARGIN * 2;
+  let seed = 7;
+  for (let i = 0; i < id.length; i++) seed = (seed * 31 + id.charCodeAt(i)) >>> 0;
+  const rnd = () => {
+    seed = (seed * 1664525 + 1013904223) >>> 0;
+    return seed / 4294967296;
+  };
+
+  ctx.save();
+  ctx.beginPath();
+  ctx.rect(x0, y0, w, h);
+  ctx.clip();
+
+  for (let i = 0; i < 26; i++) {
+    const cx = x0 + 28 + rnd() * (w - 56);
+    const cy = y0 + 28 + rnd() * (h - 56);
+    const rx = 18 + rnd() * 72;
+    const ry = 10 + rnd() * 34;
+    const dark = rnd() > 0.42;
+    const g = ctx.createRadialGradient(cx, cy, 1, cx, cy, Math.max(rx, ry));
+    g.addColorStop(0, dark ? 'rgba(22,10,6,.09)' : 'rgba(255,222,175,.04)');
+    g.addColorStop(1, 'rgba(0,0,0,0)');
+    ctx.fillStyle = g;
+    ctx.beginPath();
+    ctx.ellipse(cx, cy, rx, ry, 0, 0, Math.PI * 2);
+    ctx.fill();
+  }
+
+  ctx.strokeStyle = 'rgba(255,228,186,.05)';
+  ctx.lineWidth = 1;
+  for (let i = 0; i < 10; i++) {
+    const sx = x0 + 36 + rnd() * (w - 72);
+    const sy = y0 + 36 + rnd() * (h - 72);
+    const len = 16 + rnd() * 48;
+    const ang = (rnd() - 0.5) * 0.7;
+    ctx.beginPath();
+    ctx.moveTo(sx, sy);
+    ctx.lineTo(sx + Math.cos(ang) * len, sy + Math.sin(ang) * len);
+    ctx.stroke();
+  }
+
+  ctx.restore();
+}
+
+function drawRoomWalls() {
+  const x0 = MARGIN, y0 = MARGIN, x1 = W - MARGIN, y1 = H - MARGIN;
+  ctx.save();
+
+  // верхняя панель-молдинг
+  const band = 30;
+  ctx.fillStyle = 'rgba(255,220,170,.05)';
+  ctx.fillRect(x0, y0, x1 - x0, band);
+  ctx.fillStyle = 'rgba(0,0,0,.16)';
+  ctx.fillRect(x0, y0 + band - 2, x1 - x0, 2);
+  ctx.strokeStyle = 'rgba(224,178,92,.16)';
+  ctx.lineWidth = 1;
+  for (let x = x0 + 56; x < x1 - 24; x += 92) {
+    ctx.beginPath();
+    ctx.moveTo(x, y0 + 7);
+    ctx.lineTo(x, y0 + band - 8);
+    ctx.stroke();
+  }
+
+  // плинтус по периметру
+  ctx.fillStyle = 'rgba(0,0,0,.34)';
+  ctx.fillRect(x0, y1 - 7, x1 - x0, 7);
+  ctx.fillRect(x0, y0, 7, y1 - y0);
+  ctx.fillRect(x1 - 7, y0, 7, y1 - y0);
+  ctx.fillStyle = 'rgba(224,178,92,.14)';
+  ctx.fillRect(x0 + 7, y1 - 7, 1, 7);
+  ctx.fillRect(x0, y1 - 7, 7, 1);
+  ctx.fillRect(x1 - 8, y1 - 7, 1, 7);
+
+  // угловые пилястры
+  const p = 16;
+  const corner = (cx, cy) => {
+    const g = ctx.createLinearGradient(cx, cy, cx + p * 0.4, cy + p * 0.4);
+    g.addColorStop(0, 'rgba(255,214,160,.12)');
+    g.addColorStop(1, 'rgba(0,0,0,.22)');
+    ctx.fillStyle = g;
+    ctx.fillRect(cx, cy, p, p);
+    ctx.strokeStyle = 'rgba(224,178,92,.2)';
+    ctx.strokeRect(cx + 0.5, cy + 0.5, p - 1, p - 1);
+  };
+  corner(x0, y0);
+  corner(x1 - p, y0);
+  corner(x0, y1 - p);
+  corner(x1 - p, y1 - p);
+
+  // настенные бра на верхней стене
+  for (let x = x0 + 150; x < x1 - 60; x += 210) {
+    ctx.fillStyle = 'rgba(20,10,6,.55)';
+    ctx.fillRect(x - 5, y0 + 4, 10, 4);
+    ctx.fillStyle = 'rgba(255,206,140,.85)';
+    ctx.beginPath();
+    ctx.arc(x, y0 + 12, 3.2, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.save();
+    ctx.globalAlpha = 0.22;
+    const rg = ctx.createRadialGradient(x, y0 + 12, 1, x, y0 + 12, 26);
+    rg.addColorStop(0, 'rgba(255,200,130,.7)');
+    rg.addColorStop(1, 'rgba(255,200,130,0)');
+    ctx.fillStyle = rg;
+    ctx.beginPath();
+    ctx.arc(x, y0 + 12, 26, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.restore();
+  }
+
+  ctx.restore();
+}
 
 function buildRoomBackground(id) {
   const c = document.createElement('canvas');
@@ -6577,7 +7617,15 @@ function buildRoomBackground(id) {
       ctx.globalAlpha = 1;
     }
 
+    drawFloorWear(id);
     drawRoomDepth();
+    drawRoomWalls();
+    ctx.save();
+    ctx.globalCompositeOperation = 'soft-light';
+    ctx.globalAlpha = 0.2;
+    ctx.fillStyle = '#8e1f33';
+    ctx.fillRect(rx, ry, rw, rh);
+    ctx.restore();
     ctx.restore();
   } finally {
     ctx = real;
@@ -6629,9 +7677,2128 @@ function drawGlow(key, radius, stops, cx, cy, rx, ry, alpha) {
   ctx.restore();
 }
 
+/* ---------- главное меню, пауза, сохранения и настройки ---------- */
+
+function latestSaveIndex() {
+  let best = -1, bestTs = -1;
+  for (let i = 0; i < saves.length; i++) {
+    const s = saves[i];
+    if (!s || !s.snapshot) continue;
+    const ts = Number(s.ts) || 0;
+    if (ts > bestTs) { bestTs = ts; best = i; }
+  }
+  return best;
+}
+
+function menuLayout() {
+  const panel = { x: 492, y: 56, w: 408, h: 460 };
+  const slots = [];
+  const gx = panel.x + 16;
+  const gy = panel.y + 50;
+  const cw = 120, ch = 84, gap = 8;
+  for (let i = 0; i < SAVE_SLOTS; i++) {
+    const c = i % 3, r = Math.floor(i / 3);
+    slots.push({ x: gx + c * (cw + gap), y: gy + r * (ch + gap), w: cw, h: ch });
+  }
+  return {
+    panel,
+    slots,
+    play: { x: 84, y: 290, w: 280, h: 44 },
+    cont: { x: 84, y: 340, w: 280, h: 34 },
+    collection: { x: 84, y: 380, w: 280, h: 34 },
+    settings: { x: 84, y: 420, w: 280, h: 34 },
+    account: { x: 84, y: 460, w: 280, h: 34 }
+  };
+}
+
+function pauseLayout() {
+  const w = 400, h = 376;
+  const x = W / 2 - w / 2, y = 74;
+  return {
+    panel: { x, y, w, h },
+    resume: { x: x + 46, y: y + 90, w: w - 92, h: 44 },
+    save: { x: x + 46, y: y + 144, w: w - 92, h: 40 },
+    collection: { x: x + 46, y: y + 192, w: w - 92, h: 40 },
+    settings: { x: x + 46, y: y + 240, w: w - 92, h: 40 },
+    exit: { x: x + 46, y: y + 288, w: w - 92, h: 40 }
+  };
+}
+
+function savePanelLayout() {
+  const panel = { x: 80, y: 30, w: 800, h: 480 };
+  const slots = [];
+  const gx = panel.x + 24, gy = panel.y + 56;
+  const cw = 242, ch = 78, gapX = 12, gapY = 10;
+  for (let i = 0; i < SAVE_SLOTS; i++) {
+    const c = i % 3, r = Math.floor(i / 3);
+    slots.push({ x: gx + c * (cw + gapX), y: gy + r * (ch + gapY), w: cw, h: ch });
+  }
+  return {
+    panel,
+    slots,
+    back: { x: panel.x + panel.w - 152, y: panel.y + panel.h - 48, w: 128, h: 32 }
+  };
+}
+
+function exitLayout() {
+  const panel = { x: W / 2 - 280, y: 140, w: 560, h: 280 };
+  return {
+    panel,
+    yes: { x: panel.x + 40, y: panel.y + 152, w: 170, h: 40 },
+    no: { x: panel.x + 220, y: panel.y + 152, w: 170, h: 40 },
+    cancel: { x: panel.x + 400, y: panel.y + 152, w: 120, h: 40 },
+    collection: { x: panel.x + 40, y: panel.y + 210, w: 480, h: 38 }
+  };
+}
+
+function settingsLayout() {
+  const panel = { x: W / 2 - 250, y: 70, w: 500, h: 410 };
+  return {
+    panel,
+    slider: { x: panel.x + 46, y: panel.y + 112, w: panel.w - 92, h: 24 },
+    effects: { x: panel.x + panel.w - 118, y: panel.y + 170, w: 72, h: 30 },
+    fullscreen: { x: panel.x + panel.w - 180, y: panel.y + 222, w: 134, h: 34 },
+    reset: { x: panel.x + 46, y: panel.y + 286, w: 200, h: 32 },
+    back: { x: panel.x + panel.w / 2 - 70, y: panel.y + 342, w: 140, h: 36 }
+  };
+}
+
+function nameEditLayout() {
+  const panel = { x: W / 2 - 270, y: 150, w: 540, h: 248 };
+  return {
+    panel,
+    input: { x: panel.x + 38, y: panel.y + 94, w: panel.w - 76, h: 46 },
+    save: { x: panel.x + 38, y: panel.y + 180, w: 210, h: 38 },
+    cancel: { x: panel.x + panel.w - 248, y: panel.y + 180, w: 210, h: 38 }
+  };
+}
+
+function collectionLayout() {
+  const panel = { x: 90, y: 26, w: 780, h: 488 };
+  const grid = { x: panel.x + 28, y: panel.y + 110, w: panel.w - 56 };
+  const quoteCells = [];
+  const qw = 173, qh = 46, qgapY = 6;
+  const qgapX = (grid.w - qw * 4) / 3;
+  for (let i = 0; i < BOOK_QUOTES.length; i++) {
+    const c = i % 4, r = Math.floor(i / 4);
+    quoteCells.push({ x: grid.x + c * (qw + qgapX), y: grid.y + r * (qh + qgapY), w: qw, h: qh });
+  }
+  const endingCells = [];
+  const ew = (grid.w - 10) / 2, eh = 64, egapY = 10;
+  for (let i = 0; i < ENDING_ORDER.length; i++) {
+    const c = i % 2, r = Math.floor(i / 2);
+    endingCells.push({ x: grid.x + c * (ew + 10), y: grid.y + r * (eh + egapY), w: ew, h: eh });
+  }
+  return {
+    panel,
+    quotesTab: { x: panel.x + 28, y: panel.y + 64, w: 168, h: 30 },
+    endingsTab: { x: panel.x + 204, y: panel.y + 64, w: 190, h: 30 },
+    grid,
+    quoteCells,
+    endingCells,
+    reset: { x: panel.x + 28, y: panel.y + 440, w: 186, h: 32 },
+    back: { x: panel.x + panel.w - 148, y: panel.y + 440, w: 120, h: 32 }
+  };
+}
+
+function collectionConfirmLayout() {
+  const panel = { x: W / 2 - 230, y: 186, w: 460, h: 178 };
+  return {
+    panel,
+    yes: { x: panel.x + 38, y: panel.y + 122, w: 180, h: 38 },
+    no: { x: panel.x + 242, y: panel.y + 122, w: 180, h: 38 }
+  };
+}
+
+function shortSaveDate(ts) {
+  try {
+    return new Date(ts).toLocaleDateString('ru-RU', { day: '2-digit', month: '2-digit', year: '2-digit' });
+  } catch (err) {
+    return '';
+  }
+}
+
+function ellipsize(text, maxW, size, weight) {
+  const value = String(text == null ? '' : text);
+  ctx.font = (weight ? weight + ' ' : '') + size + 'px ' + SERIF;
+  if (ctx.measureText(value).width <= maxW) return value;
+  let lo = 0, hi = value.length;
+  while (lo < hi) {
+    const mid = Math.ceil((lo + hi) / 2);
+    const probe = value.slice(0, mid) + '…';
+    if (ctx.measureText(probe).width <= maxW) lo = mid;
+    else hi = mid - 1;
+  }
+  return value.slice(0, lo) + '…';
+}
+
+function fillTextSpaced(text, x, y, spacing) {
+  const chars = [...text];
+  let total = 0;
+  for (const ch of chars) total += ctx.measureText(ch).width;
+  total += spacing * Math.max(0, chars.length - 1);
+  let cx = x - total / 2;
+  const prevAlign = ctx.textAlign;
+  ctx.textAlign = 'left';
+  for (const ch of chars) {
+    ctx.fillText(ch, cx, y);
+    cx += ctx.measureText(ch).width + spacing;
+  }
+  ctx.textAlign = prevAlign;
+}
+
+function drawPanelCorners(x, y, w, h) {
+  const inset = 15, len = 22;
+  ctx.save();
+  ctx.strokeStyle = 'rgba(224,178,92,.5)';
+  ctx.lineWidth = 1.2;
+  ctx.beginPath();
+  ctx.moveTo(x + inset, y + inset + len);
+  ctx.lineTo(x + inset, y + inset);
+  ctx.lineTo(x + inset + len, y + inset);
+  ctx.moveTo(x + w - inset - len, y + inset);
+  ctx.lineTo(x + w - inset, y + inset);
+  ctx.lineTo(x + w - inset, y + inset + len);
+  ctx.moveTo(x + w - inset, y + h - inset - len);
+  ctx.lineTo(x + w - inset, y + h - inset);
+  ctx.lineTo(x + w - inset - len, y + h - inset);
+  ctx.moveTo(x + inset + len, y + h - inset);
+  ctx.lineTo(x + inset, y + h - inset);
+  ctx.lineTo(x + inset, y + h - inset - len);
+  ctx.stroke();
+  ctx.restore();
+}
+
+function drawLuxPanel(x, y, w, h) {
+  ctx.save();
+  ctx.shadowColor = 'rgba(0,0,0,.8)';
+  ctx.shadowBlur = 34;
+  ctx.shadowOffsetY = 12;
+  const g = ctx.createLinearGradient(x, y, x, y + h);
+  g.addColorStop(0, '#3b1019');
+  g.addColorStop(0.45, '#290b12');
+  g.addColorStop(1, '#160609');
+  ctx.fillStyle = g;
+  roundRect(x, y, w, h, 14);
+  ctx.fill();
+  ctx.restore();
+
+  ctx.save();
+  roundRect(x, y, w, h, 14);
+  ctx.clip();
+  const rg = ctx.createRadialGradient(x + w / 2, y - 18, 8, x + w / 2, y - 18, Math.max(w * 0.55, 190));
+  rg.addColorStop(0, 'rgba(172,52,62,.28)');
+  rg.addColorStop(1, 'rgba(172,52,62,0)');
+  ctx.fillStyle = rg;
+  ctx.fillRect(x, y, w, h * 0.72);
+  ctx.restore();
+
+  ctx.strokeStyle = 'rgba(224,178,92,.66)';
+  ctx.lineWidth = 1.6;
+  roundRect(x, y, w, h, 14);
+  ctx.stroke();
+  ctx.strokeStyle = 'rgba(255,220,170,.12)';
+  ctx.lineWidth = 1;
+  roundRect(x + 8, y + 8, w - 16, h - 16, 9);
+  ctx.stroke();
+  drawPanelCorners(x, y, w, h);
+}
+
+function drawLuxButton(r, label, opts) {
+  const o = opts || {};
+  const hot = !!o.hot;
+  const primary = !!o.primary;
+  const danger = !!o.danger;
+  const g = ctx.createLinearGradient(r.x, r.y, r.x, r.y + r.h);
+  if (primary) {
+    g.addColorStop(0, hot ? '#a5323d' : '#7e2233');
+    g.addColorStop(1, hot ? '#6f1a28' : '#4a111b');
+  } else if (danger) {
+    g.addColorStop(0, hot ? 'rgba(118,36,42,.95)' : 'rgba(62,19,24,.84)');
+    g.addColorStop(1, hot ? 'rgba(76,20,25,.96)' : 'rgba(37,11,16,.84)');
+  } else {
+    g.addColorStop(0, hot ? 'rgba(98,28,39,.95)' : 'rgba(58,18,26,.84)');
+    g.addColorStop(1, hot ? 'rgba(64,16,25,.97)' : 'rgba(33,10,15,.84)');
+  }
+  ctx.save();
+  if (hot) {
+    ctx.shadowColor = 'rgba(255,180,100,.22)';
+    ctx.shadowBlur = 18;
+  }
+  ctx.fillStyle = g;
+  roundRect(r.x, r.y, r.w, r.h, 8);
+  ctx.fill();
+  ctx.restore();
+
+  ctx.strokeStyle = hot ? PALETTE.gold : (primary ? 'rgba(224,178,92,.72)' : 'rgba(224,178,92,.32)');
+  ctx.lineWidth = primary ? 1.5 : 1.1;
+  roundRect(r.x, r.y, r.w, r.h, 8);
+  ctx.stroke();
+  if (primary) {
+    ctx.strokeStyle = 'rgba(255,226,180,.12)';
+    ctx.lineWidth = 1;
+    roundRect(r.x + 4, r.y + 4, r.w - 8, r.h - 8, 6);
+    ctx.stroke();
+  }
+
+  ctx.fillStyle = hot ? '#fff0cf' : (danger ? '#e8b9a6' : (primary ? PALETTE.gold : PALETTE.cream));
+  ctx.font = 'bold ' + (o.size || 14) + 'px ' + SERIF;
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'middle';
+  ctx.fillText(label, r.x + r.w / 2, r.y + r.h / 2 + 0.5);
+}
+
+function drawToggle(r, on, hot) {
+  const p = { x: r.x + 8, y: r.y + (r.h - 28) / 2, w: r.w - 16, h: 28 };
+  if (hot) {
+    ctx.save();
+    ctx.shadowColor = 'rgba(255,190,110,.25)';
+    ctx.shadowBlur = 14;
+    ctx.fillStyle = on ? 'rgba(126,34,51,.95)' : 'rgba(22,7,11,.95)';
+    roundRect(p.x, p.y, p.w, p.h, 14);
+    ctx.fill();
+    ctx.restore();
+  } else {
+    ctx.fillStyle = on ? 'rgba(126,34,51,.9)' : 'rgba(18,6,9,.9)';
+    roundRect(p.x, p.y, p.w, p.h, 14);
+    ctx.fill();
+  }
+  ctx.strokeStyle = on ? PALETTE.gold : 'rgba(224,178,92,.35)';
+  ctx.lineWidth = 1.1;
+  roundRect(p.x, p.y, p.w, p.h, 14);
+  ctx.stroke();
+  const kx = on ? p.x + p.w - 14 : p.x + 14;
+  ctx.fillStyle = on ? PALETTE.gold : 'rgba(168,144,120,.72)';
+  ctx.beginPath();
+  ctx.arc(kx, p.y + p.h / 2, 10, 0, Math.PI * 2);
+  ctx.fill();
+  ctx.fillStyle = 'rgba(255,255,255,.28)';
+  ctx.beginPath();
+  ctx.arc(kx - 2.5, p.y + p.h / 2 - 2.5, 3.2, 0, Math.PI * 2);
+  ctx.fill();
+}
+
+function drawSaveSlotCompact(r, index, save, hot) {
+  const occupied = !!save;
+  const g = ctx.createLinearGradient(r.x, r.y, r.x, r.y + r.h);
+  if (occupied) {
+    g.addColorStop(0, hot ? 'rgba(108,29,41,.95)' : 'rgba(74,20,31,.8)');
+    g.addColorStop(1, hot ? 'rgba(68,17,26,.97)' : 'rgba(40,11,18,.84)');
+  } else {
+    g.addColorStop(0, 'rgba(17,6,9,.48)');
+    g.addColorStop(1, 'rgba(8,3,5,.62)');
+  }
+  ctx.fillStyle = g;
+  roundRect(r.x, r.y, r.w, r.h, 8);
+  ctx.fill();
+  ctx.strokeStyle = hot && occupied ? PALETTE.gold : occupied ? 'rgba(224,178,92,.42)' : 'rgba(224,178,92,.13)';
+  ctx.lineWidth = hot && occupied ? 1.5 : 1;
+  if (!occupied) ctx.setLineDash([4, 4]);
+  roundRect(r.x, r.y, r.w, r.h, 8);
+  ctx.stroke();
+  ctx.setLineDash([]);
+
+  ctx.textBaseline = 'middle';
+  ctx.textAlign = 'left';
+  ctx.fillStyle = occupied ? 'rgba(236,193,116,.92)' : 'rgba(179,154,128,.45)';
+  ctx.font = 'bold 8px ' + SERIF;
+  ctx.fillText('СЛОТ ' + String(index + 1).padStart(2, '0'), r.x + 8, r.y + 11);
+
+  if (!occupied) {
+    ctx.fillStyle = 'rgba(179,154,128,.38)';
+    ctx.font = 'italic 10px ' + SERIF;
+    ctx.textAlign = 'center';
+    ctx.fillText('Пусто', r.x + r.w / 2, r.y + r.h / 2 + 3);
+    return;
+  }
+
+  ctx.textAlign = 'left';
+  ctx.fillStyle = hot ? '#fff0cf' : PALETTE.parchment;
+  ctx.font = 'bold 10.5px ' + SERIF;
+  ctx.fillText(ellipsize(save.name, r.w - 16, 10.5, 'bold'), r.x + 8, r.y + 31);
+
+  ctx.fillStyle = 'rgba(216,190,164,.72)';
+  ctx.font = '9px ' + SERIF;
+  ctx.fillText(ellipsize(save.room || (rooms[save.roomId] && rooms[save.roomId].name) || 'Библиотека', r.w - 16, 9), r.x + 8, r.y + 49);
+
+  ctx.fillStyle = 'rgba(236,193,116,.8)';
+  ctx.font = 'bold 8.5px ' + SERIF;
+  ctx.fillText((save.pages || 0) + ' / 5 стр.', r.x + 8, r.y + 66);
+  ctx.fillStyle = 'rgba(179,154,128,.55)';
+  ctx.font = '7.5px ' + SERIF;
+  ctx.textAlign = 'right';
+  ctx.fillText(shortSaveDate(save.ts), r.x + r.w - 8, r.y + 66);
+}
+
+function drawSaveSlotLarge(r, index, save, hot) {
+  const occupied = !!save;
+  const g = ctx.createLinearGradient(r.x, r.y, r.x, r.y + r.h);
+  if (occupied) {
+    g.addColorStop(0, hot ? 'rgba(108,29,41,.95)' : 'rgba(70,19,30,.78)');
+    g.addColorStop(1, hot ? 'rgba(66,16,25,.97)' : 'rgba(37,10,17,.82)');
+  } else {
+    g.addColorStop(0, 'rgba(18,6,9,.45)');
+    g.addColorStop(1, 'rgba(8,3,5,.6)');
+  }
+  ctx.fillStyle = g;
+  roundRect(r.x, r.y, r.w, r.h, 9);
+  ctx.fill();
+  ctx.strokeStyle = hot ? PALETTE.gold : occupied ? 'rgba(224,178,92,.42)' : 'rgba(224,178,92,.14)';
+  ctx.lineWidth = hot ? 1.5 : 1;
+  if (!occupied) ctx.setLineDash([5, 5]);
+  roundRect(r.x, r.y, r.w, r.h, 9);
+  ctx.stroke();
+  ctx.setLineDash([]);
+
+  ctx.fillStyle = occupied ? 'rgba(224,178,92,.13)' : 'rgba(0,0,0,.2)';
+  roundRect(r.x + 12, r.y + 12, 30, 20, 5);
+  ctx.fill();
+  ctx.fillStyle = occupied ? PALETTE.gold : 'rgba(179,154,128,.48)';
+  ctx.font = 'bold 9.5px ' + SERIF;
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'middle';
+  ctx.fillText(String(index + 1).padStart(2, '0'), r.x + 27, r.y + 22.5);
+
+  if (!occupied) {
+    ctx.fillStyle = 'rgba(216,190,164,.62)';
+    ctx.font = 'bold 12px ' + SERIF;
+    ctx.textAlign = 'center';
+    ctx.fillText('Свободный слот', r.x + r.w / 2 + 12, r.y + 34);
+    ctx.fillStyle = 'rgba(179,154,128,.45)';
+    ctx.font = '10px ' + SERIF;
+    ctx.fillText('Нажмите, чтобы сохранить', r.x + r.w / 2 + 12, r.y + 52);
+    return;
+  }
+
+  ctx.textAlign = 'left';
+  ctx.fillStyle = hot ? '#fff0cf' : PALETTE.parchment;
+  ctx.font = 'bold 12.5px ' + SERIF;
+  ctx.fillText(ellipsize(save.name, r.w - 66, 12.5, 'bold'), r.x + 52, r.y + 22);
+
+  ctx.fillStyle = 'rgba(216,190,164,.72)';
+  ctx.font = '10.5px ' + SERIF;
+  ctx.fillText(ellipsize(save.room || (rooms[save.roomId] && rooms[save.roomId].name) || 'Библиотека', r.w - 32, 10.5), r.x + 16, r.y + 47);
+
+  ctx.fillStyle = 'rgba(236,193,116,.85)';
+  ctx.font = 'bold 9.5px ' + SERIF;
+  ctx.fillText('Страниц: ' + (save.pages || 0) + ' / 5', r.x + 16, r.y + 64);
+  ctx.fillStyle = 'rgba(179,154,128,.58)';
+  ctx.font = '9px ' + SERIF;
+  ctx.textAlign = 'right';
+  ctx.fillText(formatSaveDate(save.ts), r.x + r.w - 16, r.y + 64);
+}
+
+function drawMainMenu() {
+  const L = menuLayout();
+  const t = performance.now() / 1000;
+  const bg = ctx.createRadialGradient(290, 240, 20, 290, 240, 640);
+  bg.addColorStop(0, '#3d0d17');
+  bg.addColorStop(0.45, '#1d060c');
+  bg.addColorStop(1, '#070204');
+  ctx.fillStyle = bg;
+  ctx.fillRect(0, 0, W, H);
+
+  ctx.save();
+  const glow = ctx.createRadialGradient(280, 220, 8, 280, 220, 310);
+  glow.addColorStop(0, 'rgba(156,40,54,.25)');
+  glow.addColorStop(0.55, 'rgba(110,24,36,.09)');
+  glow.addColorStop(1, 'rgba(110,24,36,0)');
+  ctx.fillStyle = glow;
+  ctx.fillRect(0, 0, W, H);
+  ctx.restore();
+
+  if (settings.effects) {
+    for (const p of dust) {
+      const dx = (p.x + Math.sin(t * p.s + p.ph) * 30) % W;
+      const dy = (p.y + Math.cos(t * p.s * 0.75 + p.ph) * 22) % H;
+      ctx.fillStyle = `rgba(255,224,178,${0.05 + Math.abs(Math.sin(t * 0.8 + p.ph)) * 0.08})`;
+      ctx.beginPath();
+      ctx.arc(dx, dy, p.r * 0.9, 0, Math.PI * 2);
+      ctx.fill();
+    }
+  }
+
+  ctx.save();
+  const vg = ctx.createRadialGradient(W / 2, H / 2, 150, W / 2, H / 2, 640);
+  vg.addColorStop(0, 'rgba(0,0,0,0)');
+  vg.addColorStop(0.62, 'rgba(16,2,6,.12)');
+  vg.addColorStop(1, 'rgba(12,2,4,.72)');
+  ctx.fillStyle = vg;
+  ctx.fillRect(0, 0, W, H);
+  ctx.restore();
+
+  ctx.strokeStyle = 'rgba(224,178,92,.26)';
+  ctx.lineWidth = 1;
+  ctx.strokeRect(22, 22, W - 44, H - 44);
+  ctx.strokeStyle = 'rgba(224,178,92,.09)';
+  ctx.strokeRect(29, 29, W - 58, H - 58);
+  drawPanelCorners(22, 22, W - 44, H - 44);
+
+  ctx.strokeStyle = 'rgba(224,178,92,.13)';
+  ctx.lineWidth = 1;
+  ctx.beginPath();
+  ctx.moveTo(466, 92);
+  ctx.lineTo(466, 494);
+  ctx.stroke();
+
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'middle';
+  ctx.fillStyle = 'rgba(224,178,92,.82)';
+  ctx.font = 'bold 10px ' + SERIF;
+  fillTextSpaced('ИНТЕРАКТИВНАЯ ИСТОРИЯ', 224, 99, 3);
+
+  ctx.save();
+  const titleGrad = ctx.createLinearGradient(0, 122, 0, 180);
+  titleGrad.addColorStop(0, '#f8e5b6');
+  titleGrad.addColorStop(0.55, '#ecc174');
+  titleGrad.addColorStop(1, '#b87a38');
+  ctx.fillStyle = titleGrad;
+
+  let titleSize = 48;
+  const titleSpacing = 4;
+  const titleMax = 348;
+  const spacedWidth = (text, sp) => {
+    let total = 0;
+    for (const ch of text) total += ctx.measureText(ch).width;
+    return total + sp * Math.max(0, text.length - 1);
+  };
+  for (;;) {
+    ctx.font = 'bold ' + titleSize + 'px ' + SERIF;
+    if (spacedWidth('БИБЛИОТЕКА', titleSpacing) <= titleMax || titleSize <= 30) break;
+    titleSize -= 2;
+  }
+  ctx.font = 'bold ' + titleSize + 'px ' + SERIF;
+  ctx.shadowColor = 'rgba(255,160,80,.32)';
+  ctx.shadowBlur = 28;
+  fillTextSpaced('БИБЛИОТЕКА', 224, 152, titleSpacing);
+  ctx.restore();
+
+  ctx.fillStyle = '#d9b99d';
+  ctx.font = 'italic 16px ' + SERIF;
+  ctx.fillText('пять историй за одной дверью', 224, 196);
+
+  ctx.strokeStyle = 'rgba(224,178,92,.42)';
+  ctx.lineWidth = 1;
+  ctx.beginPath();
+  ctx.moveTo(114, 224);
+  ctx.lineTo(206, 224);
+  ctx.moveTo(242, 224);
+  ctx.lineTo(334, 224);
+  ctx.stroke();
+  ctx.fillStyle = PALETTE.gold;
+  ctx.beginPath();
+  ctx.moveTo(224, 217);
+  ctx.lineTo(230, 224);
+  ctx.lineTo(224, 231);
+  ctx.lineTo(218, 224);
+  ctx.closePath();
+  ctx.fill();
+
+  ctx.fillStyle = 'rgba(216,190,164,.78)';
+  ctx.font = '13px ' + SERIF;
+  ctx.fillText('Тёплый свет, старые книги и люди,', 224, 258);
+  ctx.fillText('которые ещё не рассказали своё.', 224, 278);
+
+  const playHot = inRect(L.play, mouseX, mouseY);
+  const settingsHot = inRect(L.settings, mouseX, mouseY);
+  const collectionHot = inRect(L.collection, mouseX, mouseY);
+  const accountHot = inRect(L.account, mouseX, mouseY);
+  const contHot = inRect(L.cont, mouseX, mouseY);
+  drawLuxButton(L.play, 'Играть', { hot: playHot, primary: true, size: 19 });
+
+  const latestIndex = latestSaveIndex();
+  if (latestIndex >= 0) {
+    drawLuxButton(L.cont, 'Продолжить', { hot: contHot, size: 13 });
+  } else {
+    ctx.save();
+    ctx.fillStyle = 'rgba(28,12,14,.6)';
+    roundRect(L.cont.x, L.cont.y, L.cont.w, L.cont.h, 8);
+    ctx.fill();
+    ctx.strokeStyle = 'rgba(224,178,92,.16)';
+    ctx.lineWidth = 1;
+    roundRect(L.cont.x + 0.5, L.cont.y + 0.5, L.cont.w - 1, L.cont.h - 1, 8);
+    ctx.stroke();
+    ctx.fillStyle = 'rgba(232,213,174,.38)';
+    ctx.font = 'bold 12px ' + SERIF;
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.fillText('Продолжить', L.cont.x + L.cont.w / 2, L.cont.y + L.cont.h / 2 + 0.5);
+    ctx.restore();
+  }
+  drawLuxButton(L.collection, 'Коллекция', { hot: collectionHot, size: 13 });
+  drawLuxButton(L.settings, 'Настройки', { hot: settingsHot, size: 13 });
+  drawLuxButton(L.account, 'Аккаунт · ' + (activeAccount || '—'), { hot: accountHot, size: 12 });
+
+  ctx.fillStyle = 'rgba(179,154,128,.58)';
+  ctx.font = '10.5px ' + SERIF;
+  ctx.fillText('WASD / стрелки — движение · клик — взаимодействие · Esc — пауза', 224, 512);
+
+  const panel = L.panel;
+  drawLuxPanel(panel.x, panel.y, panel.w, panel.h);
+  ctx.fillStyle = PALETTE.gold;
+  ctx.font = 'bold 12px ' + SERIF;
+  fillTextSpaced('СОХРАНЁННЫЕ ИГРЫ', panel.x + panel.w / 2, panel.y + 25, 2);
+  const saveCount = saves.filter(Boolean).length;
+  ctx.fillStyle = 'rgba(179,154,128,.62)';
+  ctx.font = '9.5px ' + SERIF;
+  ctx.fillText('Слотов занято: ' + saveCount + ' из ' + SAVE_SLOTS, panel.x + panel.w / 2, panel.y + 42);
+
+  for (let i = 0; i < L.slots.length; i++) {
+    const r = L.slots[i];
+    drawSaveSlotCompact(r, i, saves[i], inRect(r, mouseX, mouseY));
+  }
+
+  ctx.textAlign = 'center';
+  ctx.fillStyle = 'rgba(179,154,128,.55)';
+  ctx.font = '9.5px ' + SERIF;
+  ctx.fillText('Нажмите на сохранение, чтобы продолжить', panel.x + panel.w / 2, panel.y + panel.h - 15);
+
+  if (menuPanel === 'settings') {
+    ctx.fillStyle = 'rgba(5, 1, 3, .64)';
+    ctx.fillRect(0, 0, W, H);
+    drawSettingsPanel('menu');
+  } else if (menuPanel === 'collection') {
+    drawCollectionPanel();
+  } else if (menuPanel === 'account') {
+    drawAccountPanel();
+  } else if (menuPanel === 'accountForm') {
+    drawAccountPanel();
+    drawAccountFormPanel();
+  } else if (menuPanel === 'notes') {
+    drawAccountPanel();
+    drawNotesPanel();
+  } else if (menuPanel === 'admin') {
+    drawAccountPanel();
+    drawAdminPanel();
+  }
+
+  if (menuToast && performance.now() < menuToastUntil) {
+    ctx.fillStyle = 'rgba(18,5,9,.94)';
+    roundRect(W / 2 - 330, H - 66, 660, 44, 9);
+    ctx.fill();
+    ctx.strokeStyle = 'rgba(224,178,92,.55)';
+    ctx.lineWidth = 1;
+    ctx.stroke();
+    ctx.fillStyle = PALETTE.cream;
+    ctx.font = '11.5px ' + SERIF;
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    wrapText(menuToast, W / 2, H - 44, 620, 14, 2);
+  }
+}
+
+function drawPausePanel() {
+  ctx.fillStyle = 'rgba(6,1,3,.78)';
+  ctx.fillRect(0, 0, W, H);
+  const L = pauseLayout();
+  const p = L.panel;
+  drawLuxPanel(p.x, p.y, p.w, p.h);
+
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'middle';
+  ctx.fillStyle = PALETTE.gold;
+  ctx.font = 'bold 26px ' + SERIF;
+  fillTextSpaced('ПАУЗА', p.x + p.w / 2, p.y + 42, 6);
+
+  ctx.fillStyle = 'rgba(179,154,128,.8)';
+  ctx.font = '11.5px ' + SERIF;
+  const roomName = rooms[currentRoom] ? rooms[currentRoom].name : 'Библиотека';
+  ctx.fillText(roomName + ' · страниц собрано: ' + storyDoneCount() + ' / 5', p.x + p.w / 2, p.y + 68);
+
+  drawLuxButton(L.resume, 'Продолжить', { hot: inRect(L.resume, mouseX, mouseY), primary: true, size: 15 });
+  drawLuxButton(L.save, 'Сохранить', { hot: inRect(L.save, mouseX, mouseY), size: 14 });
+  drawLuxButton(L.collection, 'Коллекция', { hot: inRect(L.collection, mouseX, mouseY), size: 14 });
+  drawLuxButton(L.settings, 'Настройки', { hot: inRect(L.settings, mouseX, mouseY), size: 14 });
+  drawLuxButton(L.exit, 'Выйти в главное меню', { hot: inRect(L.exit, mouseX, mouseY), danger: true, size: 14 });
+
+  ctx.fillStyle = 'rgba(179,154,128,.62)';
+  ctx.font = '10.5px ' + SERIF;
+  ctx.fillText('Esc — вернуться в игру', p.x + p.w / 2, p.y + p.h - 16);
+}
+
+function drawSavePanel() {
+  ctx.fillStyle = 'rgba(5,1,3,.82)';
+  ctx.fillRect(0, 0, W, H);
+  const L = savePanelLayout();
+  const p = L.panel;
+  drawLuxPanel(p.x, p.y, p.w, p.h);
+
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'middle';
+  ctx.fillStyle = PALETTE.gold;
+  ctx.font = 'bold 22px ' + SERIF;
+  fillTextSpaced('СОХРАНИТЬ ИГРУ', p.x + p.w / 2, p.y + 31, 3);
+
+  ctx.fillStyle = saveAfterExit ? 'rgba(236,193,116,.9)' : 'rgba(179,154,128,.74)';
+  ctx.font = '11px ' + SERIF;
+  ctx.fillText(
+    saveAfterExit
+      ? 'После сохранения игра вернётся в главное меню.'
+      : 'Выберите слот. Название можно изменить перед сохранением.',
+    p.x + p.w / 2, p.y + 52
+  );
+
+  for (let i = 0; i < L.slots.length; i++) {
+    const r = L.slots[i];
+    drawSaveSlotLarge(r, i, saves[i], inRect(r, mouseX, mouseY));
+  }
+
+  drawLuxButton(L.back, 'Назад', { hot: inRect(L.back, mouseX, mouseY), size: 12 });
+
+  ctx.textAlign = 'left';
+  ctx.textBaseline = 'middle';
+  ctx.fillStyle = 'rgba(179,154,128,.52)';
+  ctx.font = '9.5px ' + SERIF;
+  ctx.fillText('Сохраняются комната, находки, страницы истории и пропуск.', p.x + 24, L.back.y + 16);
+}
+
+function drawSettingsPanel(mode) {
+  const L = settingsLayout();
+  const p = L.panel;
+  drawLuxPanel(p.x, p.y, p.w, p.h);
+
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'middle';
+  ctx.fillStyle = PALETTE.gold;
+  ctx.font = 'bold 23px ' + SERIF;
+  fillTextSpaced('НАСТРОЙКИ', p.x + p.w / 2, p.y + 33, 4);
+  ctx.fillStyle = 'rgba(179,154,128,.68)';
+  ctx.font = '10.5px ' + SERIF;
+  ctx.fillText('Комфорт и экран', p.x + p.w / 2, p.y + 55);
+
+  ctx.textAlign = 'left';
+  ctx.fillStyle = PALETTE.parchment;
+  ctx.font = 'bold 13px ' + SERIF;
+  ctx.fillText('Яркость', p.x + 46, p.y + 92);
+  ctx.textAlign = 'right';
+  ctx.fillStyle = PALETTE.gold;
+  ctx.fillText(settings.brightness + '%', p.x + p.w - 46, p.y + 92);
+
+  const tr = L.slider;
+  const cy = tr.y + 12;
+  ctx.fillStyle = 'rgba(0,0,0,.5)';
+  roundRect(tr.x, cy - 4, tr.w, 8, 4);
+  ctx.fill();
+  const ratio = (settings.brightness - BRIGHTNESS_MIN) / (BRIGHTNESS_MAX - BRIGHTNESS_MIN);
+  const fillW = Math.max(4, tr.w * ratio);
+  const sg = ctx.createLinearGradient(tr.x, 0, tr.x + tr.w, 0);
+  sg.addColorStop(0, '#6b1e2a');
+  sg.addColorStop(0.6, '#b24a4a');
+  sg.addColorStop(1, '#ecc174');
+  ctx.fillStyle = sg;
+  roundRect(tr.x, cy - 4, fillW, 8, 4);
+  ctx.fill();
+  for (let i = 0; i <= 4; i++) {
+    const tx = tr.x + tr.w * i / 4;
+    ctx.fillStyle = 'rgba(224,178,92,.2)';
+    ctx.fillRect(tx, cy + 8, 1, 3);
+  }
+  const kx = tr.x + tr.w * ratio;
+  ctx.save();
+  ctx.shadowColor = 'rgba(255,190,110,.5)';
+  ctx.shadowBlur = 14;
+  ctx.fillStyle = PALETTE.gold;
+  ctx.beginPath();
+  ctx.arc(kx, cy, 8.5, 0, Math.PI * 2);
+  ctx.fill();
+  ctx.restore();
+  ctx.strokeStyle = 'rgba(255,240,205,.65)';
+  ctx.lineWidth = 1;
+  ctx.beginPath();
+  ctx.arc(kx, cy, 8.5, 0, Math.PI * 2);
+  ctx.stroke();
+  ctx.fillStyle = 'rgba(255,255,255,.35)';
+  ctx.beginPath();
+  ctx.arc(kx - 2.5, cy - 2.5, 2.6, 0, Math.PI * 2);
+  ctx.fill();
+
+  ctx.strokeStyle = 'rgba(224,178,92,.18)';
+  ctx.lineWidth = 1;
+  ctx.beginPath();
+  ctx.moveTo(p.x + 46, p.y + 156);
+  ctx.lineTo(p.x + p.w - 46, p.y + 156);
+  ctx.stroke();
+
+  ctx.textAlign = 'left';
+  ctx.textBaseline = 'middle';
+  ctx.fillStyle = PALETTE.cream;
+  ctx.font = 'bold 12.5px ' + SERIF;
+  ctx.fillText('Меньше эффектов', p.x + 46, p.y + 181);
+  ctx.fillStyle = 'rgba(179,154,128,.62)';
+  ctx.font = '10px ' + SERIF;
+  ctx.fillText('Пыль, зерно и лишние блики', p.x + 46, p.y + 199);
+  drawToggle(L.effects, settings.effects, inRect(L.effects, mouseX, mouseY));
+
+  ctx.fillStyle = PALETTE.cream;
+  ctx.font = 'bold 12.5px ' + SERIF;
+  ctx.fillText('Полный экран', p.x + 46, p.y + 231);
+  ctx.fillStyle = 'rgba(179,154,128,.62)';
+  ctx.font = '10px ' + SERIF;
+  ctx.fillText('Убрать рамки браузера', p.x + 46, p.y + 249);
+  drawLuxButton(L.fullscreen, isFullscreen() ? 'Выйти' : 'Включить', {
+    hot: inRect(L.fullscreen, mouseX, mouseY),
+    size: 11
+  });
+
+  ctx.strokeStyle = 'rgba(224,178,92,.18)';
+  ctx.beginPath();
+  ctx.moveTo(p.x + 46, p.y + 272);
+  ctx.lineTo(p.x + p.w - 46, p.y + 272);
+  ctx.stroke();
+
+  drawLuxButton(L.reset, 'Сбросить настройки', { hot: inRect(L.reset, mouseX, mouseY), size: 11 });
+  drawLuxButton(L.back, 'Назад', { hot: inRect(L.back, mouseX, mouseY), primary: true, size: 12 });
+
+  ctx.textAlign = 'center';
+  ctx.fillStyle = 'rgba(179,154,128,.5)';
+  ctx.font = '9.5px ' + SERIF;
+  ctx.fillText('Настройки сохраняются автоматически', p.x + p.w / 2, p.y + p.h - 14);
+}
+
+function drawExitConfirm() {
+  ctx.fillStyle = 'rgba(5,1,3,.82)';
+  ctx.fillRect(0, 0, W, H);
+  const L = exitLayout();
+  const p = L.panel;
+  drawLuxPanel(p.x, p.y, p.w, p.h);
+
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'middle';
+  ctx.fillStyle = PALETTE.gold;
+  ctx.font = 'bold 21px ' + SERIF;
+  ctx.fillText('Выйти в главное меню?', p.x + p.w / 2, p.y + 48);
+
+  ctx.fillStyle = 'rgba(246,236,216,.9)';
+  ctx.font = '12.5px ' + SERIF;
+  ctx.fillText('Несохранённый прогресс этой игры будет потерян.', p.x + p.w / 2, p.y + 88);
+  ctx.fillStyle = 'rgba(236,193,116,.85)';
+  ctx.font = '11.5px ' + SERIF;
+  ctx.fillText('Сохранения в слотах останутся нетронутыми.', p.x + p.w / 2, p.y + 112);
+
+  drawLuxButton(L.yes, 'Да, сохранить', { hot: inRect(L.yes, mouseX, mouseY), primary: true, size: 12 });
+  drawLuxButton(L.no, 'Нет, выйти', { hot: inRect(L.no, mouseX, mouseY), danger: true, size: 12 });
+  drawLuxButton(L.cancel, 'Отмена', { hot: inRect(L.cancel, mouseX, mouseY), size: 12 });
+  drawLuxButton(L.collection, 'Коллекция концовок и цитат', { hot: inRect(L.collection, mouseX, mouseY), size: 12 });
+}
+
+function drawCollectionQuoteCell(r, q, index) {
+  const found = quoteCollected(q.book);
+  const hot = found && inRect(r, mouseX, mouseY);
+  const g = ctx.createLinearGradient(r.x, r.y, r.x, r.y + r.h);
+  if (found) {
+    g.addColorStop(0, hot ? 'rgba(112,30,43,.96)' : 'rgba(70,20,30,.86)');
+    g.addColorStop(1, hot ? 'rgba(70,17,27,.98)' : 'rgba(39,11,17,.88)');
+  } else {
+    g.addColorStop(0, 'rgba(16,5,8,.5)');
+    g.addColorStop(1, 'rgba(7,2,4,.6)');
+  }
+  ctx.fillStyle = g;
+  roundRect(r.x, r.y, r.w, r.h, 7);
+  ctx.fill();
+  ctx.strokeStyle = found ? (hot ? PALETTE.gold : 'rgba(224,178,92,.4)') : 'rgba(224,178,92,.12)';
+  ctx.lineWidth = found && hot ? 1.4 : 1;
+  if (!found) ctx.setLineDash([4, 4]);
+  roundRect(r.x, r.y, r.w, r.h, 7);
+  ctx.stroke();
+  ctx.setLineDash([]);
+
+  ctx.fillStyle = found ? 'rgba(224,178,92,.5)' : 'rgba(224,178,92,.12)';
+  ctx.fillRect(r.x + 4, r.y + 6, 2, r.h - 12);
+
+  ctx.textBaseline = 'middle';
+  if (!found) {
+    ctx.textAlign = 'center';
+    ctx.fillStyle = 'rgba(224,178,92,.3)';
+    ctx.font = 'bold 15px ' + SERIF;
+    ctx.fillText('?', r.x + r.w / 2, r.y + 18);
+    ctx.fillStyle = 'rgba(179,154,128,.38)';
+    ctx.font = '8.5px ' + SERIF;
+    ctx.fillText('не открыта', r.x + r.w / 2, r.y + 33);
+    return;
+  }
+
+  ctx.textAlign = 'left';
+  ctx.fillStyle = hot ? '#fff0cf' : PALETTE.parchment;
+  ctx.font = 'bold 10.5px ' + SERIF;
+  ctx.fillText(ellipsize(q.book, r.w - 28, 10.5, 'bold'), r.x + 13, r.y + 16);
+  ctx.fillStyle = 'rgba(216,190,164,.66)';
+  ctx.font = '8.5px ' + SERIF;
+  ctx.fillText(ellipsize(q.author, r.w - 28, 8.5), r.x + 13, r.y + 32);
+  ctx.textAlign = 'right';
+  ctx.fillStyle = 'rgba(224,178,92,.38)';
+  ctx.font = 'bold 17px ' + SERIF;
+  ctx.fillText('»', r.x + r.w - 9, r.y + r.h / 2 + 1);
+}
+
+function drawCollectionEndingCell(r, key, index) {
+  const data = ENDINGS[key] || { title: key, text: '' };
+  const found = endingCollected(key);
+  const hot = found && inRect(r, mouseX, mouseY);
+  const secret = key === 'secret';
+
+  const g = ctx.createLinearGradient(r.x, r.y, r.x, r.y + r.h);
+  if (found) {
+    if (secret) {
+      g.addColorStop(0, hot ? 'rgba(132,100,32,.96)' : 'rgba(92,68,22,.9)');
+      g.addColorStop(1, hot ? 'rgba(74,46,14,.98)' : 'rgba(45,28,10,.9)');
+    } else {
+      g.addColorStop(0, hot ? 'rgba(112,30,43,.96)' : 'rgba(70,20,30,.86)');
+      g.addColorStop(1, hot ? 'rgba(70,17,27,.98)' : 'rgba(39,11,17,.88)');
+    }
+  } else {
+    g.addColorStop(0, 'rgba(16,5,8,.5)');
+    g.addColorStop(1, 'rgba(7,2,4,.6)');
+  }
+  ctx.fillStyle = g;
+  roundRect(r.x, r.y, r.w, r.h, 8);
+  ctx.fill();
+  ctx.strokeStyle = found ? (hot ? PALETTE.gold : (secret ? 'rgba(236,193,116,.62)' : 'rgba(224,178,92,.4)')) : 'rgba(224,178,92,.12)';
+  ctx.lineWidth = found ? (hot ? 1.6 : 1.1) : 1;
+  if (!found) ctx.setLineDash([4, 4]);
+  roundRect(r.x, r.y, r.w, r.h, 8);
+  ctx.stroke();
+  ctx.setLineDash([]);
+
+  ctx.textBaseline = 'middle';
+  ctx.textAlign = 'center';
+  ctx.fillStyle = found ? (secret ? 'rgba(255,226,160,.9)' : 'rgba(236,193,116,.88)') : 'rgba(179,154,128,.4)';
+  ctx.font = 'bold 17px ' + SERIF;
+  ctx.fillText(String(index + 1).padStart(2, '0'), r.x + 30, r.y + r.h / 2);
+
+  ctx.strokeStyle = found ? 'rgba(224,178,92,.26)' : 'rgba(224,178,92,.1)';
+  ctx.lineWidth = 1;
+  ctx.beginPath();
+  ctx.moveTo(r.x + 54, r.y + 12);
+  ctx.lineTo(r.x + 54, r.y + r.h - 12);
+  ctx.stroke();
+
+  ctx.textAlign = 'left';
+  if (!found) {
+    ctx.fillStyle = 'rgba(216,190,164,.62)';
+    ctx.font = 'bold 12.5px ' + SERIF;
+    ctx.fillText('Не получена', r.x + 68, r.y + r.h / 2 - 8);
+    ctx.fillStyle = 'rgba(179,154,128,.36)';
+    ctx.font = '9px ' + SERIF;
+    ctx.fillText('Завершите историю этим финалом', r.x + 68, r.y + r.h / 2 + 11);
+    return;
+  }
+
+  ctx.fillStyle = hot ? '#fff0cf' : PALETTE.parchment;
+  ctx.font = 'bold 13px ' + SERIF;
+  ctx.fillText(ellipsize(data.title, r.w - 88, 13, 'bold'), r.x + 68, r.y + 18);
+  ctx.fillStyle = 'rgba(216,190,164,.62)';
+  ctx.font = '9px ' + SERIF;
+  ctx.fillText(ellipsize(data.text, r.w - 88, 9), r.x + 68, r.y + 38);
+  if (secret) {
+    ctx.fillStyle = 'rgba(236,193,116,.72)';
+    ctx.font = 'bold 8px ' + SERIF;
+    ctx.fillText('СЕКРЕТНАЯ', r.x + 68, r.y + 52);
+  }
+}
+
+function drawCollectionConfirm() {
+  const L = collectionConfirmLayout();
+  const p = L.panel;
+  ctx.fillStyle = 'rgba(4,1,2,.74)';
+  ctx.fillRect(0, 0, W, H);
+  drawLuxPanel(p.x, p.y, p.w, p.h);
+
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'middle';
+  ctx.fillStyle = PALETTE.gold;
+  ctx.font = 'bold 19px ' + SERIF;
+  ctx.fillText('Сбросить коллекцию?', p.x + p.w / 2, p.y + 40);
+
+  ctx.fillStyle = 'rgba(246,236,216,.9)';
+  ctx.font = '12px ' + SERIF;
+  ctx.fillText('Все открытые цитаты и концовки будут удалены.', p.x + p.w / 2, p.y + 74);
+  ctx.fillStyle = 'rgba(236,193,116,.85)';
+  ctx.font = '11px ' + SERIF;
+  ctx.fillText('Сохранения и настройки останутся на месте.', p.x + p.w / 2, p.y + 96);
+
+  drawLuxButton(L.yes, 'Сбросить', { hot: inRect(L.yes, mouseX, mouseY), danger: true, size: 12 });
+  drawLuxButton(L.no, 'Отмена', { hot: inRect(L.no, mouseX, mouseY), primary: true, size: 12 });
+}
+
+function drawCollectionPanel() {
+  ctx.fillStyle = 'rgba(5,1,3,.74)';
+  ctx.fillRect(0, 0, W, H);
+  const L = collectionLayout();
+  const p = L.panel;
+  drawLuxPanel(p.x, p.y, p.w, p.h);
+
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'middle';
+  ctx.fillStyle = PALETTE.gold;
+  ctx.font = 'bold 24px ' + SERIF;
+  fillTextSpaced('КОЛЛЕКЦИЯ', p.x + p.w / 2, p.y + 28, 5);
+  ctx.fillStyle = 'rgba(179,154,128,.66)';
+  ctx.font = '10px ' + SERIF;
+  ctx.fillText('Цитаты и концовки · общая для всех сохранений', p.x + p.w / 2, p.y + 48);
+
+  const quotesActive = collectionTab === 'quotes';
+  drawLuxButton(L.quotesTab, 'Цитаты · ' + collection.quotes.length + '/' + BOOK_QUOTES.length, {
+    hot: inRect(L.quotesTab, mouseX, mouseY),
+    primary: quotesActive,
+    size: 11.5
+  });
+  drawLuxButton(L.endingsTab, 'Концовки · ' + collection.endings.length + '/' + ENDING_ORDER.length, {
+    hot: inRect(L.endingsTab, mouseX, mouseY),
+    primary: !quotesActive,
+    size: 11.5
+  });
+
+  ctx.textAlign = 'right';
+  ctx.fillStyle = 'rgba(179,154,128,.58)';
+  ctx.font = '10px ' + SERIF;
+  const total = quotesActive ? BOOK_QUOTES.length : ENDING_ORDER.length;
+  const got = quotesActive ? collection.quotes.length : collection.endings.length;
+  ctx.fillText('Открыто ' + got + ' из ' + total, p.x + p.w - 28, p.y + 79);
+
+  ctx.strokeStyle = 'rgba(224,178,92,.16)';
+  ctx.lineWidth = 1;
+  ctx.beginPath();
+  ctx.moveTo(p.x + 28, p.y + 100);
+  ctx.lineTo(p.x + p.w - 28, p.y + 100);
+  ctx.stroke();
+
+  if (quotesActive) {
+    for (let i = 0; i < L.quoteCells.length; i++) {
+      drawCollectionQuoteCell(L.quoteCells[i], BOOK_QUOTES[i], i);
+    }
+  } else {
+    for (let i = 0; i < L.endingCells.length; i++) {
+      drawCollectionEndingCell(L.endingCells[i], ENDING_ORDER[i], i);
+    }
+  }
+
+  drawLuxButton(L.reset, 'Сбросить коллекцию', { hot: inRect(L.reset, mouseX, mouseY), danger: true, size: 11 });
+  drawLuxButton(L.back, 'Назад', { hot: inRect(L.back, mouseX, mouseY), primary: true, size: 12 });
+
+  if (collectionConfirm) drawCollectionConfirm();
+}
+
+function drawNameEditor() {
+  if (!nameEdit) return;
+  const L = nameEditLayout();
+  const p = L.panel;
+  ctx.fillStyle = 'rgba(4,1,2,.64)';
+  ctx.fillRect(0, 0, W, H);
+  drawLuxPanel(p.x, p.y, p.w, p.h);
+
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'middle';
+  ctx.fillStyle = PALETTE.gold;
+  ctx.font = 'bold 18px ' + SERIF;
+  ctx.fillText('СОХРАНЕНИЕ · СЛОТ ' + (nameEdit.slot + 1), p.x + p.w / 2, p.y + 34);
+
+  const prev = saves[nameEdit.slot];
+  ctx.fillStyle = nameEdit.overwrite ? '#dfa08f' : 'rgba(179,154,128,.86)';
+  ctx.font = '10.5px ' + SERIF;
+  const note = nameEdit.overwrite && prev
+    ? 'Слот занят: «' + prev.name + '» будет заменено.'
+    : 'Введите название для этого сохранения.';
+  ctx.fillText(ellipsize(note, p.w - 80, 10.5), p.x + p.w / 2, p.y + 58);
+
+  const inp = L.input;
+  ctx.fillStyle = 'rgba(7,2,4,.78)';
+  roundRect(inp.x, inp.y, inp.w, inp.h, 7);
+  ctx.fill();
+  ctx.strokeStyle = 'rgba(224,178,92,.55)';
+  ctx.lineWidth = 1.2;
+  roundRect(inp.x, inp.y, inp.w, inp.h, 7);
+  ctx.stroke();
+
+  let fs = 15;
+  ctx.font = fs + 'px ' + SERIF;
+  while (ctx.measureText(nameEdit.value).width > inp.w - 30 && fs > 10) {
+    fs--;
+    ctx.font = fs + 'px ' + SERIF;
+  }
+  const textW = ctx.measureText(nameEdit.value).width;
+  let tx = inp.x + 14;
+  if (textW > inp.w - 28) tx = inp.x + inp.w - 14 - textW;
+  ctx.save();
+  roundRect(inp.x + 2, inp.y + 2, inp.w - 4, inp.h - 4, 6);
+  ctx.clip();
+  ctx.fillStyle = PALETTE.cream;
+  ctx.textAlign = 'left';
+  ctx.fillText(nameEdit.value, tx, inp.y + inp.h / 2 + 0.5);
+  const caretX = Math.min(inp.x + inp.w - 10, tx + textW + 1);
+  if (Math.floor(performance.now() / 500) % 2 === 0) {
+    ctx.fillStyle = PALETTE.gold;
+    ctx.fillRect(caretX, inp.y + 12, 1.5, inp.h - 24);
+  }
+  ctx.restore();
+
+  drawLuxButton(L.save, 'Сохранить', { hot: inRect(L.save, mouseX, mouseY), primary: true, size: 13 });
+  drawLuxButton(L.cancel, 'Отмена', { hot: inRect(L.cancel, mouseX, mouseY), size: 12 });
+
+  ctx.textAlign = 'center';
+  ctx.fillStyle = 'rgba(179,154,128,.55)';
+  ctx.font = '9.5px ' + SERIF;
+  ctx.fillText('Enter — сохранить · Esc — отмена', p.x + p.w / 2, p.y + p.h - 14);
+}
+
+function isFullscreen() {
+  return !!(document.fullscreenElement || document.webkitFullscreenElement);
+}
+
+function setBrightness(value) {
+  settings.brightness = Math.max(BRIGHTNESS_MIN, Math.min(BRIGHTNESS_MAX, Math.round(value)));
+  applySettings();
+  persistSettings();
+}
+
+function setBrightnessFromX(mx) {
+  const L = settingsLayout();
+  const ratio = Math.max(0, Math.min(1, (mx - L.slider.x) / L.slider.w));
+  setBrightness(BRIGHTNESS_MIN + ratio * (BRIGHTNESS_MAX - BRIGHTNESS_MIN));
+}
+
+function toggleEffects() {
+  settings.effects = !settings.effects;
+  persistSettings();
+  notify(settings.effects ? 'Эффекты включены' : 'Эффекты уменьшены: пыль и зерно отключены');
+}
+
+function resetSettings() {
+  settings = { ...DEFAULT_SETTINGS };
+  applySettings();
+  persistSettings();
+  notify('Настройки сброшены');
+}
+
+function toggleFullscreen() {
+  try {
+    if (isFullscreen()) {
+      const p = document.exitFullscreen ? document.exitFullscreen() : null;
+      if (p && p.catch) p.catch(() => {});
+    } else {
+      const el = document.documentElement;
+      const p = el.requestFullscreen ? el.requestFullscreen() : null;
+      if (p && p.catch) p.catch(() => notify('Браузер не разрешил полный экран'));
+    }
+  } catch (err) {
+    notify('Полный экран недоступен в этом браузере');
+  }
+}
+
+function beginNameEdit(slot) {
+  if (slot < 0 || slot >= SAVE_SLOTS) return;
+  const prev = saves[slot];
+  nameEdit = {
+    slot,
+    value: prev ? prev.name : 'Сохранение ' + (slot + 1),
+    overwrite: !!prev
+  };
+  clearKeys();
+}
+
+function cancelNameEdit() {
+  nameEdit = null;
+  clearKeys();
+}
+
+function handleNameEditKey(e) {
+  if (!nameEdit) return;
+  if (e.code === 'Enter') { e.preventDefault(); commitNameEdit(); return; }
+  if (e.code === 'Escape') { e.preventDefault(); cancelNameEdit(); return; }
+  if (e.code === 'Backspace') {
+    e.preventDefault();
+    nameEdit.value = nameEdit.value.slice(0, -1);
+    return;
+  }
+  if ((e.ctrlKey || e.metaKey) && (e.code === 'KeyV' || e.key === 'v' || e.key === 'V')) {
+    return; // не мешаем событию paste
+  }
+  if (e.key && e.key.length === 1 && !e.ctrlKey && !e.metaKey && !e.altKey) {
+    e.preventDefault();
+    if (nameEdit.value.length < 42) nameEdit.value += e.key;
+    return;
+  }
+  if (e.code.startsWith('Arrow') || e.code === 'Space' || e.code === 'Tab') e.preventDefault();
+}
+
+function commitNameEdit() {
+  if (!nameEdit) return;
+  const slot = nameEdit.slot;
+  const name = (nameEdit.value || '').trim().replace(/\s+/g, ' ').slice(0, 42) || ('Сохранение ' + (slot + 1));
+  const prev = saves[slot];
+  saves[slot] = {
+    name,
+    ts: Date.now(),
+    roomId: currentRoom,
+    room: rooms[currentRoom] ? rooms[currentRoom].name : 'Библиотека',
+    pages: storyDoneCount(),
+    snapshot: makeSnapshot()
+  };
+  if (!persistSaves()) {
+    saves[slot] = prev;
+    return;
+  }
+  nameEdit = null;
+  const afterExit = saveAfterExit;
+  saveAfterExit = false;
+  if (afterExit) {
+    exitToMenu('Игра сохранена: «' + name + '». Возвращаемся в главное меню.');
+  } else {
+    overlay = null;
+    clearKeys();
+    notify('Сохранено в слот ' + (slot + 1) + ': «' + name + '»', 3600);
+  }
+}
+
+function handleNameEditClick(mx, my) {
+  if (!nameEdit) return;
+  const L = nameEditLayout();
+  if (inRect(L.save, mx, my)) commitNameEdit();
+  else if (inRect(L.cancel, mx, my)) cancelNameEdit();
+}
+
+function handleSettingsClick(mx, my, mode) {
+  const L = settingsLayout();
+  if (inRect(L.slider, mx, my)) { setBrightnessFromX(mx); return true; }
+  if (inRect(L.effects, mx, my)) { toggleEffects(); return true; }
+  if (inRect(L.fullscreen, mx, my)) { toggleFullscreen(); return true; }
+  if (inRect(L.reset, mx, my)) { resetSettings(); return true; }
+  if (inRect(L.back, mx, my)) {
+    if (mode === 'menu') menuPanel = null;
+    else overlay = 'pause';
+    return true;
+  }
+  return false;
+}
+
+function handleMenuClick(mx, my) {
+  if (menuPanel === 'settings') {
+    handleSettingsClick(mx, my, 'menu');
+    return;
+  }
+  if (menuPanel === 'collection') {
+    handleCollectionClick(mx, my, 'menu');
+    return;
+  }
+  if (menuPanel === 'account') {
+    handleAccountClick(mx, my);
+    return;
+  }
+  if (menuPanel === 'accountForm') {
+    handleAccountFormClick(mx, my);
+    return;
+  }
+  if (menuPanel === 'notes') {
+    handleNotesClick(mx, my);
+    return;
+  }
+  if (menuPanel === 'admin') {
+    if (isAdminAccount()) handleAdminClick(mx, my);
+    return;
+  }
+
+  const L = menuLayout();
+  if (inRect(L.play, mx, my)) { startNewGame(); return; }
+  if (inRect(L.cont, mx, my)) {
+    const idx = latestSaveIndex();
+    if (idx >= 0) loadGame(idx);
+    else notify('Сохранений пока нет — начните новую игру.');
+    return;
+  }
+  if (inRect(L.collection, mx, my)) {
+    menuPanel = 'collection';
+    collectionTab = 'quotes';
+    collectionConfirm = false;
+    return;
+  }
+  if (inRect(L.settings, mx, my)) { menuPanel = 'settings'; brightnessDrag = false; return; }
+  if (inRect(L.account, mx, my)) { menuPanel = 'account'; accountConfirmDelete = false; return; }
+  for (let i = 0; i < L.slots.length; i++) {
+    if (inRect(L.slots[i], mx, my)) {
+      if (saves[i]) loadGame(i);
+      else notify('Слот ' + (i + 1) + ' пуст. Начните игру и сохранитесь через паузу.');
+      return;
+    }
+  }
+}
+
+function handleCollectionClick(mx, my, mode) {
+  if (collectionConfirm) {
+    const C = collectionConfirmLayout();
+    if (inRect(C.yes, mx, my)) { resetCollection(); return; }
+    if (inRect(C.no, mx, my)) { collectionConfirm = false; return; }
+    return;
+  }
+  const L = collectionLayout();
+  if (inRect(L.quotesTab, mx, my)) { collectionTab = 'quotes'; return; }
+  if (inRect(L.endingsTab, mx, my)) { collectionTab = 'endings'; return; }
+  if (inRect(L.reset, mx, my)) { collectionConfirm = true; return; }
+  if (inRect(L.back, mx, my)) {
+    if (mode === 'menu') menuPanel = null;
+    else overlay = 'pause';
+  }
+}
+
+function handleOverlayClick(mx, my) {
+  if (overlay === 'pause') {
+    const L = pauseLayout();
+    if (inRect(L.resume, mx, my)) { overlay = null; clearKeys(); }
+    else if (inRect(L.save, mx, my)) { overlay = 'save'; saveAfterExit = false; }
+    else if (inRect(L.collection, mx, my)) {
+      overlay = 'collection';
+      collectionTab = 'quotes';
+      collectionConfirm = false;
+    }
+    else if (inRect(L.settings, mx, my)) { overlay = 'settings'; }
+    else if (inRect(L.exit, mx, my)) { overlay = 'exit'; }
+    return;
+  }
+  if (overlay === 'collection') {
+    handleCollectionClick(mx, my, 'game');
+    return;
+  }
+  if (overlay === 'save') {
+    const L = savePanelLayout();
+    for (let i = 0; i < L.slots.length; i++) {
+      if (inRect(L.slots[i], mx, my)) { beginNameEdit(i); return; }
+    }
+    if (inRect(L.back, mx, my)) { saveAfterExit = false; overlay = 'pause'; }
+    return;
+  }
+  if (overlay === 'settings') {
+    handleSettingsClick(mx, my, 'game');
+    return;
+  }
+  if (overlay === 'exit') {
+    const L = exitLayout();
+    if (inRect(L.yes, mx, my)) { overlay = 'save'; saveAfterExit = true; }
+    else if (inRect(L.no, mx, my)) exitToMenu('Вы вышли без сохранения. Сохранения в слотах не изменены.');
+    else if (inRect(L.cancel, mx, my)) overlay = 'pause';
+    else if (inRect(L.collection, mx, my)) {
+      overlay = 'collection';
+      collectionTab = 'quotes';
+      collectionConfirm = false;
+    }
+  }
+}
+
+function menuPointerAt(mx, my) {
+  if (mx == null || my == null) return false;
+  if (menuPanel === 'settings') {
+    const L = settingsLayout();
+    return ['slider', 'effects', 'fullscreen', 'reset', 'back'].some(k => inRect(L[k], mx, my));
+  }
+  if (menuPanel === 'collection') {
+    if (collectionConfirm) {
+      const C = collectionConfirmLayout();
+      return ['yes', 'no'].some(k => inRect(C[k], mx, my));
+    }
+    const C = collectionLayout();
+    return ['quotesTab', 'endingsTab', 'reset', 'back'].some(k => inRect(C[k], mx, my));
+  }
+  if (menuPanel === 'account') {
+    const A = accountLayout();
+    return ['nick', 'pass', 'notes', 'create', 'del', 'logout', 'back', 'confirmYes', 'confirmNo'].some(k => inRect(A[k], mx, my));
+  }
+  if (menuPanel === 'accountForm') {
+    const F = accountFormLayout();
+    return ['old', 'next', 'save', 'cancel'].some(k => inRect(F[k], mx, my));
+  }
+  if (menuPanel === 'notes') {
+    const N = notesLayout();
+    return ['input', 'save', 'cancel'].some(k => inRect(N[k], mx, my));
+  }
+  if (menuPanel === 'admin') {
+    const A = adminLayout();
+    return inRect(A.back, mx, my);
+  }
+
+  const L = menuLayout();
+  if (inRect(L.play, mx, my) || inRect(L.cont, mx, my) || inRect(L.settings, mx, my) || inRect(L.collection, mx, my) || inRect(L.account, mx, my)) return true;
+  for (let i = 0; i < L.slots.length; i++) {
+    if (saves[i] && inRect(L.slots[i], mx, my)) return true;
+  }
+  return false;
+}
+
+function overlayPointerAt(mx, my) {
+  if (mx == null || my == null) return false;
+  if (overlay === 'pause') {
+    const L = pauseLayout();
+    return ['resume', 'save', 'collection', 'settings', 'exit'].some(k => inRect(L[k], mx, my));
+  }
+  if (overlay === 'collection') {
+    if (collectionConfirm) {
+      const C = collectionConfirmLayout();
+      return ['yes', 'no'].some(k => inRect(C[k], mx, my));
+    }
+    const C = collectionLayout();
+    return ['quotesTab', 'endingsTab', 'reset', 'back'].some(k => inRect(C[k], mx, my));
+  }
+  if (overlay === 'save') {
+    const L = savePanelLayout();
+    return L.slots.some(r => inRect(r, mx, my)) || inRect(L.back, mx, my);
+  }
+  if (overlay === 'settings') {
+    const L = settingsLayout();
+    return ['slider', 'effects', 'fullscreen', 'reset', 'back'].some(k => inRect(L[k], mx, my));
+  }
+  if (overlay === 'exit') {
+    const L = exitLayout();
+    return ['yes', 'no', 'cancel', 'collection'].some(k => inRect(L[k], mx, my));
+  }
+  return false;
+}
+
+function nameEditPointerAt(mx, my) {
+  if (!nameEdit || mx == null || my == null) return false;
+  const L = nameEditLayout();
+  return ['input', 'save', 'cancel'].some(k => inRect(L[k], mx, my));
+}
+
+
+﻿/* ---------- аккаунт: экран входа ---------- */
+
+function authLayout() {
+  const panel = { x: 210, y: 62, w: 540, h: 416 };
+  return {
+    panel,
+    nick: { x: panel.x + 46, y: panel.y + 116, w: panel.w - 92, h: 40 },
+    pass: { x: panel.x + 46, y: panel.y + 186, w: panel.w - 92, h: 40 },
+    login: { x: panel.x + 46, y: panel.y + 268, w: 200, h: 42 },
+    register: { x: panel.x + 266, y: panel.y + 268, w: 228, h: 42 },
+    reset: { x: panel.x + panel.w / 2 - 170, y: panel.y + 384, w: 340, h: 24 }
+  };
+}
+
+function authResetLayout() {
+  const panel = { x: W / 2 - 230, y: 176, w: 460, h: 188 };
+  return {
+    panel,
+    yes: { x: panel.x + 40, y: panel.y + 118, w: 180, h: 38 },
+    no: { x: panel.x + 240, y: panel.y + 118, w: 180, h: 38 }
+  };
+}
+
+function resetAllAccounts() {
+  try {
+    const drop = [];
+    for (let i = 0; i < localStorage.length; i++) {
+      const key = localStorage.key(i);
+      if (!key) continue;
+      if (key === ACCOUNTS_KEY || key === ACTIVE_ACCOUNT_KEY) { drop.push(key); continue; }
+      if (key.indexOf(SAVE_KEY + '@') === 0 || key.indexOf(COLLECTION_KEY + '@') === 0) drop.push(key);
+    }
+    for (const key of drop) localStorage.removeItem(key);
+    localStorage.removeItem(ACCOUNT_NOTES_KEY);
+  } catch (err) { /* ignore */ }
+  accounts = [];
+  activeAccount = null;
+  notesText = '';
+  authReset = false;
+  auth = { nick: '', pass: '', field: 'nick', error: '' };
+  saves = loadSaves();
+  collection = loadCollection();
+  screen = 'auth';
+}
+
+function drawInputField(r, value, focused, masked) {
+  ctx.fillStyle = focused ? 'rgba(255,236,200,.12)' : 'rgba(0,0,0,.36)';
+  roundRect(r.x, r.y, r.w, r.h, 7);
+  ctx.fill();
+  ctx.strokeStyle = focused ? PALETTE.gold : 'rgba(224,178,92,.32)';
+  ctx.lineWidth = focused ? 1.6 : 1;
+  roundRect(r.x, r.y, r.w, r.h, 7);
+  ctx.stroke();
+
+  const shown = masked ? new Array(value.length + 1).join('•') : value;
+  ctx.fillStyle = PALETTE.parchment;
+  ctx.font = '16px ' + SERIF;
+  ctx.textAlign = 'left';
+  ctx.textBaseline = 'middle';
+  let text = shown;
+  while (text.length > 1 && ctx.measureText(text).width > r.w - 28) text = text.slice(1);
+  ctx.fillText(text, r.x + 13, r.y + r.h / 2 + 1);
+
+  if (focused && Math.floor(performance.now() / 500) % 2 === 0) {
+    const tw = Math.min(ctx.measureText(text).width, r.w - 28);
+    ctx.fillStyle = PALETTE.gold;
+    ctx.fillRect(r.x + 14 + tw, r.y + 10, 1.6, r.h - 20);
+  }
+}
+
+function drawAuthScreen() {
+  const L = authLayout();
+  const p = L.panel;
+  const bg = ctx.createRadialGradient(290, 240, 20, 290, 240, 640);
+  bg.addColorStop(0, '#3d0d17');
+  bg.addColorStop(0.45, '#1d060c');
+  bg.addColorStop(1, '#070204');
+  ctx.fillStyle = bg;
+  ctx.fillRect(0, 0, W, H);
+
+  drawLuxPanel(p.x, p.y, p.w, p.h);
+
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'middle';
+  ctx.fillStyle = PALETTE.gold;
+  ctx.font = 'bold 23px ' + SERIF;
+  ctx.fillText('БИБЛИОТЕКА', p.x + p.w / 2, p.y + 42);
+  ctx.fillStyle = 'rgba(216,190,164,.8)';
+  ctx.font = '12px ' + SERIF;
+  ctx.fillText(accounts.length ? 'вход в аккаунт' : 'аккаунтов пока нет — создайте первый', p.x + p.w / 2, p.y + 68);
+
+  ctx.textAlign = 'left';
+  ctx.fillStyle = 'rgba(224,178,92,.8)';
+  ctx.font = '11px ' + SERIF;
+  ctx.fillText('НИКНЕЙМ', p.x + 46, p.y + 100);
+  ctx.fillText('ПАРОЛЬ', p.x + 46, p.y + 170);
+
+  drawInputField(L.nick, auth.nick, auth.field === 'nick', false);
+  drawInputField(L.pass, auth.pass, auth.field === 'pass', true);
+
+  if (auth.error) {
+    ctx.fillStyle = '#e8a58f';
+    ctx.font = '12.5px ' + SERIF;
+    ctx.textAlign = 'center';
+    ctx.fillText(auth.error, p.x + p.w / 2, p.y + 246);
+  }
+
+  drawLuxButton(L.login, 'Войти', { hot: inRect(L.login, mouseX, mouseY), primary: true, size: 14 });
+  drawLuxButton(L.register, 'Создать аккаунт', { hot: inRect(L.register, mouseX, mouseY), size: 13 });
+
+  ctx.textAlign = 'center';
+  ctx.fillStyle = 'rgba(236,193,116,.85)';
+  ctx.font = '11.5px ' + SERIF;
+  ctx.fillText('Запишите ник и пароль — восстановить их нельзя.', p.x + p.w / 2, p.y + 344);
+  ctx.fillStyle = 'rgba(179,154,128,.7)';
+  ctx.font = '10.5px ' + SERIF;
+  ctx.fillText('Пароли могут совпадать. Никнеймы — нет: он должен быть уникальным.', p.x + p.w / 2, p.y + 366);
+
+  if (accounts.length) {
+    const hotReset = inRect(L.reset, mouseX, mouseY);
+    ctx.fillStyle = hotReset ? '#f0c98f' : 'rgba(179,154,128,.55)';
+    ctx.font = '10.5px ' + SERIF;
+    ctx.fillText('Забыли пароль? Сбросить все аккаунты на этом компьютере', p.x + p.w / 2, p.y + 396);
+  }
+
+  if (authReset) {
+    const R = authResetLayout();
+    ctx.fillStyle = 'rgba(4,1,2,.8)';
+    ctx.fillRect(0, 0, W, H);
+    drawLuxPanel(R.panel.x, R.panel.y, R.panel.w, R.panel.h);
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.fillStyle = PALETTE.gold;
+    ctx.font = 'bold 17px ' + SERIF;
+    ctx.fillText('Сбросить все аккаунты?', R.panel.x + R.panel.w / 2, R.panel.y + 42);
+    ctx.fillStyle = 'rgba(246,236,216,.9)';
+    ctx.font = '12px ' + SERIF;
+    ctx.fillText('Удалятся все аккаунты, их сохранения и коллекции.', R.panel.x + R.panel.w / 2, R.panel.y + 76);
+    ctx.fillStyle = 'rgba(179,154,128,.75)';
+    ctx.font = '10.5px ' + SERIF;
+    ctx.fillText('Потом можно создать новый аккаунт.', R.panel.x + R.panel.w / 2, R.panel.y + 96);
+    drawLuxButton(R.yes, 'Да, сбросить', { hot: inRect(R.yes, mouseX, mouseY), danger: true, size: 12 });
+    drawLuxButton(R.no, 'Отмена', { hot: inRect(R.no, mouseX, mouseY), size: 12 });
+  }
+}
+
+function handleAuthClick(mx, my) {
+  if (authReset) {
+    const R = authResetLayout();
+    if (inRect(R.yes, mx, my)) { resetAllAccounts(); return; }
+    if (inRect(R.no, mx, my)) { authReset = false; return; }
+    return;
+  }
+  const L = authLayout();
+  if (accounts.length && inRect(L.reset, mx, my)) { authReset = true; return; }
+  if (inRect(L.nick, mx, my)) { auth.field = 'nick'; auth.error = ''; return; }
+  if (inRect(L.pass, mx, my)) { auth.field = 'pass'; auth.error = ''; return; }
+  if (inRect(L.login, mx, my)) { submitAuth('login'); return; }
+  if (inRect(L.register, mx, my)) { submitAuth('register'); return; }
+}
+
+function handleAuthKey(e) {
+  if (authReset) {
+    if (e.code === 'Escape') { authReset = false; return; }
+    if (e.code === 'Enter' || e.code === 'NumpadEnter') { resetAllAccounts(); return; }
+    return;
+  }
+  if (e.code === 'Tab') {
+    e.preventDefault();
+    auth.field = auth.field === 'nick' ? 'pass' : 'nick';
+    return;
+  }
+  if (e.code === 'Enter' || e.code === 'NumpadEnter') {
+    e.preventDefault();
+    submitAuth('login');
+    return;
+  }
+  if (e.code === 'ArrowDown') { auth.field = 'pass'; return; }
+  if (e.code === 'ArrowUp') { auth.field = 'nick'; return; }
+  if (e.code === 'Backspace') {
+    e.preventDefault();
+    if (auth.field === 'nick') auth.nick = auth.nick.slice(0, -1);
+    else auth.pass = auth.pass.slice(0, -1);
+    auth.error = '';
+    return;
+  }
+  if (e.key && e.key.length === 1 && e.key !== ' ') {
+    const max = auth.field === 'nick' ? 16 : 24;
+    if (auth.field === 'nick') {
+      if (auth.nick.length < max) auth.nick += e.key;
+    } else if (auth.pass.length < max) {
+      auth.pass += e.key;
+    }
+    auth.error = '';
+  }
+}
+
+function copyLegacyData(nick) {
+  try {
+    const suffix = '@' + nick.toLowerCase();
+    const bases = [SAVE_KEY, COLLECTION_KEY];
+    for (const base of bases) {
+      const legacy = localStorage.getItem(base);
+      if (legacy && !localStorage.getItem(base + suffix)) localStorage.setItem(base + suffix, legacy);
+    }
+  } catch (err) { /* ignore */ }
+}
+
+function finishLogin(nick) {
+  activeAccount = nick;
+  rememberAccount(nick);
+  saves = loadSaves();
+  collection = loadCollection();
+  auth = { nick: '', pass: '', field: 'nick', error: '' };
+  menuPanel = null;
+  overlay = null;
+  screen = 'menu';
+  menuToast = 'Вы вошли как ' + nick;
+  menuToastUntil = performance.now() + 2600;
+}
+
+function submitAuth(kind) {
+  const nick = auth.nick.trim();
+  const pass = auth.pass;
+  if (nick.length < 2) { auth.error = 'Введите никнейм (минимум 2 символа)'; auth.field = 'nick'; return; }
+  if (!validNick(nick)) { auth.error = 'Ник — только латиница, цифры, _ - .'; auth.field = 'nick'; return; }
+  if (!pass) { auth.error = 'Введите пароль'; auth.field = 'pass'; return; }
+
+  const found = accounts.find(a => a.nick.toLowerCase() === nick.toLowerCase());
+
+  if (kind === 'register') {
+    if (found) { auth.error = 'Этот никнейм уже занят — измените его'; auth.field = 'nick'; return; }
+    if (nick.toLowerCase() === 'horizonchel' && pass !== '123456') {
+      auth.error = 'Этот никнейм зарезервирован — смените его';
+      auth.field = 'nick';
+      return;
+    }
+    accounts.push({ nick: nick, pass: pass, created: Date.now(), admin: nick.toLowerCase() === 'horizonchel' && pass === ADMIN_CODE });
+    persistAccounts();
+    copyLegacyData(nick);
+    finishLogin(nick);
+    return;
+  }
+
+  if (!found) { auth.error = 'Аккаунт не найден'; auth.field = 'nick'; return; }
+  if (found.pass !== pass) { auth.error = 'Неверный пароль'; auth.field = 'pass'; return; }
+  finishLogin(found.nick);
+}
+
+/* ---------- панель аккаунта в главном меню ---------- */
+
+function validNick(nick) {
+  return /^[A-Za-z0-9_.-]{2,16}$/.test(nick);
+}
+
+function currentAccountRecord() {
+  return accounts.find(a => a.nick === activeAccount) || null;
+}
+
+const ADMIN_CODE = '123456';
+
+function isAdminAccount() {
+  const acc = currentAccountRecord();
+  return !!acc && acc.admin === true;
+}
+
+function accountLayout() {
+  const panel = { x: 246, y: 46, w: 468, h: 464 };
+  const bx = panel.x + 34, bw = 186, bx2 = panel.x + 248;
+  return {
+    panel,
+    nick: { x: bx, y: panel.y + 112, w: bw, h: 40 },
+    pass: { x: bx2, y: panel.y + 112, w: bw, h: 40 },
+    notes: { x: bx, y: panel.y + 164, w: bw, h: 40 },
+    create: { x: bx2, y: panel.y + 164, w: bw, h: 40 },
+    del: { x: bx, y: panel.y + 216, w: bw, h: 40 },
+    logout: { x: bx2, y: panel.y + 216, w: bw, h: 40 },
+    admin: { x: bx, y: panel.y + 272, w: bx2 + bw - bx, h: 36 },
+    back: { x: panel.x + panel.w / 2 - 70, y: panel.y + 406, w: 140, h: 36 },
+    confirmYes: { x: bx + 10, y: panel.y + 246, w: 160, h: 36 },
+    confirmNo: { x: bx2 + 16, y: panel.y + 246, w: 160, h: 36 }
+  };
+}
+
+function drawAccountPanel() {
+  const L = accountLayout();
+  const p = L.panel;
+  ctx.fillStyle = 'rgba(5,1,3,.66)';
+  ctx.fillRect(0, 0, W, H);
+  drawLuxPanel(p.x, p.y, p.w, p.h);
+
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'middle';
+  ctx.fillStyle = PALETTE.gold;
+  ctx.font = 'bold 20px ' + SERIF;
+  ctx.fillText('АККАУНТ', p.x + p.w / 2, p.y + 38);
+
+  ctx.fillStyle = 'rgba(246,236,216,.92)';
+  ctx.font = '13px ' + SERIF;
+  ctx.fillText('Вы вошли как: ' + (activeAccount || '—'), p.x + p.w / 2, p.y + 74);
+  ctx.fillStyle = 'rgba(179,154,128,.72)';
+  ctx.font = '10.5px ' + SERIF;
+  ctx.fillText('Сохранения и коллекция относятся только к этому аккаунту', p.x + p.w / 2, p.y + 94);
+
+  drawLuxButton(L.nick, 'Изменить никнейм', { hot: inRect(L.nick, mouseX, mouseY), size: 12 });
+  drawLuxButton(L.pass, 'Изменить пароль', { hot: inRect(L.pass, mouseX, mouseY), size: 12 });
+  drawLuxButton(L.notes, 'Примечания', { hot: inRect(L.notes, mouseX, mouseY), size: 12 });
+  drawLuxButton(L.create, 'Создать аккаунт', { hot: inRect(L.create, mouseX, mouseY), size: 12 });
+  drawLuxButton(L.del, 'Удалить аккаунт', { hot: inRect(L.del, mouseX, mouseY), danger: true, size: 12 });
+  drawLuxButton(L.logout, 'Выйти', { hot: inRect(L.logout, mouseX, mouseY), size: 12 });
+
+  if (isAdminAccount()) {
+    drawLuxButton(L.admin, 'Админ: все аккаунты', { hot: inRect(L.admin, mouseX, mouseY), size: 12 });
+  } else {
+    const hotCode = inRect(L.admin, mouseX, mouseY);
+    ctx.fillStyle = hotCode ? '#f0c98f' : 'rgba(179,154,128,.5)';
+    ctx.font = '10.5px ' + SERIF;
+    ctx.textAlign = 'center';
+    ctx.fillText('Ввести код администратора', p.x + p.w / 2, p.y + 290);
+  }
+
+  if (accountConfirmDelete) {
+    ctx.fillStyle = 'rgba(20,4,8,.96)';
+    roundRect(p.x + 34, p.y + 156, p.w - 68, 140, 10);
+    ctx.fill();
+    ctx.strokeStyle = 'rgba(224,178,92,.5)';
+    ctx.lineWidth = 1;
+    roundRect(p.x + 34, p.y + 156, p.w - 68, 140, 10);
+    ctx.stroke();
+    ctx.fillStyle = '#e8a58f';
+    ctx.font = '13px ' + SERIF;
+    ctx.fillText('Удалить аккаунт «' + activeAccount + '»?', p.x + p.w / 2, p.y + 190);
+    ctx.fillStyle = 'rgba(246,236,216,.8)';
+    ctx.font = '11px ' + SERIF;
+    ctx.fillText('Его сохранения и коллекция тоже удалятся.', p.x + p.w / 2, p.y + 212);
+    drawLuxButton(L.confirmYes, 'Да, удалить', { hot: inRect(L.confirmYes, mouseX, mouseY), danger: true, size: 12 });
+    drawLuxButton(L.confirmNo, 'Отмена', { hot: inRect(L.confirmNo, mouseX, mouseY), size: 12 });
+  }
+
+  drawLuxButton(L.back, 'Назад', { hot: inRect(L.back, mouseX, mouseY), size: 12 });
+}
+
+function handleAccountClick(mx, my) {
+  const L = accountLayout();
+  if (accountConfirmDelete) {
+    if (inRect(L.confirmYes, mx, my)) { deleteAccount(); return; }
+    if (inRect(L.confirmNo, mx, my)) { accountConfirmDelete = false; return; }
+    return;
+  }
+  if (inRect(L.nick, mx, my)) { openAccountForm('nick'); return; }
+  if (inRect(L.pass, mx, my)) { openAccountForm('pass'); return; }
+  if (inRect(L.notes, mx, my)) {
+    if (!notesText) notesText = 'Ник: ' + (activeAccount || '') + ' · пароль: ';
+    menuPanel = 'notes';
+    return;
+  }
+  if (inRect(L.create, mx, my)) {
+    auth = { nick: '', pass: '', field: 'nick', error: '' };
+    menuPanel = null;
+    screen = 'auth';
+    return;
+  }
+  if (inRect(L.admin, mx, my)) {
+    if (isAdminAccount()) menuPanel = 'admin';
+    else openAccountForm('code');
+    return;
+  }
+  if (inRect(L.del, mx, my)) { accountConfirmDelete = true; return; }
+  if (inRect(L.logout, mx, my)) { logoutAccount(); return; }
+  if (inRect(L.back, mx, my)) { accountConfirmDelete = false; menuPanel = null; }
+}
+
+/* ---------- смена ника и пароля ---------- */
+
+function accountFormLayout() {
+  const panel = { x: 236, y: 116, w: 488, h: 308 };
+  return {
+    panel,
+    old: { x: panel.x + 40, y: panel.y + 104, w: panel.w - 80, h: 38 },
+    next: { x: panel.x + 40, y: panel.y + 172, w: panel.w - 80, h: 38 },
+    save: { x: panel.x + 40, y: panel.y + 240, w: 190, h: 38 },
+    cancel: { x: panel.x + 258, y: panel.y + 240, w: 190, h: 38 }
+  };
+}
+
+function openAccountForm(kind) {
+  accountForm = { kind: kind, old: '', next: '', field: kind === 'code' ? 'next' : 'old', error: '' };
+  menuPanel = 'accountForm';
+}
+
+function drawAccountFormPanel() {
+  const L = accountFormLayout();
+  const p = L.panel;
+  const kind = accountForm ? accountForm.kind : 'nick';
+  const isNick = kind === 'nick';
+  const isCode = kind === 'code';
+  ctx.fillStyle = 'rgba(5,1,3,.72)';
+  ctx.fillRect(0, 0, W, H);
+  drawLuxPanel(p.x, p.y, p.w, p.h);
+
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'middle';
+  ctx.fillStyle = PALETTE.gold;
+  ctx.font = 'bold 18px ' + SERIF;
+  ctx.fillText(isCode ? 'КОД АДМИНИСТРАТОРА' : (isNick ? 'ИЗМЕНИТЬ НИКНЕЙМ' : 'ИЗМЕНИТЬ ПАРОЛЬ'), p.x + p.w / 2, p.y + 34);
+
+  if (isCode) {
+    ctx.fillStyle = 'rgba(179,154,128,.8)';
+    ctx.font = '11.5px ' + SERIF;
+    ctx.fillText('Код один раз включает админку на этом аккаунте.', p.x + p.w / 2, p.y + 78);
+    ctx.fillStyle = 'rgba(224,178,92,.8)';
+    ctx.font = '11px ' + SERIF;
+    ctx.textAlign = 'left';
+    ctx.fillText('КОД', p.x + 40, p.y + 88);
+    drawInputField(L.old, accountForm ? accountForm.next : '', true, true);
+  } else {
+    ctx.textAlign = 'left';
+    ctx.fillStyle = 'rgba(224,178,92,.8)';
+    ctx.font = '11px ' + SERIF;
+    ctx.fillText('ТЕКУЩИЙ ПАРОЛЬ', p.x + 40, p.y + 88);
+    ctx.fillText(isNick ? 'НОВЫЙ НИКНЕЙМ' : 'НОВЫЙ ПАРОЛЬ', p.x + 40, p.y + 156);
+    drawInputField(L.old, accountForm ? accountForm.old : '', accountForm && accountForm.field === 'old', true);
+    drawInputField(L.next, accountForm ? accountForm.next : '', accountForm && accountForm.field === 'next', !isNick);
+  }
+
+  if (accountForm && accountForm.error) {
+    ctx.fillStyle = '#e8a58f';
+    ctx.font = '12px ' + SERIF;
+    ctx.textAlign = 'center';
+    ctx.fillText(accountForm.error, p.x + p.w / 2, p.y + 222);
+  }
+
+  drawLuxButton(L.save, 'Сохранить', { hot: inRect(L.save, mouseX, mouseY), primary: true, size: 12 });
+  drawLuxButton(L.cancel, 'Отмена', { hot: inRect(L.cancel, mouseX, mouseY), size: 12 });
+}
+
+function handleAccountFormClick(mx, my) {
+  const L = accountFormLayout();
+  if (!accountForm) return;
+  if (inRect(L.old, mx, my)) { accountForm.field = 'old'; accountForm.error = ''; return; }
+  if (inRect(L.next, mx, my)) { accountForm.field = 'next'; accountForm.error = ''; return; }
+  if (inRect(L.save, mx, my)) { submitAccountForm(); return; }
+  if (inRect(L.cancel, mx, my)) { accountForm = null; menuPanel = 'account'; }
+}
+
+function handleAccountFormKey(e) {
+  if (!accountForm) return;
+  if (accountForm.kind === 'code') {
+    if (e.code === 'Escape') { e.preventDefault(); accountForm = null; menuPanel = 'account'; return; }
+    if (e.code === 'Enter' || e.code === 'NumpadEnter') { e.preventDefault(); submitAccountForm(); return; }
+    if (e.code === 'Backspace') { e.preventDefault(); accountForm.next = accountForm.next.slice(0, -1); accountForm.error = ''; return; }
+    if (e.key && e.key.length === 1 && e.key !== ' ' && accountForm.next.length < 24) { accountForm.next += e.key; accountForm.error = ''; }
+    return;
+  }
+  if (e.code === 'Tab') {
+    e.preventDefault();
+    accountForm.field = accountForm.field === 'old' ? 'next' : 'old';
+    return;
+  }
+  if (e.code === 'Enter' || e.code === 'NumpadEnter') { e.preventDefault(); submitAccountForm(); return; }
+  if (e.code === 'Escape') { e.preventDefault(); accountForm = null; menuPanel = 'account'; return; }
+  if (e.code === 'Backspace') {
+    e.preventDefault();
+    if (accountForm.field === 'old') accountForm.old = accountForm.old.slice(0, -1);
+    else accountForm.next = accountForm.next.slice(0, -1);
+    accountForm.error = '';
+    return;
+  }
+  if (e.key && e.key.length === 1 && e.key !== ' ') {
+    const max = accountForm.kind === 'nick' ? 16 : 24;
+    if (accountForm.field === 'old') {
+      if (accountForm.old.length < 24) accountForm.old += e.key;
+    } else if (accountForm.next.length < max) {
+      accountForm.next += e.key;
+    }
+    accountForm.error = '';
+  }
+}
+
+function renameAccountData(from, to) {
+  try {
+    const a = '@' + from.toLowerCase();
+    const b = '@' + to.toLowerCase();
+    const bases = [SAVE_KEY, COLLECTION_KEY];
+    for (const base of bases) {
+      const val = localStorage.getItem(base + a);
+      if (val !== null) {
+        localStorage.setItem(base + b, val);
+        localStorage.removeItem(base + a);
+      }
+    }
+  } catch (err) { /* ignore */ }
+}
+
+function submitAccountForm() {
+  if (!accountForm) return;
+  const acc = accounts.find(a => a.nick === activeAccount);
+  if (!acc) { accountForm = null; menuPanel = 'account'; return; }
+  if (accountForm.old !== acc.pass) {
+    accountForm.error = 'Неверный текущий пароль';
+    accountForm.field = 'old';
+    return;
+  }
+  const next = accountForm.next.trim();
+  if (accountForm.kind === 'code') {
+    if (next !== ADMIN_CODE) {
+      accountForm.error = 'Неверный код администратора';
+      accountForm.field = 'next';
+      return;
+    }
+    acc.admin = true;
+    persistAccounts();
+    accountForm = null;
+    menuPanel = 'account';
+    menuToast = 'Доступ администратора включён';
+    menuToastUntil = performance.now() + 2400;
+    return;
+  }
+  if (accountForm.kind === 'nick') {
+    if (next.length < 2) { accountForm.error = 'Введите новый никнейм'; accountForm.field = 'next'; return; }
+    if (!validNick(next)) { accountForm.error = 'Ник — только латиница, цифры, _ - .'; accountForm.field = 'next'; return; }
+    if (next.toLowerCase() === acc.nick.toLowerCase()) { accountForm.error = 'Это тот же никнейм'; accountForm.field = 'next'; return; }
+    if (accounts.some(a => a !== acc && a.nick.toLowerCase() === next.toLowerCase())) {
+      accountForm.error = 'Этот никнейм уже занят — измените его';
+      accountForm.field = 'next';
+      return;
+    }
+    if (next.toLowerCase() === 'horizonchel') {
+      accountForm.error = 'Этот никнейм зарезервирован — выберите другой';
+      accountForm.field = 'next';
+      return;
+    }
+    const oldNick = acc.nick;
+    acc.nick = next;
+    persistAccounts();
+    renameAccountData(oldNick, next);
+    activeAccount = next;
+    rememberAccount(next);
+  } else {
+    if (!next) { accountForm.error = 'Введите новый пароль'; accountForm.field = 'next'; return; }
+    acc.pass = next;
+    persistAccounts();
+  }
+  accountForm = null;
+  accountConfirmDelete = false;
+  menuPanel = 'account';
+  menuToast = 'Изменения сохранены';
+  menuToastUntil = performance.now() + 2400;
+}
+
+function deleteAccount() {
+  const acc = accounts.find(a => a.nick === activeAccount);
+  if (acc) {
+    try {
+      const suffix = '@' + acc.nick.toLowerCase();
+      localStorage.removeItem(SAVE_KEY + suffix);
+      localStorage.removeItem(COLLECTION_KEY + suffix);
+    } catch (err) { /* ignore */ }
+    accounts = accounts.filter(a => a !== acc);
+    persistAccounts();
+  }
+  activeAccount = null;
+  rememberAccount(null);
+  saves = loadSaves();
+  collection = loadCollection();
+  accountConfirmDelete = false;
+  accountForm = null;
+  menuPanel = null;
+  auth = { nick: '', pass: '', field: 'nick', error: '' };
+  screen = 'auth';
+}
+
+function logoutAccount() {
+  activeAccount = null;
+  rememberAccount(null);
+  saves = loadSaves();
+  collection = loadCollection();
+  accountConfirmDelete = false;
+  accountForm = null;
+  menuPanel = null;
+  auth = { nick: '', pass: '', field: 'nick', error: '' };
+  screen = 'auth';
+}
+
+﻿﻿/* ---------- админ: список аккаунтов (только HorizonChel) ---------- */
+
+function adminLayout() {
+  const panel = { x: 110, y: 48, w: 740, h: 444 };
+  return {
+    panel,
+    back: { x: panel.x + panel.w / 2 - 80, y: panel.y + 386, w: 160, h: 36 }
+  };
+}
+
+function drawAdminPanel() {
+  const L = adminLayout();
+  const p = L.panel;
+  ctx.fillStyle = 'rgba(5,1,3,.8)';
+  ctx.fillRect(0, 0, W, H);
+  drawLuxPanel(p.x, p.y, p.w, p.h);
+
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'middle';
+  ctx.fillStyle = PALETTE.gold;
+  ctx.font = 'bold 19px ' + SERIF;
+  ctx.fillText('ВСЕ АККАУНТЫ', p.x + p.w / 2, p.y + 30);
+  ctx.fillStyle = 'rgba(179,154,128,.72)';
+  ctx.font = '10.5px ' + SERIF;
+  ctx.fillText('Видит только аккаунт HorizonChel', p.x + p.w / 2, p.y + 52);
+
+  ctx.textAlign = 'left';
+  ctx.fillStyle = 'rgba(224,178,92,.6)';
+  ctx.font = '10px ' + SERIF;
+  ctx.fillText('НИК', p.x + 44, p.y + 80);
+  ctx.fillText('ПАРОЛЬ', p.x + 300, p.y + 80);
+  ctx.fillText('СОЗДАН', p.x + 500, p.y + 80);
+
+  ctx.strokeStyle = 'rgba(224,178,92,.2)';
+  ctx.lineWidth = 1;
+  ctx.beginPath();
+  ctx.moveTo(p.x + 40, p.y + 90);
+  ctx.lineTo(p.x + p.w - 40, p.y + 90);
+  ctx.stroke();
+
+  if (!accounts.length) {
+    ctx.fillStyle = 'rgba(179,154,128,.7)';
+    ctx.font = '13px ' + SERIF;
+    ctx.textAlign = 'center';
+    ctx.fillText('Аккаунтов пока нет', p.x + p.w / 2, p.y + 190);
+  }
+
+  const maxRows = 11;
+  accounts.slice(0, maxRows).forEach((acc, i) => {
+    const y = p.y + 114 + i * 24;
+    ctx.textAlign = 'left';
+    ctx.fillStyle = acc.nick === activeAccount ? '#fff0cf' : PALETTE.parchment;
+    ctx.font = '13px ' + SERIF;
+    ctx.fillText(acc.nick, p.x + 44, y);
+    ctx.fillStyle = 'rgba(246,236,216,.85)';
+    ctx.fillText(acc.pass, p.x + 300, y);
+    ctx.fillStyle = 'rgba(179,154,128,.7)';
+    ctx.font = '11px ' + SERIF;
+    ctx.fillText(acc.created ? new Date(acc.created).toLocaleDateString('ru-RU') : '—', p.x + 500, y);
+  });
+  if (accounts.length > maxRows) {
+    ctx.fillStyle = 'rgba(179,154,128,.7)';
+    ctx.font = '11px ' + SERIF;
+    ctx.textAlign = 'center';
+    ctx.fillText('и ещё ' + (accounts.length - maxRows) + ' аккаунтов', p.x + p.w / 2, p.y + 114 + maxRows * 24);
+  }
+
+  drawLuxButton(L.back, 'Назад', { hot: inRect(L.back, mouseX, mouseY), size: 12 });
+}
+
+function handleAdminClick(mx, my) {
+  const L = adminLayout();
+  if (inRect(L.back, mx, my)) { menuPanel = 'account'; }
+}
+
+/* ---------- примечания ---------- */
+
+function notesLayout() {
+  const panel = { x: 190, y: 118, w: 580, h: 304 };
+  return {
+    panel,
+    input: { x: panel.x + 40, y: panel.y + 104, w: panel.w - 80, h: 42 },
+    save: { x: panel.x + 40, y: panel.y + 236, w: 190, h: 38 },
+    cancel: { x: panel.x + 258, y: panel.y + 236, w: 190, h: 38 }
+  };
+}
+
+function drawNotesPanel() {
+  const L = notesLayout();
+  const p = L.panel;
+  ctx.fillStyle = 'rgba(5,1,3,.72)';
+  ctx.fillRect(0, 0, W, H);
+  drawLuxPanel(p.x, p.y, p.w, p.h);
+
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'middle';
+  ctx.fillStyle = PALETTE.gold;
+  ctx.font = 'bold 18px ' + SERIF;
+  ctx.fillText('ПРИМЕЧАНИЯ', p.x + p.w / 2, p.y + 36);
+
+  ctx.fillStyle = 'rgba(179,154,128,.8)';
+  ctx.font = '11px ' + SERIF;
+  ctx.fillText('Запишите здесь свой ник и пароль, чтобы не забыть', p.x + p.w / 2, p.y + 62);
+
+  drawInputField(L.input, notesText, true, false);
+
+  ctx.textAlign = 'left';
+  ctx.fillStyle = 'rgba(179,154,128,.6)';
+  ctx.font = '10.5px ' + SERIF;
+  ctx.fillText('Важно: заметка видна только на этом компьютере и не защищена паролем.', p.x + 40, p.y + 176);
+  ctx.fillText('Если сюда зайдёт другой человек, он сможет её прочитать.', p.x + 40, p.y + 194);
+
+  drawLuxButton(L.save, 'Сохранить', { hot: inRect(L.save, mouseX, mouseY), primary: true, size: 12 });
+  drawLuxButton(L.cancel, 'Назад', { hot: inRect(L.cancel, mouseX, mouseY), size: 12 });
+}
+
+function handleNotesClick(mx, my) {
+  const L = notesLayout();
+  if (inRect(L.save, mx, my)) {
+    try { localStorage.setItem(ACCOUNT_NOTES_KEY, notesText); } catch (err) { /* ignore */ }
+    menuToast = 'Примечание сохранено';
+    menuToastUntil = performance.now() + 2200;
+    menuPanel = 'account';
+    return;
+  }
+  if (inRect(L.cancel, mx, my)) { menuPanel = 'account'; return; }
+}
+
+function handleNotesKey(e) {
+  if (e.code === 'Escape') { e.preventDefault(); menuPanel = 'account'; return; }
+  if (e.code === 'Enter' || e.code === 'NumpadEnter') {
+    e.preventDefault();
+    try { localStorage.setItem(ACCOUNT_NOTES_KEY, notesText); } catch (err) { /* ignore */ }
+    menuPanel = 'account';
+    return;
+  }
+  if (e.code === 'Backspace') {
+    e.preventDefault();
+    notesText = notesText.slice(0, -1);
+    return;
+  }
+  if (e.key && e.key.length === 1) {
+    if (notesText.length < 120) notesText += e.key;
+  }
+}
+
 function draw() {
   ctx.setTransform(canvas.width / W, 0, 0, canvas.height / H, 0, 0);
   ctx.clearRect(0, 0, W, H);
+
+  if (screen === 'auth') {
+    drawAuthScreen();
+    return;
+  }
+
+  if (screen === 'menu') {
+    drawMainMenu();
+    return;
+  }
 
   drawWall();
   drawWallFrames(currentRoom);
@@ -6672,7 +9839,6 @@ function draw() {
   }
 
   drawLampPools();
-  drawLamps();
 
   ctx.restore();
 
@@ -6681,7 +9847,7 @@ function draw() {
   const room = rooms[currentRoom];
   const door = nearDoor();
 
-  ctx.fillStyle = 'rgba(23,15,12,.85)';
+  ctx.fillStyle = 'rgba(30,9,14,.9)';
   ctx.fillRect(0, 0, W, MARGIN - 6);
   ctx.fillStyle = PALETTE.brass;
   ctx.fillRect(0, MARGIN - 8, W, 2);
@@ -6702,7 +9868,7 @@ function draw() {
   ctx.font = 'bold 13px ' + SERIF;
   const nameW = Math.min(250, ctx.measureText(room.name).width + 24);
   const nameX = UI.tasks.x + UI.tasks.w + 8;
-  ctx.fillStyle = 'rgba(23,15,12,.9)';
+  ctx.fillStyle = 'rgba(30,9,14,.92)';
   roundRect(nameX, 4, nameW, 22, 6);
   ctx.fill();
   ctx.strokeStyle = 'rgba(224,178,92,.5)';
@@ -6740,7 +9906,7 @@ function draw() {
     ctx.fillText('История завершена. Можно исследовать библиотеку или начать заново.', W / 2, H - 20);
   } else {
     ctx.fillStyle = PALETTE.dim;
-    ctx.fillText('WASD — движение, подойди к двери и кликни', W / 2, H - 20);
+    ctx.fillText('WASD — движение, подойди к двери и кликни · Esc — пауза', W / 2, H - 20);
   }
 
   drawCornerButton(UI.tasks, inRect(UI.tasks, mouseX, mouseY), iconTasks);
@@ -6751,7 +9917,7 @@ function draw() {
   if (havePass) {
     ctx.textAlign = 'center';
     ctx.textBaseline = 'middle';
-    ctx.fillStyle = 'rgba(23,15,12,.9)';
+    ctx.fillStyle = 'rgba(30,9,14,.92)';
     roundRect(UI.map.x - 104, 6, 96, 22, 6);
     ctx.fill();
     ctx.strokeStyle = PALETTE.brass;
@@ -6765,10 +9931,17 @@ function draw() {
   drawMiniMap();
 
   if (typeof canvas !== 'undefined' && canvas.style) {
-    const mapHot = mapOpen && mapNodeAt(mouseX, mouseY);
-    const clickable = ending ? true : (dialog ? true : (mapOpen ? !!mapHot : (taskOpen || quoteCard || door || item || storyItem || hotObj ||
-      inRect(UI.tasks, mouseX, mouseY) || inRect(UI.map, mouseX, mouseY) || inRect(UI.exit, mouseX, mouseY) ||
-      (storyLocked && inRect(UI.restart, mouseX, mouseY)))));
+    let clickable = false;
+    if (nameEdit) {
+      clickable = nameEditPointerAt(mouseX, mouseY);
+    } else if (overlay) {
+      clickable = overlayPointerAt(mouseX, mouseY);
+    } else {
+      const mapHot = mapOpen && mapNodeAt(mouseX, mouseY);
+      clickable = ending ? true : (dialog ? true : (mapOpen ? !!mapHot : (taskOpen || quoteCard || door || item || storyItem || hotObj ||
+        inRect(UI.tasks, mouseX, mouseY) || inRect(UI.map, mouseX, mouseY) || inRect(UI.exit, mouseX, mouseY) ||
+        (storyLocked && inRect(UI.restart, mouseX, mouseY)))));
+    }
     canvas.style.cursor = clickable ? 'pointer' : 'default';
   }
 
@@ -6780,9 +9953,17 @@ function draw() {
   if (ending) drawEnding();
   if (storyTask) drawStoryTask();
 
+  if (overlay === 'pause') drawPausePanel();
+  else if (overlay === 'save') {
+    drawSavePanel();
+    if (nameEdit) drawNameEditor();
+  } else if (overlay === 'settings') drawSettingsPanel('game');
+  else if (overlay === 'collection') drawCollectionPanel();
+  else if (overlay === 'exit') drawExitConfirm();
+
   if (fade > 0) {
     const a = Math.min(1, fade * 1.6);
-    ctx.fillStyle = `rgba(10,6,4,${(a * 0.94).toFixed(3)})`;
+    ctx.fillStyle = `rgba(14,3,7,${(a * 0.94).toFixed(3)})`;
     ctx.fillRect(0, 0, W, H);
     const labelA = Math.max(0, Math.min(1, (a - 0.3) / 0.5));
     if (labelA > 0) {
@@ -7085,6 +10266,16 @@ function drawDialog() {
   ctx.fillStyle = PALETTE.gold;
   ctx.font = 'bold 19px ' + SERIF;
   ctx.fillText(dialog.speaker || '', x + 30, y + 26);
+
+  const speakerNpc = npcs.find(n => n.name === dialog.speaker);
+  const speakerRole = speakerNpc && speakerNpc.arc ? ARCS[speakerNpc.arc].role : (speakerNpc && speakerNpc.secret ? 'заведующая' : '');
+  if (speakerRole) {
+    ctx.textAlign = 'right';
+    ctx.fillStyle = 'rgba(179,154,128,.75)';
+    ctx.font = '11px ' + SERIF;
+    ctx.fillText(speakerRole, x + w - 30, y + 27);
+    ctx.textAlign = 'left';
+  }
 
   ctx.strokeStyle = 'rgba(224,178,92,.28)';
   ctx.beginPath();
@@ -7813,9 +11004,15 @@ function drawMap() {
   ctx.restore();
 }
 
+function quoteCardLayout() {
+  const w = 580, h = 356;
+  const x = (W - w) / 2, y = (H - h) / 2;
+  return { panel: { x, y, w, h }, add: { x: W / 2 - 160, y: y + 284, w: 320, h: 38 } };
+}
+
 function drawQuoteCard() {
   const q = quoteCard;
-  const w = 580, h = 300;
+  const w = 580, h = 356;
   const x = (W - w) / 2, y = (H - h) / 2;
 
   ctx.save();
@@ -7859,6 +11056,12 @@ function drawQuoteCard() {
   ctx.font = '10px ' + SERIF;
   ctx.fillText('ЦИТАТА ИЗ КНИГИ', W / 2, y + 45);
 
+  ctx.textAlign = 'right';
+  ctx.fillStyle = '#8a6a48';
+  ctx.font = '9.5px ' + SERIF;
+  ctx.fillText('собрано ' + collection.quotes.length + ' / ' + BOOK_QUOTES.length, x + w - 22, y + 26);
+  ctx.textAlign = 'center';
+
   ctx.fillStyle = '#4a2b1c';
   fitText(`«${q.book}»`, W / 2, y + 72, w - 90, 18);
 
@@ -7879,11 +11082,20 @@ function drawQuoteCard() {
 
   ctx.fillStyle = '#8a6a48';
   ctx.font = '12px ' + SERIF;
-  fitText(`${q.book} · ${q.author}`, W / 2, y + 262, w - 100, 12);
+  fitText(`${q.book} · ${q.author}`, W / 2, y + 256, w - 100, 12);
+
+  const cardL = quoteCardLayout();
+  const hasIt = quoteCollected(q.book);
+  const justAdded = performance.now() < quoteCollectFlashUntil;
+  drawLuxButton(cardL.add, hasIt ? (justAdded ? 'Добавлено в коллекцию' : 'Уже в коллекции') : 'Добавить в коллекцию', {
+    hot: inRect(cardL.add, mouseX, mouseY),
+    primary: !hasIt,
+    size: 12
+  });
 
   ctx.fillStyle = 'rgba(90,60,40,.65)';
   ctx.font = '10px ' + SERIF;
-  ctx.fillText('Клик или Esc — закрыть', W / 2, y + 284);
+  ctx.fillText('Esc — закрыть без добавления', W / 2, y + 340);
 
   ctx.restore();
 }
