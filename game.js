@@ -10057,7 +10057,7 @@ function draw() {
 
   ctx.save();
   ctx.translate(player.x, player.y + 11);
-  ctx.scale(1.12, 1.5);
+  ctx.scale(1.06, 1.5);
   ctx.translate(-player.x, -player.y - 11);
   drawCat(player);
   ctx.restore();
