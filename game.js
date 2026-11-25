@@ -276,13 +276,13 @@ const interactables = [
 ];
 
 const npcs = [
-  { room: 'vestibule', x: 225, y: 214, name: 'Библиотекарь Борис', skin: '#e8c3a0', hair: '#7a726a', outfit: '#6a4a5a', trim: '#4a3240', style: 1, glasses: true, prop: 'book', scale: 0.89, quote: 'Борис поправляет очки: «Читальный зал откроется в восемь. Пропуск — у секретаря за правой стойкой. А ещё... присмотрись к людям здесь. У каждого своя история»' },
-  { room: 'computer_class', x: 760, y: 230, name: 'Егор', arc: 'egor', skin: '#e8bd98', hair: '#2f2a28', outfit: '#4f6d7a', trim: '#36505a', style: 0, glasses: true, prop: 'tablet', scale: 0.91, quote: 'Егор не отрывается от планшета: «Книги? Это медленный интерфейс. У меня каталог падает третий день»' },
-  { room: 'buffet', x: 460, y: 230, name: 'Клара', arc: 'klara', skin: '#c98a5a', hair: '#3a2a22', outfit: '#a05a6a', trim: '#7a3e4c', style: 2, scarf: '#c9a23a', prop: 'tray', scale: 0.9, quote: 'Клара вытирает руки: «У меня потерялись страницы из книги рецептов. Внучка говорит, что я всё равно всё помню. А я уже не уверена»' },
-  { room: 'abonement', x: 740, y: 250, name: 'Библиотекарша Вера', arc: 'vera', skin: '#f0c9a6', hair: '#a05a6a', outfit: '#c9a23a', trim: '#8a6a24', style: 3, scarf: '#8a3a4a', prop: 'books', scale: 0.93, quote: 'Вера перебирает формуляры: «Редкую книгу просит мальчик. А я не могу её отдать — это единственный экземпляр»' },
-  { room: 'hall_universal', x: 760, y: 360, name: 'Миша', arc: 'misha', scale: 0.68, skin: '#f2b487', hair: '#2b211d', outfit: '#f2772c', trim: '#c9571c', style: 0, prop: 'book', quote: 'Миша сидит с телефоном: «Книги — это скучно. Там надо долго. А тут всё быстро»' },
-  { room: 'archive', x: 690, y: 300, name: 'Гриша', arc: 'grisha', skin: '#d9a982', hair: '#8a8078', outfit: '#7a5a3a', trim: '#5a4028', style: 0, beard: true, prop: 'folder', scale: 0.66, quote: 'Гриша подметает у стеллажей: «Я тут просто убираю. Истории — не моё. Я и в школе-то не дочитал ни одной»' },
-  { room: 'admin', x: 740, y: 280, name: 'Заведующая Ада', secret: true, skin: '#e6c2a2', hair: '#6a6a72', outfit: '#5a3a4a', trim: '#3e2632', style: 3, glasses: true, scarf: '#b08a52', prop: 'folder', scale: 0.89, quote: 'Ада смотрит поверх очков: «В каталоге пять историй. Но у библиотеки есть и седьмая полка. Она не для читателей»' }
+  { room: 'vestibule', x: 225, y: 214, name: 'Библиотекарь Борис', skin: '#e8c3a0', hair: '#7a726a', outfit: '#6a4a5a', trim: '#4a3240', style: 1, glasses: true, prop: 'book', scale: 0.92, quote: 'Борис поправляет очки: «Читальный зал откроется в восемь. Пропуск — у секретаря за правой стойкой. А ещё... присмотрись к людям здесь. У каждого своя история»' },
+  { room: 'computer_class', x: 760, y: 230, name: 'Егор', arc: 'egor', skin: '#e8bd98', hair: '#2f2a28', outfit: '#4f6d7a', trim: '#36505a', style: 0, glasses: true, prop: 'tablet', scale: 0.92, quote: 'Егор не отрывается от планшета: «Книги? Это медленный интерфейс. У меня каталог падает третий день»' },
+  { room: 'buffet', x: 460, y: 230, name: 'Клара', arc: 'klara', skin: '#c98a5a', hair: '#3a2a22', outfit: '#a05a6a', trim: '#7a3e4c', style: 2, scarf: '#c9a23a', prop: 'tray', scale: 0.92, quote: 'Клара вытирает руки: «У меня потерялись страницы из книги рецептов. Внучка говорит, что я всё равно всё помню. А я уже не уверена»' },
+  { room: 'abonement', x: 740, y: 250, name: 'Библиотекарша Вера', arc: 'vera', skin: '#f0c9a6', hair: '#a05a6a', outfit: '#c9a23a', trim: '#8a6a24', style: 3, scarf: '#8a3a4a', prop: 'books', scale: 0.92, quote: 'Вера перебирает формуляры: «Редкую книгу просит мальчик. А я не могу её отдать — это единственный экземпляр»' },
+  { room: 'hall_universal', x: 760, y: 360, name: 'Миша', arc: 'misha', scale: 0.86, skin: '#f2b487', hair: '#2b211d', outfit: '#f2772c', trim: '#c9571c', style: 0, prop: 'book', quote: 'Миша сидит с телефоном: «Книги — это скучно. Там надо долго. А тут всё быстро»' },
+  { room: 'archive', x: 690, y: 300, name: 'Гриша', arc: 'grisha', skin: '#d9a982', hair: '#8a8078', outfit: '#7a5a3a', trim: '#5a4028', style: 0, beard: true, prop: 'folder', scale: 0.92, quote: 'Гриша подметает у стеллажей: «Я тут просто убираю. Истории — не моё. Я и в школе-то не дочитал ни одной»' },
+  { room: 'admin', x: 740, y: 280, name: 'Заведующая Ада', secret: true, skin: '#e6c2a2', hair: '#6a6a72', outfit: '#5a3a4a', trim: '#3e2632', style: 3, glasses: true, scarf: '#b08a52', prop: 'folder', scale: 0.92, quote: 'Ада смотрит поверх очков: «В каталоге пять историй. Но у библиотеки есть и седьмая полка. Она не для читателей»' }
 ];
 for (const n of npcs) {
   n.chat = { room: n.room, x: n.x, y: n.y, icon: 'npc', title: n.name, text: n.quote, npc: n };
@@ -5905,834 +5905,257 @@ function npcGlasses(hx, hy, hr, shape) {
   ctx.stroke();
 }
 
-function drawVeraNpc(n, t) {
-  const skin = '#f0c9a6';
-  const hair = '#c85a24';
-  const hairLight = '#f0995e';
-  const sway = Math.sin(t * 1.35) * 0.4;
+/* ---------- взрослые персонажи одного роста и телосложения ---------- */
+function npcAdultArt(cfg) {
+  const t = performance.now() / 1000;
+  const bob = Math.sin(t * 1.6) * 0.3;
+  const skin = cfg.skin;
+  const hair = cfg.hair;
+  const shoulder = cfg.shoulder || 5.4;
 
   ctx.save();
-  ctx.rotate(Math.sin(t * 1.1) * 0.004);
+  ctx.translate(0, bob);
 
-  // backpack behind
-  ctx.fillStyle = '#39465e';
-  roundRect(-12, -43, 24, 26, 6);
+  for (const d of [-1, 1]) {
+    npcLimb(d * 2.3, -21.5, d * 2.7, -12, d * 2.5, -3, 3.0, cfg.pants);
+    npcShoe(d * 2.6, -1.5, d, cfg.shoes || '#2a2118');
+  }
+
+  ctx.fillStyle = cfg.pants;
+  roundRect(-4.4, -23.6, 8.8, 3.4, 1.8);
   ctx.fill();
-  ctx.fillStyle = '#4c5d7a';
-  roundRect(-10, -41, 20, 10, 4);
-  ctx.fill();
-  ctx.strokeStyle = 'rgba(0,0,0,.25)';
-  ctx.lineWidth = 1;
-  ctx.beginPath();
-  ctx.moveTo(-10, -29); ctx.lineTo(10, -29);
-  ctx.stroke();
 
-  // legs
-  npcLimb(-4.6, -17, -4.4, -9, -4.9, -2.4, 5.4, '#c7a178');
-  npcLimb(4.6, -17, 4.4, -9, 4.9, -2.4, 5.4, '#c7a178');
-  ctx.fillStyle = 'rgba(0,0,0,.1)';
-  ctx.fillRect(-7.2, -9, 5, 1.2);
-  ctx.fillRect(2.2, -9, 5, 1.2);
-  npcShoe(-5.2, -1.6, 1, '#6b4a36');
-  npcShoe(5.2, -1.6, -1, '#6b4a36');
-
-  // shirt
-  const shirt = ctx.createLinearGradient(0, -45, 0, -15);
-  shirt.addColorStop(0, '#c2dcf0');
-  shirt.addColorStop(0.55, '#a8c8e8');
-  shirt.addColorStop(1, '#8fb2d6');
-  ctx.fillStyle = shirt;
+  const g = ctx.createLinearGradient(0, -38, 0, -21);
+  g.addColorStop(0, cfg.shirt);
+  g.addColorStop(1, cfg.shirt2 || cfg.shirt);
+  ctx.fillStyle = g;
   ctx.beginPath();
-  ctx.moveTo(-9.6, -43);
-  ctx.quadraticCurveTo(-12.2, -32, -10.2, -26);
-  ctx.quadraticCurveTo(-12.4, -21, -11.4, -15);
-  ctx.quadraticCurveTo(0, -12, 11.4, -15);
-  ctx.quadraticCurveTo(12.4, -21, 10.2, -26);
-  ctx.quadraticCurveTo(12.2, -32, 9.6, -43);
+  ctx.moveTo(-shoulder, -37);
+  ctx.quadraticCurveTo(-shoulder - 0.4, -29, -4.2, -22.6);
+  ctx.lineTo(4.2, -22.6);
+  ctx.quadraticCurveTo(shoulder + 0.4, -29, shoulder, -37);
+  ctx.quadraticCurveTo(0, -38.8, -shoulder, -37);
   ctx.closePath();
   ctx.fill();
 
-  // collar and tie
-  ctx.fillStyle = '#eef4f8';
-  ctx.beginPath();
-  ctx.moveTo(-5, -44); ctx.lineTo(0, -37); ctx.lineTo(5, -44); ctx.closePath();
-  ctx.fill();
-  ctx.fillStyle = '#cf5a22';
-  ctx.beginPath();
-  ctx.moveTo(0, -39); ctx.lineTo(2.4, -36.5); ctx.lineTo(0, -26); ctx.lineTo(-2.4, -36.5);
-  ctx.closePath();
-  ctx.fill();
-  ctx.fillStyle = 'rgba(255,220,150,.22)';
-  ctx.beginPath();
-  ctx.moveTo(-0.8, -36); ctx.lineTo(0, -36); ctx.lineTo(-0.2, -27);
-  ctx.closePath();
-  ctx.fill();
+  if (cfg.plaid) {
+    ctx.strokeStyle = 'rgba(255,255,255,.16)';
+    ctx.lineWidth = 0.45;
+    for (let i = 0; i < 4; i++) {
+      ctx.beginPath();
+      ctx.moveTo(-shoulder + 0.6, -34.6 + i * 3.2);
+      ctx.lineTo(shoulder - 0.6, -34.6 + i * 3.2);
+      ctx.stroke();
+    }
+  }
 
-  // backpack straps
-  ctx.strokeStyle = '#39465e';
-  ctx.lineWidth = 3.4;
-  ctx.lineCap = 'round';
-  ctx.beginPath();
-  ctx.moveTo(-8, -43); ctx.quadraticCurveTo(-10, -32, -8.5, -19);
-  ctx.moveTo(8, -43); ctx.quadraticCurveTo(10, -32, 8.5, -19);
-  ctx.stroke();
-  ctx.fillStyle = '#c9a23a';
-  ctx.fillRect(-10, -31, 3, 2);
-  ctx.fillRect(7, -31, 3, 2);
+  if (cfg.apron) {
+    ctx.fillStyle = cfg.apron;
+    ctx.beginPath();
+    ctx.moveTo(-3.4, -31.4);
+    ctx.lineTo(3.4, -31.4);
+    ctx.lineTo(4.2, -22.6);
+    ctx.lineTo(-4.2, -22.6);
+    ctx.closePath();
+    ctx.fill();
+  }
 
-  // sleeves
-  ctx.strokeStyle = '#98bada';
-  ctx.lineWidth = 6;
-  ctx.lineCap = 'round';
-  ctx.beginPath();
-  ctx.moveTo(-10, -40); ctx.quadraticCurveTo(-15, -35, -14, -30);
-  ctx.moveTo(10, -40); ctx.quadraticCurveTo(15, -35, 14, -30);
-  ctx.stroke();
-  ctx.fillStyle = '#a8c8e8';
-  ctx.beginPath();
-  ctx.ellipse(-14, -29.5, 3.4, 2.2, 0.2, 0, Math.PI * 2);
-  ctx.ellipse(14, -29.5, 3.4, 2.2, -0.2, 0, Math.PI * 2);
-  ctx.fill();
+  const swing = Math.sin(t * 1.6) * 0.45;
+  for (const d of [-1, 1]) {
+    npcLimb(d * (shoulder - 0.7), -35.9, d * (shoulder + 0.9 + swing * d), -29.2, d * 4.3, -24.2, 2.7, skin);
+    npcHand(d * 4.3, -23.8, 1.6, skin);
+  }
 
-  // arms to hips
-  ctx.strokeStyle = skin;
-  ctx.lineWidth = 3.5;
-  ctx.beginPath();
-  ctx.moveTo(-13, -29); ctx.quadraticCurveTo(-16, -23, -11.5, -19.5);
-  ctx.moveTo(13, -29); ctx.quadraticCurveTo(16, -23, 11.5, -19.5);
-  ctx.stroke();
-  npcHand(-11, -18.6, 3, skin);
-  npcHand(11, -18.6, 3, skin);
-
-  // neck
   ctx.fillStyle = skin;
-  ctx.fillRect(-3, -47, 6, 5);
+  ctx.fillRect(-1.6, -40.4, 3.2, 4.2);
 
-  // wavy hair behind
+  const hy = -44.8;
+  const hr = 4.4;
+
   ctx.fillStyle = hair;
   ctx.beginPath();
-  ctx.moveTo(-8.5, -57);
-  ctx.bezierCurveTo(-17, -54, -17, -44, -13, -38);
-  ctx.bezierCurveTo(-15, -34, -11, -31, -7.5, -34);
-  ctx.bezierCurveTo(-8.5, -41, -7, -48, -6, -55);
-  ctx.closePath();
+  ctx.ellipse(0, hy - hr * 0.3, hr * 1.04, hr * 0.96, 0, Math.PI, Math.PI * 2);
   ctx.fill();
-  ctx.beginPath();
-  ctx.moveTo(8.5, -57);
-  ctx.bezierCurveTo(17, -54, 18, -43, 14, -37);
-  ctx.bezierCurveTo(17, -33, 12, -30, 8, -34);
-  ctx.bezierCurveTo(9, -41, 7.5, -48, 6, -55);
-  ctx.closePath();
-  ctx.fill();
-  ctx.beginPath();
-  ctx.ellipse(-12.5, -36, 4.2, 6.2, 0.5, 0, Math.PI * 2);
-  ctx.ellipse(12.5, -35, 4.2, 6.2, -0.5, 0, Math.PI * 2);
-  ctx.fill();
-  ctx.fillStyle = 'rgba(255,190,120,.22)';
-  ctx.beginPath();
-  ctx.ellipse(-12, -48, 3, 5, 0.3, 0, Math.PI * 2);
-  ctx.ellipse(11, -50, 2.4, 4, -0.3, 0, Math.PI * 2);
-  ctx.fill();
+  if (cfg.bun) {
+    ctx.beginPath();
+    ctx.arc(0, hy - hr * 1.2, hr * 0.6, 0, Math.PI * 2);
+    ctx.fill();
+  }
 
-  const hx = 0, hy = -55.5, hr = 9.4;
-  npcFace(skin, hx, hy, hr, { seed: 1.2, eyeColor: '#4d6b3a', blush: true, mouthColor: '#a04e3e', female: true });
+  npcFace(skin, 0, hy + 0.3, hr, {
+    seed: cfg.seed || 1,
+    eyeColor: cfg.eyeColor || '#4a3a30',
+    mouth: cfg.mouth || 'small',
+    mouthColor: '#8a4a3a',
+    blush: false,
+    gazeDown: !!cfg.gazeDown
+  });
 
-  // fringe
   ctx.fillStyle = hair;
   ctx.beginPath();
-  ctx.moveTo(-hr * 1.06, hy - hr * 0.1);
-  ctx.bezierCurveTo(-hr * 1.04, hy - hr * 0.9, -hr * 0.36, hy - hr * 1.24, hr * 0.2, hy - hr * 0.95);
-  ctx.bezierCurveTo(hr * 0.72, hy - hr * 0.92, hr * 1.04, hy - hr * 0.48, hr * 1.02, hy - hr * 0.02);
-  ctx.bezierCurveTo(hr * 0.8, hy - hr * 0.38, hr * 0.62, hy - hr * 0.46, hr * 0.4, hy - hr * 0.3);
-  ctx.bezierCurveTo(hr * 0.1, hy - hr * 0.66, -hr * 0.34, hy - hr * 0.5, -hr * 0.52, hy - hr * 0.22);
-  ctx.bezierCurveTo(-hr * 0.7, hy - hr * 0.58, -hr * 0.92, hy - hr * 0.42, -hr * 1.06, hy - hr * 0.1);
+  ctx.moveTo(-hr * 1.0, hy - hr * 0.25);
+  ctx.quadraticCurveTo(-hr * 0.1, hy - hr * 1.45, hr * 0.92, hy - hr * 0.3);
+  ctx.quadraticCurveTo(hr * 0.15, hy - hr * 0.8, -hr * 1.0, hy - hr * 0.25);
   ctx.closePath();
   ctx.fill();
-  ctx.fillStyle = hairLight;
-  ctx.beginPath();
-  ctx.ellipse(-hr * 0.42, hy - hr * 0.66, hr * 0.35, hr * 0.12, -0.45, 0, Math.PI * 2);
-  ctx.ellipse(hr * 0.38, hy - hr * 0.62, hr * 0.3, hr * 0.1, 0.4, 0, Math.PI * 2);
-  ctx.fill();
-  ctx.fillStyle = 'rgba(255,225,190,.2)';
-  ctx.beginPath();
-  ctx.ellipse(-hr * 0.1, hy - hr * 0.92, hr * 0.4, hr * 0.08, -0.2, 0, Math.PI * 2);
-  ctx.fill();
 
-  npcGlasses(hx, hy + 0.5, hr, 'round');
+  if (cfg.beard) {
+    ctx.fillStyle = hair;
+    ctx.beginPath();
+    ctx.moveTo(-hr * 0.75, hy + hr * 0.3);
+    ctx.quadraticCurveTo(0, hy + hr * 1.8, hr * 0.75, hy + hr * 0.3);
+    ctx.quadraticCurveTo(0, hy + hr * 0.85, -hr * 0.75, hy + hr * 0.3);
+    ctx.closePath();
+    ctx.fill();
+  }
+
+  if (cfg.glasses) npcGlasses(0, hy + hr * 0.05, hr, 'round');
+
   ctx.restore();
+
+  if (cfg.prop === 'tablet') {
+    ctx.fillStyle = '#1c2228';
+    roundRect(-3.4, -28.2, 6.8, 5, 1.1);
+    ctx.fill();
+    ctx.fillStyle = '#2f6f8a';
+    roundRect(-2.8, -27.6, 5.6, 3.8, 0.8);
+    ctx.fill();
+    ctx.fillStyle = 'rgba(200,245,255,.75)';
+    ctx.fillRect(-2, -26.6, 2.6, 0.5);
+    ctx.fillRect(-2, -25.4, 3.6, 0.5);
+  } else if (cfg.prop === 'books') {
+    ctx.fillStyle = '#8a3a4a';
+    roundRect(-6.6, -27.4, 5.6, 3.2, 0.7);
+    ctx.fill();
+    ctx.fillStyle = '#3f5f8a';
+    roundRect(-6.2, -24.4, 5.4, 3, 0.7);
+    ctx.fill();
+  } else if (cfg.prop === 'tray') {
+    ctx.fillStyle = '#9a8a70';
+    ctx.beginPath();
+    ctx.ellipse(-4.4, -25.4, 4.6, 1.8, 0, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.fillStyle = '#e8dcc8';
+    ctx.beginPath();
+    ctx.ellipse(-4.4, -26.2, 2.4, 0.9, 0, 0, Math.PI * 2);
+    ctx.fill();
+  } else if (cfg.prop === 'folder') {
+    ctx.fillStyle = '#c9a24a';
+    roundRect(0.4, -28.6, 6, 4.6, 0.7);
+    ctx.fill();
+    ctx.fillStyle = '#e8dcc0';
+    roundRect(0.9, -28.1, 5, 3.6, 0.5);
+    ctx.fill();
+  } else if (cfg.prop === 'book') {
+    ctx.fillStyle = '#5a6a8a';
+    roundRect(0.6, -27.6, 5.4, 4, 0.7);
+    ctx.fill();
+    ctx.fillStyle = '#efe3c8';
+    ctx.fillRect(0.9, -27.2, 4.8, 0.6);
+  }
+}
+
+/* ---------- ребёнок ---------- */
+function npcChildArt(cfg) {
+  const t = performance.now() / 1000;
+  const bob = Math.sin(t * 1.9) * 0.35;
+  const skin = cfg.skin;
+  const hair = cfg.hair;
+
+  ctx.save();
+  ctx.translate(0, bob);
+
+  for (const d of [-1, 1]) {
+    npcLimb(d * 1.9, -13.4, d * 2.1, -8, d * 2, -2.6, 2.6, cfg.pants);
+    npcShoe(d * 2.1, -1.2, d, cfg.shoes || '#b8431a');
+  }
+
+  ctx.fillStyle = cfg.pants;
+  roundRect(-3.6, -15.4, 7.2, 3, 1.6);
+  ctx.fill();
+
+  const g = ctx.createLinearGradient(0, -30, 0, -15);
+  g.addColorStop(0, cfg.shirt);
+  g.addColorStop(1, cfg.shirt2 || cfg.shirt);
+  ctx.fillStyle = g;
+  ctx.beginPath();
+  ctx.moveTo(-4.4, -28.2);
+  ctx.quadraticCurveTo(-4.8, -22, -3.6, -16.6);
+  ctx.lineTo(3.6, -15.2);
+  ctx.quadraticCurveTo(4.8, -21.4, 4.4, -28.2);
+  ctx.quadraticCurveTo(0, -30, -4.4, -28.2);
+  ctx.closePath();
+  ctx.fill();
+
+  const swing = Math.sin(t * 1.9) * 0.4;
+  for (const d of [-1, 1]) {
+    npcLimb(d * 3.9, -27.2, d * (5 + swing * d), -22, d * 3.6, -18, 2.2, skin);
+    npcHand(d * 3.6, -17.8, 1.4, skin);
+  }
+
+  ctx.fillStyle = skin;
+  ctx.fillRect(-1.3, -31.4, 2.6, 3.4);
+
+  const hy = -35.2;
+  const hr = 5.7;
+
+  ctx.fillStyle = hair;
+  ctx.beginPath();
+  ctx.ellipse(0, hy - hr * 0.3, hr * 1.05, hr * 0.95, 0, Math.PI, Math.PI * 2);
+  ctx.fill();
+
+  npcFace(skin, 0, hy + 0.3, hr, {
+    seed: cfg.seed || 3,
+    eyeColor: '#5a7a9a',
+    mouth: 'small',
+    mouthColor: '#a05a4a',
+    blush: true,
+    gazeDown: !!cfg.gazeDown
+  });
+
+  ctx.fillStyle = hair;
+  ctx.beginPath();
+  ctx.moveTo(-hr * 1.0, hy - hr * 0.25);
+  ctx.quadraticCurveTo(-hr * 0.1, hy - hr * 1.45, hr * 0.95, hy - hr * 0.3);
+  ctx.quadraticCurveTo(hr * 0.15, hy - hr * 0.85, -hr * 1.0, hy - hr * 0.25);
+  ctx.closePath();
+  ctx.fill();
+
+  ctx.fillStyle = '#2f3841';
+  roundRect(-2.2, -21.4, 4.4, 6, 1.2);
+  ctx.fill();
+  ctx.fillStyle = 'rgba(127,196,232,.55)';
+  ctx.fillRect(-1.4, -20.4, 2.8, 3.4);
+
+  ctx.restore();
+}
+
+function drawVeraNpc(n, t) {
+  npcAdultArt({ skin: '#f0c9a6', hair: '#7a3f4c', shirt: '#e6d6b8', shirt2: '#d6c2a0', pants: '#54445c', shoes: '#3a2a28', bun: true, prop: 'books', seed: 2 });
 }
 
 function drawKlaraNpc(n, t) {
-  const skin = '#eac3a1';
-  const bounce = Math.abs(Math.sin(t * 2.2)) * 1.1;
-  const fist = Math.sin(t * 3.1) * 1.2;
-
-  ctx.save();
-  ctx.translate(0, -bounce);
-
-  // ankles and shoes
-  npcLimb(-3.5, -10, -3.5, -6.5, -3.8, -3.2, 3.6, skin);
-  npcLimb(3.5, -10, 3.5, -6.5, 3.8, -3.2, 3.6, skin);
-  npcShoe(-4.6, -2.6, 1, '#f0ede4', '#b8b4a8');
-  npcShoe(4.6, -2.6, -1, '#f0ede4', '#b8b4a8');
-
-  // long skirt — женский силуэт
-  ctx.fillStyle = '#4a3f52';
-  ctx.beginPath();
-  ctx.moveTo(-8.8, -19);
-  ctx.lineTo(8.8, -19);
-  ctx.quadraticCurveTo(11.6, -10, 12.4, -4.4);
-  ctx.quadraticCurveTo(0, -1.6, -12.4, -4.4);
-  ctx.quadraticCurveTo(-11.6, -10, -8.8, -19);
-  ctx.closePath();
-  ctx.fill();
-  ctx.strokeStyle = 'rgba(20,14,20,.45)';
-  ctx.lineWidth = 0.8;
-  for (let i = -1; i <= 1; i++) {
-    ctx.beginPath();
-    ctx.moveTo(i * 4, -17);
-    ctx.quadraticCurveTo(i * 5.4, -10, i * 6, -4.2);
-    ctx.stroke();
-  }
-  ctx.fillStyle = 'rgba(255,255,255,.07)';
-  ctx.beginPath();
-  ctx.moveTo(-8, -18);
-  ctx.quadraticCurveTo(-10.4, -10, -10.2, -5);
-  ctx.lineTo(-12, -4.6);
-  ctx.quadraticCurveTo(-11.4, -10, -9.4, -18);
-  ctx.closePath();
-  ctx.fill();
-
-  // orange tee (как на портрете)
-  const jacket = ctx.createLinearGradient(0, -43, 0, -16);
-  jacket.addColorStop(0, '#f4894a');
-  jacket.addColorStop(1, '#cf5f27');
-  ctx.fillStyle = jacket;
-  ctx.beginPath();
-  ctx.moveTo(-7.6, -43);
-  ctx.quadraticCurveTo(-9.4, -33, -7.6, -27);
-  ctx.quadraticCurveTo(-11.4, -22, -10.4, -17);
-  ctx.quadraticCurveTo(0, -14, 10.4, -17);
-  ctx.quadraticCurveTo(11.4, -22, 7.6, -27);
-  ctx.quadraticCurveTo(9.4, -33, 7.6, -43);
-  ctx.closePath();
-  ctx.fill();
-
-  // collar and double-breasted buttons
-  ctx.fillStyle = '#f7f3e9';
-  ctx.beginPath();
-  ctx.moveTo(-6, -43); ctx.lineTo(0, -36); ctx.lineTo(6, -43); ctx.closePath();
-  ctx.fill();
-  ctx.strokeStyle = 'rgba(120,100,80,.3)';
-  ctx.lineWidth = 0.8;
-  for (let i = 0; i < 3; i++) {
-    ctx.fillStyle = '#8a7a64';
-    ctx.beginPath();
-    ctx.arc(-4, -33 + i * 5.5, 0.85, 0, Math.PI * 2);
-    ctx.arc(4, -33 + i * 5.5, 0.85, 0, Math.PI * 2);
-    ctx.fill();
-  }
-  ctx.strokeStyle = 'rgba(120,100,80,.25)';
-  ctx.beginPath();
-  ctx.moveTo(0, -36); ctx.lineTo(0, -18);
-  ctx.stroke();
-
-  // light apron over the tee
-  ctx.fillStyle = '#f5efe0';
-  ctx.beginPath();
-  ctx.moveTo(-9, -27);
-  ctx.lineTo(9, -27);
-  ctx.lineTo(10.5, -5);
-  ctx.quadraticCurveTo(0, -2.5, -10.5, -5);
-  ctx.closePath();
-  ctx.fill();
-  ctx.fillStyle = 'rgba(255,255,255,.45)';
-  ctx.beginPath();
-  ctx.moveTo(-7.5, -25); ctx.lineTo(-1, -25); ctx.lineTo(-2, -6); ctx.lineTo(-9, -7);
-  ctx.closePath();
-  ctx.fill();
-  ctx.strokeStyle = 'rgba(150,135,110,.35)';
-  ctx.lineWidth = 1;
-  ctx.beginPath();
-  ctx.moveTo(-9, -27); ctx.lineTo(9, -27);
-  ctx.stroke();
-
-  // цветастый платок на плечах (как на портрете)
-  ctx.fillStyle = '#b5493a';
-  ctx.beginPath();
-  ctx.moveTo(-11, -43);
-  ctx.quadraticCurveTo(-15.5, -33, -10, -27);
-  ctx.quadraticCurveTo(-4, -33, 0, -34);
-  ctx.quadraticCurveTo(4, -33, 10, -27);
-  ctx.quadraticCurveTo(15.5, -33, 11, -43);
-  ctx.quadraticCurveTo(0, -48, -11, -43);
-  ctx.closePath();
-  ctx.fill();
-  ctx.fillStyle = 'rgba(232,196,92,.8)';
-  for (let i = 0; i < 5; i++) {
-    const a = -0.9 + i * 0.45;
-    ctx.beginPath();
-    ctx.arc(Math.sin(a) * 9, -36 + Math.cos(a) * 3, 1.1, 0, Math.PI * 2);
-    ctx.fill();
-  }
-  ctx.fillStyle = 'rgba(255,255,255,.16)';
-  ctx.beginPath();
-  ctx.moveTo(-10, -42);
-  ctx.quadraticCurveTo(-13.5, -35, -10, -30);
-  ctx.lineTo(-8, -31);
-  ctx.quadraticCurveTo(-11, -36, -8.5, -41);
-  ctx.closePath();
-  ctx.fill();
-
-  // sleeves
-  ctx.strokeStyle = '#e8793c';
-  ctx.lineWidth = 5.6;
-  ctx.lineCap = 'round';
-  ctx.beginPath();
-  ctx.moveTo(-8, -39); ctx.quadraticCurveTo(-11, -36, -10.2, -31);
-  ctx.moveTo(8, -39); ctx.quadraticCurveTo(11, -36, 10.2, -31);
-  ctx.stroke();
-
-  // left hand on hip
-  ctx.strokeStyle = skin;
-  ctx.lineWidth = 3.4;
-  ctx.beginPath();
-  ctx.moveTo(-12, -30); ctx.quadraticCurveTo(-15, -24, -10.5, -20);
-  ctx.stroke();
-  npcHand(-10.5, -19, 2.9, skin);
-
-  // right arm raised in a cheerful fist
-  ctx.strokeStyle = skin;
-  ctx.lineWidth = 3.4;
-  ctx.beginPath();
-  ctx.moveTo(12, -30); ctx.quadraticCurveTo(19, -34, 17, -41 + fist);
-  ctx.stroke();
-  npcHand(17, -42 + fist, 3.3, skin);
-  ctx.fillStyle = skin;
-  ctx.beginPath();
-  ctx.arc(17.4, -44.5 + fist, 2.2, 0, Math.PI * 2);
-  ctx.fill();
-  ctx.strokeStyle = 'rgba(255,220,150,.7)';
-  ctx.lineWidth = 1;
-  ctx.beginPath();
-  ctx.arc(17, -42 + fist, 6.5, -0.6, 0.5);
-  ctx.moveTo(20, -35 + fist);
-  ctx.lineTo(22, -34 + fist);
-  ctx.stroke();
-
-  // neck
-  ctx.fillStyle = skin;
-  ctx.fillRect(-2.8, -46, 5.6, 5);
-
-  // седые волосы и пучок
-  const hx = 0, hy = -54.5, hr = 9;
-  ctx.fillStyle = '#cfc7b8';
-  ctx.beginPath();
-  ctx.ellipse(hx, hy - hr * 1.06, hr * 0.5, hr * 0.44, 0, 0, Math.PI * 2);
-  ctx.fill();
-  ctx.strokeStyle = 'rgba(120,108,92,.5)';
-  ctx.lineWidth = 0.8;
-  ctx.beginPath();
-  ctx.ellipse(hx, hy - hr * 1.06, hr * 0.5, hr * 0.44, 0, 0, Math.PI * 2);
-  ctx.stroke();
-  ctx.fillStyle = 'rgba(255,255,255,.45)';
-  ctx.beginPath();
-  ctx.ellipse(hx - hr * 0.14, hy - hr * 1.2, hr * 0.2, hr * 0.1, -0.3, 0, Math.PI * 2);
-  ctx.fill();
-  ctx.beginPath();
-  ctx.ellipse(hx, hy - hr * 0.3, hr * 1.05, hr * 0.78, 0, Math.PI * 0.95, Math.PI * 2.05);
-  ctx.fill();
-  ctx.beginPath();
-  ctx.ellipse(hx - hr * 0.94, hy + hr * 0.05, hr * 0.22, hr * 0.4, -0.12, 0, Math.PI * 2);
-  ctx.ellipse(hx + hr * 0.94, hy + hr * 0.05, hr * 0.22, hr * 0.4, 0.12, 0, Math.PI * 2);
-  ctx.fill();
-  ctx.fillStyle = 'rgba(255,255,255,.4)';
-  ctx.beginPath();
-  ctx.ellipse(hx - hr * 0.3, hy - hr * 0.74, hr * 0.4, hr * 0.1, -0.25, 0, Math.PI * 2);
-  ctx.fill();
-
-  npcFace(skin, hx, hy + 0.4, hr, { seed: 2.1, eyeColor: '#3a2b20', blush: true, mouth: 'smile', mouthColor: '#a04e3e', age: true, female: true, lipColor: 'rgba(186,88,78,.5)' });
-
-  // warm smile lines
-  ctx.strokeStyle = 'rgba(150,90,60,.35)';
-  ctx.lineWidth = 0.8;
-  ctx.beginPath();
-  ctx.arc(hx - hr * 0.52, hy + hr * 0.38, hr * 0.18, 0.15 * Math.PI, 0.7 * Math.PI);
-  ctx.arc(hx + hr * 0.52, hy + hr * 0.38, hr * 0.18, 0.3 * Math.PI, 0.85 * Math.PI);
-  ctx.stroke();
-
-  ctx.restore();
+  npcAdultArt({ skin: '#c98a5a', hair: '#3a2a22', shirt: '#7a4a5a', shirt2: '#603a48', pants: '#46382c', shoes: '#3a2a20', bun: true, apron: '#e2d6c0', prop: 'tray', seed: 5 });
 }
 
 function drawMishaNpc(n, t) {
-  const skin = '#f4b183';
-  const hair = '#2b211d';
-  const pocketGlow = 0.28 + Math.sin(t * 2.4) * 0.12;
-  const shift = Math.sin(t * 1.5) * 0.35;
-  const look = Math.sin(t * 0.8);
-  const gazeDown = look < 0.2;
-
-  ctx.save();
-  ctx.translate(shift, 0);
-
-  // legs
-  npcLimb(-3.6, -18, -3.5, -11, -4, -4, 4.3, skin);
-  npcLimb(3.6, -18, 3.5, -11, 4, -4, 4.3, skin);
-  npcShoe(-4.3, -3.4, 1, '#e2602a', '#b8431a');
-  npcShoe(4.3, -3.4, -1, '#e2602a', '#b8431a');
-
-  // beige shorts
-  ctx.fillStyle = '#2f5c9e';
-  roundRect(-6.8, -22, 13.6, 9, 3);
-  ctx.fill();
-  ctx.strokeStyle = 'rgba(18,38,78,.4)';
-  ctx.lineWidth = 0.9;
-  ctx.beginPath();
-  ctx.moveTo(-2.4, -20); ctx.lineTo(-2.4, -13.5);
-  ctx.moveTo(2.4, -20); ctx.lineTo(2.4, -13.5);
-  ctx.stroke();
-
-  // orange tee (как на портрете)
-  const sweat = ctx.createLinearGradient(0, -40, 0, -19);
-  sweat.addColorStop(0, '#ff8f3a');
-  sweat.addColorStop(1, '#e0561b');
-  ctx.fillStyle = sweat;
-  ctx.beginPath();
-  ctx.moveTo(-8.6, -38);
-  ctx.quadraticCurveTo(-11, -30, -8.6, -20);
-  ctx.quadraticCurveTo(0, -17.5, 8.6, -20);
-  ctx.quadraticCurveTo(11, -30, 8.6, -38);
-  ctx.closePath();
-  ctx.fill();
-
-  // collar
-  ctx.fillStyle = '#ffffff';
-  ctx.beginPath();
-  ctx.moveTo(-5, -40); ctx.lineTo(0, -34.6); ctx.lineTo(5, -40); ctx.closePath();
-  ctx.fill();
-  ctx.fillStyle = 'rgba(180,160,130,.35)';
-  ctx.beginPath();
-  ctx.moveTo(-4, -39.4); ctx.lineTo(0, -35.4); ctx.lineTo(4, -39.4); ctx.closePath();
-  ctx.fill();
-
-  // sleeves + hands in pockets
-  ctx.strokeStyle = '#f6762a';
-  ctx.lineWidth = 5.2;
-  ctx.lineCap = 'round';
-  ctx.beginPath();
-  ctx.moveTo(-8.5, -36); ctx.quadraticCurveTo(-11, -29, -7.8, -23);
-  ctx.moveTo(8.5, -36); ctx.quadraticCurveTo(11, -29, 7.8, -23);
-  ctx.stroke();
-  ctx.fillStyle = '#e0561b';
-  ctx.beginPath();
-  ctx.ellipse(-7.8, -22.5, 2.6, 1.7, 0.1, 0, Math.PI * 2);
-  ctx.ellipse(7.8, -22.5, 2.6, 1.7, -0.1, 0, Math.PI * 2);
-  ctx.fill();
-
-  // phone peeking from pocket
-  ctx.fillStyle = '#2f3841';
-  roundRect(-2.3, -25, 4.6, 6.8, 1.4);
-  ctx.fill();
-  ctx.fillStyle = `rgba(127,196,232,${pocketGlow.toFixed(3)})`;
-  ctx.fillRect(-1.5, -24, 3, 4.2);
-  ctx.fillStyle = `rgba(127,196,232,${(pocketGlow * 0.25).toFixed(3)})`;
-  ctx.beginPath();
-  ctx.arc(0, -21, 7, 0, Math.PI * 2);
-  ctx.fill();
-
-  // neck
-  ctx.fillStyle = skin;
-  ctx.fillRect(-2.6, -43, 5.2, 4.5);
-
-  // hair + head
-  const hx = 0, hy = -49.5, hr = 9.3;
-  ctx.fillStyle = hair;
-  ctx.beginPath();
-  ctx.ellipse(hx, hy - hr * 0.55, hr * 1.02, hr * 0.72, 0, Math.PI, Math.PI * 2);
-  ctx.fill();
-  ctx.fillStyle = '#1f1916';
-  ctx.beginPath();
-  ctx.ellipse(hx - hr * 0.9, hy - hr * 0.15, hr * 0.16, hr * 0.28, 0.1, 0, Math.PI * 2);
-  ctx.ellipse(hx + hr * 0.9, hy - hr * 0.15, hr * 0.16, hr * 0.28, -0.1, 0, Math.PI * 2);
-  ctx.fill();
-
-  npcFace(skin, hx, hy + 0.5, hr, { seed: 3.4, eyeColor: '#5a7a9a', blush: true, mouth: 'small', gazeDown, mouthColor: '#a05a4a' });
-
-  // side-swept fringe
-  ctx.fillStyle = hair;
-  ctx.beginPath();
-  ctx.moveTo(-hr * 1.04, hy - hr * 0.18);
-  ctx.bezierCurveTo(-hr * 0.95, hy - hr * 0.98, -hr * 0.2, hy - hr * 1.18, hr * 0.3, hy - hr * 0.82);
-  ctx.bezierCurveTo(hr * 0.8, hy - hr * 0.78, hr * 0.98, hy - hr * 0.35, hr * 0.82, hy - hr * 0.08);
-  ctx.bezierCurveTo(hr * 0.56, hy - hr * 0.5, hr * 0.2, hy - hr * 0.55, -hr * 0.12, hy - hr * 0.32);
-  ctx.bezierCurveTo(-hr * 0.4, hy - hr * 0.58, -hr * 0.78, hy - hr * 0.44, -hr * 1.04, hy - hr * 0.18);
-  ctx.closePath();
-  ctx.fill();
-  ctx.fillStyle = 'rgba(255,238,200,.2)';
-  ctx.beginPath();
-  ctx.ellipse(hr * 0.2, hy - hr * 0.78, hr * 0.34, hr * 0.08, -0.2, 0, Math.PI * 2);
-  ctx.fill();
-
-  // phone light on chin
-  ctx.fillStyle = `rgba(255,170,120,${(pocketGlow * 0.16).toFixed(3)})`;
-  ctx.beginPath();
-  ctx.ellipse(hx, hy + hr * 0.75, hr * 0.7, hr * 0.35, 0, 0, Math.PI * 2);
-  ctx.fill();
-
-  ctx.restore();
+  npcChildArt({ skin: '#f4b183', hair: '#2b211d', shirt: '#ff8f3a', shirt2: '#e0561b', pants: '#2f5c9e', shoes: '#e2602a', gazeDown: true });
 }
 
 function drawEgorNpc(n, t) {
-  const skin = '#e8bd98';
-  const hair = '#6b4227';
-  const tap = Math.sin(t * 5.2) * 0.8;
-  const glow = 0.42 + Math.sin(t * 2.1) * 0.12;
-
-  ctx.save();
-  ctx.translate(0, 0.5);
-
-  // legs (purple plaid trousers)
-  npcLimb(-4.4, -17, -4.2, -9, -4.8, -2, 5.6, '#6a4f85');
-  npcLimb(4.4, -17, 4.2, -9, 4.8, -2 + tap, 5.6, '#6a4f85');
-  ctx.strokeStyle = 'rgba(48,34,68,.45)';
-  ctx.lineWidth = 0.7;
-  for (let i = 0; i < 3; i++) {
-    ctx.beginPath();
-    ctx.moveTo(-7, -14 + i * 3.4); ctx.lineTo(-2, -14 + i * 3.4);
-    ctx.moveTo(2, -14 + i * 3.4); ctx.lineTo(7, -14 + i * 3.4);
-    ctx.stroke();
-  }
-  for (let i = 0; i < 2; i++) {
-    ctx.beginPath();
-    ctx.moveTo(-4.8 + i * 1.2, -16); ctx.lineTo(-4.5 + i * 1.2, -3);
-    ctx.moveTo(4.8 - i * 1.2, -16); ctx.lineTo(4.5 - i * 1.2, -3);
-    ctx.stroke();
-  }
-  // slippers
-  ctx.fillStyle = '#7d6a5a';
-  ctx.beginPath();
-  ctx.ellipse(-5.2, -1.4, 6, 2.7, 0, 0, Math.PI * 2);
-  ctx.ellipse(5.2, -1.4 + tap, 6, 2.7, 0, 0, Math.PI * 2);
-  ctx.fill();
-  ctx.fillStyle = '#5e4f42';
-  ctx.beginPath();
-  ctx.ellipse(-5.2, -0.5, 6.2, 1.3, 0, 0, Math.PI * 2);
-  ctx.ellipse(5.2, 0.5 + tap, 6.2, 1.3, 0, 0, Math.PI * 2);
-  ctx.fill();
-
-  // white tee
-  const tee = ctx.createLinearGradient(0, -45, 0, -20);
-  tee.addColorStop(0, '#f2f0e9');
-  tee.addColorStop(1, '#d9d6cd');
-  ctx.fillStyle = tee;
-  ctx.beginPath();
-  ctx.moveTo(-8.5, -43);
-  ctx.quadraticCurveTo(-11, -33, -8.5, -20);
-  ctx.quadraticCurveTo(0, -17.5, 8.5, -20);
-  ctx.quadraticCurveTo(11, -33, 8.5, -43);
-  ctx.closePath();
-  ctx.fill();
-
-  // open blue plaid overshirt
-  const plaid = ctx.createLinearGradient(0, -45, 0, -22);
-  plaid.addColorStop(0, '#527aa8');
-  plaid.addColorStop(1, '#3c5f88');
-  ctx.fillStyle = plaid;
-  ctx.beginPath();
-  ctx.moveTo(-9, -44); ctx.quadraticCurveTo(-13, -33, -10, -21);
-  ctx.lineTo(-5, -20); ctx.lineTo(-3.5, -41); ctx.closePath();
-  ctx.fill();
-  ctx.beginPath();
-  ctx.moveTo(9, -44); ctx.quadraticCurveTo(13, -33, 10, -21);
-  ctx.lineTo(5, -20); ctx.lineTo(3.5, -41); ctx.closePath();
-  ctx.fill();
-  ctx.strokeStyle = 'rgba(30,50,80,.55)';
-  ctx.lineWidth = 0.8;
-  for (let i = 0; i < 4; i++) {
-    ctx.beginPath();
-    ctx.moveTo(-12.5 + i * 0.5, -39 + i * 4.4); ctx.lineTo(-5 + i * 0.3, -39 + i * 4.4);
-    ctx.moveTo(5 - i * 0.3, -39 + i * 4.4); ctx.lineTo(12.5 - i * 0.5, -39 + i * 4.4);
-    ctx.stroke();
-  }
-  for (let i = 0; i < 2; i++) {
-    ctx.beginPath();
-    ctx.moveTo(-8 + i * 2.2, -42); ctx.lineTo(-7 + i * 2.2, -22);
-    ctx.moveTo(8 - i * 2.2, -42); ctx.lineTo(7 - i * 2.2, -22);
-    ctx.stroke();
-  }
-  ctx.fillStyle = 'rgba(255,255,255,.2)';
-  ctx.beginPath();
-  ctx.moveTo(-8.5, -42); ctx.lineTo(-6.5, -41); ctx.lineTo(-5.4, -24); ctx.lineTo(-8, -26);
-  ctx.closePath();
-  ctx.fill();
-
-  // rolled sleeves
-  ctx.strokeStyle = '#527aa8';
-  ctx.lineWidth = 5.4;
-  ctx.lineCap = 'round';
-  ctx.beginPath();
-  ctx.moveTo(-10, -41); ctx.quadraticCurveTo(-14, -35, -12, -30);
-  ctx.moveTo(10, -41); ctx.quadraticCurveTo(14, -35, 12, -30);
-  ctx.stroke();
-  ctx.strokeStyle = 'rgba(30,50,80,.4)';
-  ctx.lineWidth = 1.2;
-  ctx.beginPath();
-  ctx.moveTo(-14, -30.5); ctx.lineTo(-10, -31);
-  ctx.moveTo(10, -31); ctx.lineTo(14, -30.5);
-  ctx.stroke();
-
-  // arms holding tablet
-  ctx.strokeStyle = skin;
-  ctx.lineWidth = 3.2;
-  ctx.beginPath();
-  ctx.moveTo(-12, -30); ctx.quadraticCurveTo(-12, -26, -7, -25.5);
-  ctx.moveTo(12, -30); ctx.quadraticCurveTo(12, -26, 7, -25.5);
-  ctx.stroke();
-  npcHand(-7, -25, 2.6, skin);
-  npcHand(7, -25, 2.6, skin);
-
-  // tablet
-  ctx.fillStyle = '#1c2228';
-  roundRect(-8.5, -33.5, 17, 12.5, 2.4);
-  ctx.fill();
-  ctx.fillStyle = '#0f2a32';
-  roundRect(-7.3, -32.5, 14.6, 10.5, 1.8);
-  ctx.fill();
-  const scr = ctx.createLinearGradient(-7, -32, 7, -22);
-  scr.addColorStop(0, '#52c6e8');
-  scr.addColorStop(0.55, '#256f9a');
-  scr.addColorStop(1, '#c05a7a');
-  ctx.fillStyle = scr;
-  roundRect(-6.4, -31.6, 12.8, 8.7, 1.2);
-  ctx.fill();
-  ctx.fillStyle = `rgba(220,250,255,${(0.55 + glow * 0.4).toFixed(3)})`;
-  ctx.fillRect(-5, -29.8, 6, 0.9);
-  ctx.fillRect(-5, -27.7, 8.5, 0.9);
-  ctx.fillRect(-5, -25.6, 4.5, 0.9);
-  ctx.fillStyle = `rgba(120,220,255,${(glow * 0.28).toFixed(3)})`;
-  ctx.beginPath();
-  ctx.ellipse(0, -27, 18, 10, 0, 0, Math.PI * 2);
-  ctx.fill();
-
-  // neck
-  ctx.fillStyle = skin;
-  ctx.fillRect(-2.8, -46.5, 5.6, 5);
-
-  // messy hair + head
-  const hx = 0, hy = -53.5, hr = 9.3;
-  ctx.fillStyle = hair;
-  ctx.beginPath();
-  ctx.moveTo(-hr * 1.02, hy - hr * 0.12);
-  ctx.bezierCurveTo(-hr * 1.05, hy - hr * 0.72, -hr * 0.72, hy - hr * 1.18, -hr * 0.26, hy - hr * 1.04);
-  ctx.lineTo(-hr * 0.36, hy - hr * 1.28);
-  ctx.lineTo(hr * 0.02, hy - hr * 1.05);
-  ctx.lineTo(hr * 0.18, hy - hr * 1.3);
-  ctx.lineTo(hr * 0.46, hy - hr * 1.0);
-  ctx.lineTo(hr * 0.78, hy - hr * 1.14);
-  ctx.lineTo(hr * 0.72, hy - hr * 0.82);
-  ctx.bezierCurveTo(hr * 1.08, hy - hr * 0.6, hr * 1.02, hy - hr * 0.1, hr * 0.9, hy + hr * 0.05);
-  ctx.bezierCurveTo(hr * 0.86, hy - hr * 0.38, hr * 0.55, hy - hr * 0.5, hr * 0.28, hy - hr * 0.42);
-  ctx.bezierCurveTo(0, hy - hr * 0.7, -hr * 0.55, hy - hr * 0.6, -hr * 0.72, hy - hr * 0.25);
-  ctx.bezierCurveTo(-hr * 0.86, hy - hr * 0.44, -hr * 0.98, hy - hr * 0.22, -hr * 1.02, hy - hr * 0.12);
-  ctx.closePath();
-  ctx.fill();
-
-  npcFace(skin, hx, hy + 1.5, hr, { seed: 4.1, eyeColor: '#5a4632', mouth: 'small', gazeDown: true, mouthColor: '#8a4a3a', brow: 'worry', jaw: true });
-
-  // tired shadows under eyes
-  ctx.strokeStyle = 'rgba(100,70,55,.28)';
-  ctx.lineWidth = 0.9;
-  ctx.beginPath();
-  ctx.moveTo(hx - hr * 0.5, hy + hr * 0.22);
-  ctx.lineTo(hx - hr * 0.2, hy + hr * 0.23);
-  ctx.moveTo(hx + hr * 0.2, hy + hr * 0.23);
-  ctx.lineTo(hx + hr * 0.5, hy + hr * 0.22);
-  ctx.stroke();
-
-  // earbud + wire
-  ctx.strokeStyle = '#2a2f36';
-  ctx.lineWidth = 0.8;
-  ctx.beginPath();
-  ctx.moveTo(hx + hr * 0.86, hy + hr * 0.15);
-  ctx.quadraticCurveTo(hx + hr * 1.5, hy + hr * 0.9, hx + hr * 1.15, hy + hr * 2.4);
-  ctx.stroke();
-  ctx.fillStyle = '#f0f0ea';
-  ctx.beginPath();
-  ctx.arc(hx + hr * 0.92, hy + hr * 0.15, 1.5, 0, Math.PI * 2);
-  ctx.fill();
-
-  ctx.restore();
+  npcAdultArt({ skin: '#e8bd98', hair: '#6b4227', shirt: '#527aa8', shirt2: '#3c5f88', pants: '#4a3a52', shoes: '#332821', plaid: true, glasses: true, prop: 'tablet', gazeDown: true, seed: 4 });
 }
 
 function drawGrishaNpc(n, t) {
-  const skin = '#d9a982';
-  const hair = '#bdb6a8';
-  const breathe = Math.sin(t * 1.7) * 0.5;
-  const mopSway = Math.sin(t * 1.1) * 0.05;
-  const salute = Math.sin(t * 1.4) * 0.8;
+  npcAdultArt({ skin: '#d9a982', hair: '#8a8078', shirt: '#7a5a3a', shirt2: '#5e4429', pants: '#413528', shoes: '#2e241c', beard: true, prop: 'folder', seed: 6 });
+}
 
-  ctx.save();
+function drawBorisNpc(n, t) {
+  npcAdultArt({ skin: '#e8c3a0', hair: '#7a726a', shirt: '#6a4a5a', shirt2: '#523844', pants: '#3a3a44', shoes: '#2a2320', glasses: true, prop: 'book', seed: 1 });
+}
 
-  // mop behind
-  ctx.save();
-  ctx.translate(12, -24);
-  ctx.rotate(0.22 + mopSway);
-  ctx.strokeStyle = '#b08a52';
-  ctx.lineWidth = 2.4;
-  ctx.lineCap = 'round';
-  ctx.beginPath();
-  ctx.moveTo(0, 0); ctx.lineTo(0, 45);
-  ctx.stroke();
-  ctx.fillStyle = '#8fa3ad';
-  ctx.beginPath();
-  ctx.moveTo(-4, 44); ctx.lineTo(4, 44); ctx.lineTo(7, 52); ctx.quadraticCurveTo(0, 55, -7, 52);
-  ctx.closePath();
-  ctx.fill();
-  ctx.strokeStyle = 'rgba(230,240,245,.35)';
-  ctx.lineWidth = 0.7;
-  for (let i = -3; i <= 3; i += 2) {
-    ctx.beginPath();
-    ctx.moveTo(i, 47); ctx.lineTo(i * 1.5, 53);
-    ctx.stroke();
-  }
-  ctx.restore();
-
-  // legs
-  npcLimb(-4.8, -17, -4.6, -9, -5.1, -2, 6, '#4a3a2e');
-  npcLimb(4.8, -17, 4.6, -9, 5.1, -2, 6, '#4a3a2e');
-  ctx.fillStyle = '#3a2a20';
-  ctx.beginPath();
-  ctx.ellipse(-5.6, -1.2, 6.4, 3, 0, 0, Math.PI * 2);
-  ctx.ellipse(5.6, -1.2, 6.4, 3, 0, 0, Math.PI * 2);
-  ctx.fill();
-  ctx.fillStyle = '#5a4030';
-  ctx.beginPath();
-  ctx.ellipse(-5.6, -2, 5.8, 2.2, 0, 0, Math.PI * 2);
-  ctx.ellipse(5.6, -2, 5.8, 2.2, 0, 0, Math.PI * 2);
-  ctx.fill();
-
-  // brown work shirt
-  const suit = ctx.createLinearGradient(0, -47, 0, -15);
-  suit.addColorStop(0, '#8a5f3e');
-  suit.addColorStop(0.6, '#734a2f');
-  suit.addColorStop(1, '#5c3a23');
-  ctx.fillStyle = suit;
-  ctx.beginPath();
-  ctx.moveTo(-9.8, -45);
-  ctx.quadraticCurveTo(-13, -33, -11, -15);
-  ctx.quadraticCurveTo(0, -12, 11, -15);
-  ctx.quadraticCurveTo(13, -33, 9.8, -45);
-  ctx.closePath();
-  ctx.fill();
-
-  // shirt collar
-  ctx.fillStyle = '#e8ddc8';
-  ctx.beginPath();
-  ctx.moveTo(-6, -46); ctx.lineTo(0, -38); ctx.lineTo(6, -46); ctx.closePath();
-  ctx.fill();
-  ctx.fillStyle = 'rgba(90,70,50,.35)';
-  ctx.beginPath();
-  ctx.moveTo(-4, -44.6); ctx.lineTo(0, -39.6); ctx.lineTo(4, -44.6); ctx.closePath();
-  ctx.fill();
-
-  // zipper and pockets
-  ctx.strokeStyle = '#7a6244';
-  ctx.lineWidth = 1;
-  ctx.beginPath();
-  ctx.moveTo(0, -38); ctx.lineTo(0, -13);
-  ctx.stroke();
-  ctx.strokeStyle = 'rgba(90,70,50,.55)';
-  ctx.lineWidth = 1.1;
-  ctx.beginPath();
-  ctx.moveTo(-8, -34); ctx.lineTo(-2.5, -34); ctx.lineTo(-2.5, -29); ctx.lineTo(-8, -29);
-  ctx.moveTo(8, -34); ctx.lineTo(2.5, -34); ctx.lineTo(2.5, -29); ctx.lineTo(8, -29);
-  ctx.stroke();
-  ctx.fillStyle = 'rgba(255,240,210,.13)';
-  ctx.fillRect(-9, -44, 3, 25);
-
-  // notebook in pocket
-  ctx.fillStyle = '#3f5f45';
-  roundRect(-8.2, -36, 4.8, 6.4, 1);
-  ctx.fill();
-  ctx.fillStyle = '#e8ddc8';
-  ctx.fillRect(-7.4, -35.2, 3.2, 4.2);
-  ctx.fillStyle = PALETTE.brass;
-  ctx.fillRect(-6.6, -36.2, 1.3, 1.2);
-
-  // sleeves
-  ctx.strokeStyle = '#7a5136';
-  ctx.lineWidth = 6.2;
-  ctx.lineCap = 'round';
-  ctx.beginPath();
-  ctx.moveTo(-9.8, -43); ctx.quadraticCurveTo(-14, -37, -13, -30);
-  ctx.moveTo(9.8, -43); ctx.quadraticCurveTo(14, -37, 13, -29);
-  ctx.stroke();
-
-  // left hand on mop
-  ctx.strokeStyle = skin;
-  ctx.lineWidth = 3.4;
-  ctx.beginPath();
-  ctx.moveTo(-13, -29); ctx.quadraticCurveTo(-10, -25, -6, -24);
-  ctx.stroke();
-  npcHand(-5.5, -24, 2.9, skin);
-
-  // right hand saluting the cap
-  ctx.strokeStyle = skin;
-  ctx.lineWidth = 3.4;
-  ctx.beginPath();
-  ctx.moveTo(13, -29); ctx.quadraticCurveTo(17, -35, 10.5, -44 + salute);
-  ctx.stroke();
-  npcHand(10, -45 + salute, 2.8, skin);
-
-  // neck
-  ctx.fillStyle = skin;
-  ctx.fillRect(-3, -49, 6, 5);
-
-  // short hair + head
-  const hx = 0, hy = -56, hr = 9.4;
-  ctx.fillStyle = hair;
-  ctx.beginPath();
-  ctx.ellipse(hx - hr * 0.9, hy, hr * 0.2, hr * 0.36, -0.1, 0, Math.PI * 2);
-  ctx.ellipse(hx + hr * 0.9, hy, hr * 0.2, hr * 0.36, 0.1, 0, Math.PI * 2);
-  ctx.fill();
-  ctx.beginPath();
-  ctx.ellipse(hx, hy - hr * 0.45, hr * 1.0, hr * 0.58, 0, Math.PI, Math.PI * 2);
-  ctx.fill();
-
-  npcFace(skin, hx, hy + 0.8, hr, { seed: 5.2, eyeColor: '#4a3a2a', mouthColor: '#8a4a3a', age: true, mouth: 'smile' });
-
-  // short grey beard
-  ctx.fillStyle = 'rgba(196,190,178,.92)';
-  ctx.beginPath();
-  ctx.moveTo(hx - hr * 0.72, hy + hr * 0.34);
-  ctx.quadraticCurveTo(hx, hy + hr * 1.32, hx + hr * 0.72, hy + hr * 0.34);
-  ctx.quadraticCurveTo(hx + hr * 0.4, hy + hr * 0.62, hx, hy + hr * 0.66);
-  ctx.quadraticCurveTo(hx - hr * 0.4, hy + hr * 0.62, hx - hr * 0.72, hy + hr * 0.34);
-  ctx.closePath();
-  ctx.fill();
-  ctx.fillStyle = 'rgba(120,112,102,.5)';
-  ctx.beginPath();
-  ctx.ellipse(hx, hy + hr * 0.6, hr * 0.22, hr * 0.1, 0, 0, Math.PI * 2);
-  ctx.fill();
-
-  // cap removed: седые волосы на макушке
-  ctx.fillStyle = hair;
-  ctx.beginPath();
-  ctx.ellipse(hx, hy - hr * 0.5, hr * 1.02, hr * 0.62, 0, Math.PI, Math.PI * 2);
-  ctx.fill();
-  ctx.fillStyle = 'rgba(255,255,255,.35)';
-  ctx.beginPath();
-  ctx.ellipse(hx - hr * 0.25, hy - hr * 0.86, hr * 0.42, hr * 0.1, -0.2, 0, Math.PI * 2);
-  ctx.fill();
-
-  // dust puffs near mop
-  ctx.fillStyle = 'rgba(220,205,180,.1)';
-  ctx.beginPath();
-  ctx.arc(-8 + Math.sin(t * 2) * 2, -2, 3.2, 0, Math.PI * 2);
-  ctx.arc(7 + Math.cos(t * 1.5) * 2, -1.5, 2.3, 0, Math.PI * 2);
-  ctx.fill();
-
-  ctx.restore();
+function drawAdaNpc(n, t) {
+  npcAdultArt({ skin: '#e6c2a2', hair: '#6a6a72', shirt: '#5a3a4a', shirt2: '#452c38', pants: '#33303e', shoes: '#241f1c', bun: true, glasses: true, prop: 'folder', seed: 7 });
 }
 
 const NPC_CUSTOM_ART = {
@@ -6740,7 +6163,9 @@ const NPC_CUSTOM_ART = {
   klara: drawKlaraNpc,
   vera: drawVeraNpc,
   misha: drawMishaNpc,
-  grisha: drawGrishaNpc
+  grisha: drawGrishaNpc,
+  'Библиотекарь Борис': drawBorisNpc,
+  'Заведующая Ада': drawAdaNpc
 };
 
 function drawNpcBubble(n, scale) {
@@ -6770,7 +6195,7 @@ function drawNpcBubble(n, scale) {
 
 const NPC_SILHOUETTES = {};
 function npcSilhouette(n) {
-  const key = n.arc;
+  const key = n.arc || n.name;
   if (!key) return null;
   if (NPC_SILHOUETTES[key]) return NPC_SILHOUETTES[key];
   const art = NPC_CUSTOM_ART[key];
@@ -6813,7 +6238,7 @@ function npcSilhouette(n) {
 }
 
 function drawNpc(n, hot) {
-  const customArt = NPC_CUSTOM_ART[n.arc];
+  const customArt = NPC_CUSTOM_ART[n.arc] || NPC_CUSTOM_ART[n.name];
   if (customArt) {
     const t = performance.now() / 1000;
     const scale = (n.scale || 1) * NPC_CUSTOM_ART_SCALE * NPC_SCALE;
@@ -7005,7 +6430,7 @@ function drawNpcMarker(n) {
   else if (a.status === 'return' || (a.status === 'active' && a.found >= ARCS[n.arc].need)) mark = '?';
   else if (a.status === 'active') mark = '…';
   if (!mark) return;
-  const scale = (n.scale || 1) * (NPC_CUSTOM_ART[n.arc] ? NPC_CUSTOM_ART_SCALE : 1) * NPC_SCALE;
+  const scale = (n.scale || 1) * ((NPC_CUSTOM_ART[n.arc] || NPC_CUSTOM_ART[n.name]) ? NPC_CUSTOM_ART_SCALE : 1) * NPC_SCALE;
   const x = n.x + 19 * scale;
   const y = n.y - 58 * scale;
   const pulse = 0.5 + Math.sin(performance.now() / 220 + n.x) * 0.5;
@@ -10090,7 +9515,7 @@ function draw() {
 
   ctx.save();
   ctx.translate(player.x, player.y + 11);
-  ctx.scale(1.32, 1.32);
+  ctx.scale(1.15, 1.15);
   ctx.translate(-player.x, -player.y - 11);
   drawCat(player);
   ctx.restore();
