@@ -485,10 +485,10 @@ const EXTRA_PROPS = [
   { room: 'security', x: 470, y: 460, icon: 'menu', title: 'Термос', text: 'Термос с чаем. Рядом — три пустых стакана.' },
   { room: 'zone_reading', x: 230, y: 130, icon: 'book', title: 'Закладки', text: 'Стопка закладок ручной работы. На одной вышито «дочитаю».' },
   { room: 'zone_reading', x: 700, y: 130, icon: 'catalog', title: 'Каталог', text: 'Ящик с карточками. Кто-то переставил «Толстого» к «Толкину».' },
-  { room: 'zone_reading', x: 470, y: 460, icon: 'plant', title: 'Монстера', text: 'Большой лист заглядывает в книгу через плечо читателя.' },
+  { room: 'zone_reading', x: 850, y: 462, icon: 'plant', title: 'Монстера', text: 'Большой лист заглядывает в книгу через плечо читателя.' },
   { room: 'zone_storage', x: 250, y: 150, icon: 'catalog', title: 'Коробки фонда', text: 'На коробке: «Не выдавать. Дупликаты». Внутри — двенадцать одинаковых словарей.' },
   { room: 'zone_storage', x: 700, y: 150, icon: 'book', title: 'Связка книг', text: 'Книги связаны бечёвкой. Пахнут старым клеем и чужим домом.' },
-  { room: 'zone_storage', x: 470, y: 468, icon: 'ladder', title: 'Стремянка', text: 'Стремянка шатается. На верхней ступеньке — забытая чашка.' },
+  { room: 'zone_storage', x: 200, y: 468, icon: 'ladder', title: 'Стремянка', text: 'Стремянка шатается. На верхней ступеньке — забытая чашка.' },
   { room: 'climate', x: 240, y: 140, icon: 'gauge', title: 'Пульт климата', text: 'На пульте 21°. Гигрометр показывает «сухо».' },
   { room: 'climate', x: 700, y: 140, icon: 'screen', title: 'Блок вентиляции', text: 'Гудит ровно. На корпусе стикер: «не выключать».' },
   { room: 'climate', x: 470, y: 460, icon: 'plant', title: 'Папоротник', text: 'Папоротник прижился здесь лучше людей.' },
@@ -1617,15 +1617,15 @@ function openFinalBook() {
   if (unresolved.length) {
     const names = unresolved.map(a => ARCS[a.id].name).join(', ');
     openDialog('Книга пяти страниц', `Пять страниц ещё не готовы. Осталось поговорить или вернуться к: ${names}.`, [
-      { label: 'Закрыть книгу', action: closeDialog },
-      { label: 'Закрыть книгу и уйти', action: () => showEnding('empty') }
+      { label: 'Закрыть книгу', action: closeDialog }
     ]);
     return;
   }
   const done = storyDoneCount();
   if (done === 0) {
-    openDialog('Книга пяти страниц', 'Все пять историй прошли мимо. Книга осталась такой, какой была: тихой, аккуратной и чужой. Библиотека всё ещё здесь — и однажды кто-то снова откроет дверь.', [
-      { label: 'Открыть книгу', action: () => showEnding('quiet') }
+    openDialog('Книга пяти страниц', 'Пять страниц пусты. Подпишешь эту книгу своей рукой — или оставишь её как есть?', [
+      { label: 'Подписать книгу', action: () => showEnding('empty') },
+      { label: 'Не подписывать', action: () => showEnding('quiet') }
     ]);
   } else if (done === 1) {
     openDialog('Книга пяти страниц', 'Заполнена одна страница из пяти. Одна история, один человек. Этого достаточно, чтобы книга не была пустой.', [
