@@ -470,7 +470,7 @@ bookSpots.forEach((spot, i) => {
 const EXTRA_PROPS = [
   { room: 'zone_staff', x: 250, y: 150, icon: 'clock', title: 'График смен', text: 'В пятницу смена Веры — до восьми.' },
   { room: 'zone_staff', x: 700, y: 150, icon: 'menu', title: 'Кружка с чаем', text: 'Чай давно остыл. На кружке — «Библиотека» и трещина.' },
-  { room: 'zone_staff', x: 480, y: 468, icon: 'poster', title: 'Объявление', text: '«Пожалуйста, не оставляйте книги на подоконнике. Они мёрзнут».' },
+  { room: 'zone_staff', x: 700, y: 462, icon: 'poster', title: 'Объявление', text: '«Пожалуйста, не оставляйте книги на подоконнике. Они мёрзнут».' },
   { room: 'hall_periodics', x: 230, y: 130, icon: 'catalog', title: 'Свежие газеты', text: 'Пресса за эту неделю. Кто-то уже вырезал кроссворд.' },
   { room: 'hall_periodics', x: 520, y: 130, icon: 'book', title: 'Подшивка журналов', text: '«Вокруг света» за 1998 год. Страницы пахнут пылью и летом.' },
   { room: 'hall_periodics', x: 760, y: 440, icon: 'plant', title: 'Фикус у окна', text: 'Листья протёрты. О нём заботятся больше, чем о журналах.' },
