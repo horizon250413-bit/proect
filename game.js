@@ -883,6 +883,7 @@ function loadGame(index) {
 }
 
 function exitToMenu(message) {
+  resetMiniFails();
   screen = 'menu';
   overlay = null;
   nameEdit = null;
@@ -914,6 +915,24 @@ const mini = {
   status: '',
   statusUntil: 0
 };
+
+const meme = {
+  fails: 0,
+  showUntil: 0,
+  img: null
+};
+
+function memePic() {
+  if (!meme.img) {
+    meme.img = new Image();
+    meme.img.src = encodeURI('картинки/67.jpg');
+  }
+  return meme.img;
+}
+
+function resetMiniFails() {
+  meme.fails = 0;
+}
 
 function openMini() {
   mini.active = true;
@@ -947,11 +966,25 @@ function updateMini(dt) {
       mini.light = 'green';
       mini.timer = mini.greenDur;
       mini.grace = 0;
+      meme.fails++;
+      if (meme.fails === 67) {
+        memePic();
+        meme.showUntil = performance.now() + 2000;
+      }
+      if (meme.fails >= 100) {
+        havePass = true;
+        const passIdx = items.findIndex(i => i.id === 'pass');
+        if (passIdx >= 0) items.splice(passIdx, 1);
+        mini.active = false;
+        resetMiniFails();
+        showToast('Бро, ну ты чего? Настолько нубасик… Ладно, держи пропуск бесплатно', 5200);
+      }
       return;
     }
     mini.progress = Math.min(100, mini.progress + dt * 32);
   }
   if (mini.progress >= 100) {
+    resetMiniFails();
     havePass = true;
     const idx = items.findIndex(i => i.id === 'pass');
     if (idx >= 0) items.splice(idx, 1);
@@ -1700,6 +1733,7 @@ function restartGame() {
   lockedEndingKey = null;
   havePass = false;
   touchTarget = null;
+  resetMiniFails();
 
   items.length = 0;
   INITIAL_ITEMS.forEach(it => items.push({ ...it }));
@@ -1796,7 +1830,7 @@ addEventListener('keydown', e => {
     return;
   }
   if (mini.active) {
-    if (e.code === 'Escape') mini.active = false;
+    if (e.code === 'Escape') { mini.active = false; resetMiniFails(); }
     if (e.code === 'Space' || e.code.startsWith('Arrow')) e.preventDefault();
     return;
   }
@@ -1946,7 +1980,7 @@ canvas.addEventListener('click', e => {
   if (nameEdit) { handleNameEditClick(mx, my); return; }
   if (overlay) { handleOverlayClick(mx, my); return; }
 
-  if (mini.active) { mini.active = false; return; }
+  if (mini.active) { mini.active = false; resetMiniFails(); return; }
   if (quoteCard) {
     const L = quoteCardLayout();
     if (inRect(L.add, mx, my)) {
@@ -2984,6 +3018,29 @@ function drawMiniGame() {
   ctx.font = '13px ' + SERIF;
   ctx.fillText('✕', p.x + p.w - 18, p.y + 18);
   ctx.textAlign = 'left';
+}
+
+function drawMeme67() {
+  const img = meme.img;
+  ctx.save();
+  ctx.fillStyle = 'rgba(6,2,4,.86)';
+  ctx.fillRect(0, 0, W, H);
+  if (img && img.complete && img.naturalWidth) {
+    const maxW = W * 0.62, maxH = H * 0.72;
+    const k = Math.min(maxW / img.naturalWidth, maxH / img.naturalHeight);
+    const iw = img.naturalWidth * k, ih = img.naturalHeight * k;
+    ctx.drawImage(img, (W - iw) / 2, (H - ih) / 2, iw, ih);
+    ctx.strokeStyle = 'rgba(224,178,92,.6)';
+    ctx.lineWidth = 2;
+    ctx.strokeRect((W - iw) / 2, (H - ih) / 2, iw, ih);
+  } else {
+    ctx.fillStyle = PALETTE.gold;
+    ctx.font = 'bold 96px ' + SERIF;
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.fillText('67', W / 2, H / 2);
+  }
+  ctx.restore();
 }
 
 function drawPass(x, y) {
@@ -10223,6 +10280,7 @@ function draw() {
   if (mapOpen) drawMap();
   if (taskOpen) drawTaskPanel();
   if (mini.active) drawMiniGame();
+  if (performance.now() < meme.showUntil) drawMeme67();
   if (quoteCard) drawQuoteCard();
   if (dialog) drawDialog();
   if (ending) drawEnding();
