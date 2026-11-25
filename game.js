@@ -276,13 +276,13 @@ const interactables = [
 ];
 
 const npcs = [
-  { room: 'vestibule', x: 225, y: 214, name: 'Библиотекарь Борис', skin: '#e8c3a0', hair: '#7a726a', outfit: '#6a4a5a', trim: '#4a3240', style: 1, glasses: true, prop: 'book', scale: 0.60, quote: 'Борис поправляет очки: «Читальный зал откроется в восемь. Пропуск — у секретаря за правой стойкой. А ещё... присмотрись к людям здесь. У каждого своя история»' },
-  { room: 'computer_class', x: 760, y: 230, name: 'Егор', arc: 'egor', skin: '#e8bd98', hair: '#2f2a28', outfit: '#4f6d7a', trim: '#36505a', style: 0, glasses: true, prop: 'tablet', scale: 0.52, quote: 'Егор не отрывается от планшета: «Книги? Это медленный интерфейс. У меня каталог падает третий день»' },
-  { room: 'buffet', x: 460, y: 230, name: 'Клара', arc: 'klara', skin: '#c98a5a', hair: '#3a2a22', outfit: '#a05a6a', trim: '#7a3e4c', style: 2, scarf: '#c9a23a', prop: 'tray', scale: 0.52, quote: 'Клара вытирает руки: «У меня потерялись страницы из книги рецептов. Внучка говорит, что я всё равно всё помню. А я уже не уверена»' },
-  { room: 'abonement', x: 740, y: 250, name: 'Библиотекарша Вера', arc: 'vera', skin: '#f0c9a6', hair: '#a05a6a', outfit: '#c9a23a', trim: '#8a6a24', style: 3, scarf: '#8a3a4a', prop: 'books', scale: 0.53, quote: 'Вера перебирает формуляры: «Редкую книгу просит мальчик. А я не могу её отдать — это единственный экземпляр»' },
-  { room: 'hall_universal', x: 760, y: 360, name: 'Миша', arc: 'misha', scale: 0.59, skin: '#f2b487', hair: '#2b211d', outfit: '#f2772c', trim: '#c9571c', style: 0, prop: 'book', quote: 'Миша сидит с телефоном: «Книги — это скучно. Там надо долго. А тут всё быстро»' },
-  { room: 'archive', x: 690, y: 300, name: 'Гриша', arc: 'grisha', skin: '#d9a982', hair: '#8a8078', outfit: '#7a5a3a', trim: '#5a4028', style: 0, beard: true, prop: 'folder', scale: 0.37, quote: 'Гриша подметает у стеллажей: «Я тут просто убираю. Истории — не моё. Я и в школе-то не дочитал ни одной»' },
-  { room: 'admin', x: 740, y: 280, name: 'Заведующая Ада', secret: true, skin: '#e6c2a2', hair: '#6a6a72', outfit: '#5a3a4a', trim: '#3e2632', style: 3, glasses: true, scarf: '#b08a52', prop: 'folder', scale: 0.60, quote: 'Ада смотрит поверх очков: «В каталоге пять историй. Но у библиотеки есть и седьмая полка. Она не для читателей»' }
+  { room: 'vestibule', x: 225, y: 214, name: 'Библиотекарь Борис', skin: '#e8c3a0', hair: '#7a726a', outfit: '#6a4a5a', trim: '#4a3240', style: 1, glasses: true, prop: 'book', scale: 0.68, quote: 'Борис поправляет очки: «Читальный зал откроется в восемь. Пропуск — у секретаря за правой стойкой. А ещё... присмотрись к людям здесь. У каждого своя история»' },
+  { room: 'computer_class', x: 760, y: 230, name: 'Егор', arc: 'egor', skin: '#e8bd98', hair: '#2f2a28', outfit: '#4f6d7a', trim: '#36505a', style: 0, glasses: true, prop: 'tablet', scale: 0.66, quote: 'Егор не отрывается от планшета: «Книги? Это медленный интерфейс. У меня каталог падает третий день»' },
+  { room: 'buffet', x: 460, y: 230, name: 'Клара', arc: 'klara', skin: '#c98a5a', hair: '#3a2a22', outfit: '#a05a6a', trim: '#7a3e4c', style: 2, scarf: '#c9a23a', prop: 'tray', scale: 0.66, quote: 'Клара вытирает руки: «У меня потерялись страницы из книги рецептов. Внучка говорит, что я всё равно всё помню. А я уже не уверена»' },
+  { room: 'abonement', x: 740, y: 250, name: 'Библиотекарша Вера', arc: 'vera', skin: '#f0c9a6', hair: '#a05a6a', outfit: '#c9a23a', trim: '#8a6a24', style: 3, scarf: '#8a3a4a', prop: 'books', scale: 0.67, quote: 'Вера перебирает формуляры: «Редкую книгу просит мальчик. А я не могу её отдать — это единственный экземпляр»' },
+  { room: 'hall_universal', x: 760, y: 360, name: 'Миша', arc: 'misha', scale: 0.745, skin: '#f2b487', hair: '#2b211d', outfit: '#f2772c', trim: '#c9571c', style: 0, prop: 'book', quote: 'Миша сидит с телефоном: «Книги — это скучно. Там надо долго. А тут всё быстро»' },
+  { room: 'archive', x: 690, y: 300, name: 'Гриша', arc: 'grisha', skin: '#d9a982', hair: '#8a8078', outfit: '#7a5a3a', trim: '#5a4028', style: 0, beard: true, prop: 'folder', scale: 0.465, quote: 'Гриша подметает у стеллажей: «Я тут просто убираю. Истории — не моё. Я и в школе-то не дочитал ни одной»' },
+  { room: 'admin', x: 740, y: 280, name: 'Заведующая Ада', secret: true, skin: '#e6c2a2', hair: '#6a6a72', outfit: '#5a3a4a', trim: '#3e2632', style: 3, glasses: true, scarf: '#b08a52', prop: 'folder', scale: 0.68, quote: 'Ада смотрит поверх очков: «В каталоге пять историй. Но у библиотеки есть и седьмая полка. Она не для читателей»' }
 ];
 for (const n of npcs) {
   n.chat = { room: n.room, x: n.x, y: n.y, icon: 'npc', title: n.name, text: n.quote, npc: n };
@@ -10090,7 +10090,7 @@ function draw() {
 
   ctx.save();
   ctx.translate(player.x, player.y + 11);
-  ctx.scale(0.63, 0.63);
+  ctx.scale(0.88, 0.88);
   ctx.translate(-player.x, -player.y - 11);
   drawCat(player);
   ctx.restore();
