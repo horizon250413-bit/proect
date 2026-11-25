@@ -1152,24 +1152,9 @@ function openArcDetails(a, n) {
 
 function openArcChoice(a, n) {
   const def = ARCS[a.id];
-  const options = (def.choices || []).map(ch => ({
-    label: ch.label,
-    action: () => {
-      a.choice = ch.id;
-      a.trust = (a.trust || 0) + (ch.trust || 0);
-      a.growth = (a.growth || 0) + (ch.growth || 0);
-      openDialog(def.name, ch.result || def.doneText, [
-        { label: 'Закрыть страницу', action: () => completeArc(a) }
-      ]);
-    }
-  }));
-  if (!options.length) {
-    openDialog(n.name, def.returnText, [
-      { label: 'Закрыть страницу', action: () => completeArc(a) }
-    ]);
-    return;
-  }
-  openDialog(n.name, def.returnText + String.fromCharCode(10, 10) + 'Что ты решишь?', options);
+  openDialog(n.name, def.returnText + String.fromCharCode(10, 10) + '«Спасибо тебе. Я этого не забуду», — говорит ' + def.name + '.', [
+    { label: 'Пожалуйста', action: () => completeArc(a) }
+  ]);
 }
 
 function completeArc(a) {
@@ -1653,7 +1638,8 @@ function openFinalBook() {
   } else {
     openDialog('Книга пяти страниц', 'Все пять страниц на месте. Последняя — пустая. Кто её подпишет?', [
       { label: 'Дать дописать им', action: () => showEnding('together') },
-      { label: 'Вписать финал самому', action: () => showEnding('write') }
+      { label: 'Вписать финал самому', action: () => showEnding('write') },
+      { label: 'Секретная концовка', action: () => showEnding('secret') }
     ]);
   }
 }
