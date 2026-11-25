@@ -9403,6 +9403,8 @@ function drawAuthScreen() {
   ctx.fillStyle = bg;
   ctx.fillRect(0, 0, W, H);
 
+  drawMenuSparks(performance.now() / 1000);
+
   drawLuxPanel(p.x, p.y, p.w, p.h);
 
   ctx.textAlign = 'center';
