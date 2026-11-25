@@ -5911,18 +5911,19 @@ function npcAdultArt(cfg) {
   const bob = Math.sin(t * 1.6) * 0.3;
   const skin = cfg.skin;
   const hair = cfg.hair;
-  const shoulder = cfg.shoulder || 5.4;
+  const shoulder = cfg.shoulder || (cfg.male ? 7.2 : 6.0);
 
   ctx.save();
   ctx.translate(0, bob);
 
   for (const d of [-1, 1]) {
-    npcLimb(d * 2.3, -21.5, d * 2.7, -12, d * 2.5, -3, 3.0, cfg.pants);
+    npcLimb(d * 2.4, -21.5, d * 2.9, -12, d * 2.6, -3, 3.5, cfg.pants);
     npcShoe(d * 2.6, -1.5, d, cfg.shoes || '#2a2118');
   }
 
   ctx.fillStyle = cfg.pants;
-  roundRect(-4.4, -23.6, 8.8, 3.4, 1.8);
+  const hipW = cfg.male ? 5.4 : 4.9;
+  roundRect(-hipW, -23.6, hipW * 2, 3.6, 1.8);
   ctx.fill();
 
   const g = ctx.createLinearGradient(0, -38, 0, -21);
@@ -5931,12 +5932,15 @@ function npcAdultArt(cfg) {
   ctx.fillStyle = g;
   ctx.beginPath();
   ctx.moveTo(-shoulder, -37);
-  ctx.quadraticCurveTo(-shoulder - 0.4, -29, -4.2, -22.6);
-  ctx.lineTo(4.2, -22.6);
+  ctx.quadraticCurveTo(-shoulder - 0.4, -29, -hipW, -22.6);
+  ctx.lineTo(hipW, -22.6);
   ctx.quadraticCurveTo(shoulder + 0.4, -29, shoulder, -37);
   ctx.quadraticCurveTo(0, -38.8, -shoulder, -37);
   ctx.closePath();
   ctx.fill();
+  ctx.strokeStyle = 'rgba(46,28,18,.34)';
+  ctx.lineWidth = 0.55;
+  ctx.stroke();
 
   if (cfg.plaid) {
     ctx.strokeStyle = 'rgba(255,255,255,.16)';
@@ -5954,23 +5958,23 @@ function npcAdultArt(cfg) {
     ctx.beginPath();
     ctx.moveTo(-3.4, -31.4);
     ctx.lineTo(3.4, -31.4);
-    ctx.lineTo(4.2, -22.6);
-    ctx.lineTo(-4.2, -22.6);
+    ctx.lineTo(hipW, -22.6);
+    ctx.lineTo(-hipW, -22.6);
     ctx.closePath();
     ctx.fill();
   }
 
   const swing = Math.sin(t * 1.6) * 0.45;
   for (const d of [-1, 1]) {
-    npcLimb(d * (shoulder - 0.7), -35.9, d * (shoulder + 0.9 + swing * d), -29.2, d * 4.3, -24.2, 2.7, skin);
-    npcHand(d * 4.3, -23.8, 1.6, skin);
+    npcLimb(d * (shoulder - 0.7), -35.9, d * (shoulder + 0.9 + swing * d), -29.2, d * 4.6, -24.2, cfg.male ? 3.4 : 3.1, skin);
+    npcHand(d * 4.6, -23.8, 1.7, skin);
   }
 
   ctx.fillStyle = skin;
   ctx.fillRect(-1.6, -40.4, 3.2, 4.2);
 
   const hy = -44.8;
-  const hr = 4.4;
+  const hr = 4.6;
 
   ctx.fillStyle = hair;
   ctx.beginPath();
@@ -6143,19 +6147,104 @@ function drawMishaNpc(n, t) {
 }
 
 function drawEgorNpc(n, t) {
-  npcAdultArt({ skin: '#e8bd98', hair: '#6b4227', shirt: '#527aa8', shirt2: '#3c5f88', pants: '#4a3a52', shoes: '#332821', plaid: true, glasses: true, prop: 'tablet', gazeDown: true, seed: 4 });
+  npcAdultArt({ skin: '#e8bd98', hair: '#6b4227', shirt: '#527aa8', shirt2: '#3c5f88', pants: '#4a3a52', shoes: '#332821', plaid: true, glasses: true, male: true, prop: 'tablet', gazeDown: true, seed: 4 });
 }
 
 function drawGrishaNpc(n, t) {
-  npcAdultArt({ skin: '#d9a982', hair: '#8a8078', shirt: '#7a5a3a', shirt2: '#5e4429', pants: '#413528', shoes: '#2e241c', beard: true, prop: 'folder', seed: 6 });
+  npcAdultArt({ skin: '#d9a982', hair: '#8a8078', shirt: '#7a5a3a', shirt2: '#5e4429', pants: '#413528', shoes: '#2e241c', beard: true, male: true, prop: 'folder', seed: 6 });
 }
 
 function drawBorisNpc(n, t) {
-  npcAdultArt({ skin: '#e8c3a0', hair: '#7a726a', shirt: '#6a4a5a', shirt2: '#523844', pants: '#3a3a44', shoes: '#2a2320', glasses: true, prop: 'book', seed: 1 });
+  npcAdultArt({ skin: '#e8c3a0', hair: '#7a726a', shirt: '#6a4a5a', shirt2: '#523844', pants: '#3a3a44', shoes: '#2a2320', glasses: true, male: true, prop: 'book', seed: 1 });
 }
 
 function drawAdaNpc(n, t) {
   npcAdultArt({ skin: '#e6c2a2', hair: '#6a6a72', shirt: '#5a3a4a', shirt2: '#452c38', pants: '#33303e', shoes: '#241f1c', bun: true, glasses: true, prop: 'folder', seed: 7 });
+}
+
+function drawPlayerArt(p) {
+  const t = performance.now() / 1000;
+  const step = p.step || 0;
+  const moving = !!p.moving;
+  const swing = moving ? Math.sin(step) : 0;
+  const bob = moving ? Math.abs(Math.sin(step)) * 0.6 : Math.sin(t * 1.5) * 0.25;
+  const skin = '#f3cba8';
+  const hair = '#5d3a26';
+  const top = '#6f9a63';
+  const top2 = '#577d4d';
+  const pants = '#3c3a46';
+  const shoulder = 6.0;
+
+  ctx.save();
+  ctx.translate(0, -bob);
+
+  for (const d of [-1, 1]) {
+    const off = d * swing * 2.2;
+    npcLimb(d * 2.4, -21.5, d * 2.9 + off, -12, d * 2.6 + off, -3, 3.5, pants);
+    npcShoe(d * 2.6 + off, -1.5, d, '#33261f');
+  }
+
+  ctx.fillStyle = pants;
+  const hipW = 4.9;
+  roundRect(-hipW, -23.6, hipW * 2, 3.6, 1.8);
+  ctx.fill();
+
+  const g = ctx.createLinearGradient(0, -38, 0, -21);
+  g.addColorStop(0, top);
+  g.addColorStop(1, top2);
+  ctx.fillStyle = g;
+  ctx.beginPath();
+  ctx.moveTo(-shoulder, -37);
+  ctx.quadraticCurveTo(-shoulder - 0.4, -29, -hipW, -22.6);
+  ctx.lineTo(hipW, -22.6);
+  ctx.quadraticCurveTo(shoulder + 0.4, -29, shoulder, -37);
+  ctx.quadraticCurveTo(0, -38.8, -shoulder, -37);
+  ctx.closePath();
+  ctx.fill();
+  ctx.strokeStyle = 'rgba(46,28,18,.34)';
+  ctx.lineWidth = 0.55;
+  ctx.stroke();
+
+  for (const d of [-1, 1]) {
+    const aswing = swing * 2.4;
+    npcLimb(d * (shoulder - 0.7), -35.9, d * (shoulder + 0.9), -30 + d * aswing, d * 4.6, -24.2 + d * aswing * 0.6, 3.1, skin);
+    npcHand(d * 4.6, -23.8 + d * aswing * 0.6, 1.7, skin);
+  }
+
+  ctx.fillStyle = skin;
+  ctx.fillRect(-1.7, -40.4, 3.4, 4.2);
+
+  const hy = -44.9;
+  const hr = 4.6;
+
+  ctx.fillStyle = hair;
+  ctx.beginPath();
+  ctx.ellipse(0, hy - hr * 0.28, hr * 1.06, hr * 0.98, 0, Math.PI, Math.PI * 2);
+  ctx.fill();
+  ctx.beginPath();
+  ctx.ellipse(-hr * 0.98, hy + hr * 0.35, hr * 0.34, hr * 0.95, 0.08, 0, Math.PI * 2);
+  ctx.fill();
+  ctx.beginPath();
+  ctx.ellipse(hr * 0.98, hy + hr * 0.35, hr * 0.34, hr * 0.95, -0.08, 0, Math.PI * 2);
+  ctx.fill();
+
+  npcFace(skin, 0, hy + 0.3, hr, {
+    seed: 8,
+    eyeColor: '#4a3a30',
+    mouth: 'small',
+    mouthColor: '#9a5547',
+    blush: false
+  });
+
+  ctx.fillStyle = hair;
+  ctx.beginPath();
+  ctx.moveTo(-hr * 1.0, hy - hr * 0.3);
+  ctx.quadraticCurveTo(-hr * 0.1, hy - hr * 1.5, hr * 0.95, hy - hr * 0.3);
+  ctx.quadraticCurveTo(hr * 0.15, hy - hr * 0.85, -hr * 1.0, hy - hr * 0.3);
+  ctx.closePath();
+  ctx.fill();
+
+  ctx.restore();
 }
 
 const NPC_CUSTOM_ART = {
@@ -9514,10 +9603,13 @@ function draw() {
   }
 
   ctx.save();
-  ctx.translate(player.x, player.y + 11);
-  ctx.scale(1.15, 1.15);
-  ctx.translate(-player.x, -player.y - 11);
-  drawCat(player);
+  ctx.translate(player.x, player.y);
+  ctx.scale(0.96 * (player.face || 1), 0.96);
+  ctx.fillStyle = 'rgba(0,0,0,.34)';
+  ctx.beginPath();
+  ctx.ellipse(0, 0, 12, 3.6, 0, 0, Math.PI * 2);
+  ctx.fill();
+  drawPlayerArt(player);
   ctx.restore();
 
   if (door) drawDoorLabel(door, doorRect(door), true, isLocked(door));
