@@ -276,13 +276,13 @@ const interactables = [
 ];
 
 const npcs = [
-  { room: 'vestibule', x: 225, y: 214, name: 'Библиотекарь Борис', skin: '#e8c3a0', hair: '#7a726a', outfit: '#6a4a5a', trim: '#4a3240', style: 1, glasses: true, prop: 'book', scale: 0.68, quote: 'Борис поправляет очки: «Читальный зал откроется в восемь. Пропуск — у секретаря за правой стойкой. А ещё... присмотрись к людям здесь. У каждого своя история»' },
-  { room: 'computer_class', x: 760, y: 230, name: 'Егор', arc: 'egor', skin: '#e8bd98', hair: '#2f2a28', outfit: '#4f6d7a', trim: '#36505a', style: 0, glasses: true, prop: 'tablet', scale: 0.66, quote: 'Егор не отрывается от планшета: «Книги? Это медленный интерфейс. У меня каталог падает третий день»' },
-  { room: 'buffet', x: 460, y: 230, name: 'Клара', arc: 'klara', skin: '#c98a5a', hair: '#3a2a22', outfit: '#a05a6a', trim: '#7a3e4c', style: 2, scarf: '#c9a23a', prop: 'tray', scale: 0.66, quote: 'Клара вытирает руки: «У меня потерялись страницы из книги рецептов. Внучка говорит, что я всё равно всё помню. А я уже не уверена»' },
-  { room: 'abonement', x: 740, y: 250, name: 'Библиотекарша Вера', arc: 'vera', skin: '#f0c9a6', hair: '#a05a6a', outfit: '#c9a23a', trim: '#8a6a24', style: 3, scarf: '#8a3a4a', prop: 'books', scale: 0.67, quote: 'Вера перебирает формуляры: «Редкую книгу просит мальчик. А я не могу её отдать — это единственный экземпляр»' },
-  { room: 'hall_universal', x: 760, y: 360, name: 'Миша', arc: 'misha', scale: 0.745, skin: '#f2b487', hair: '#2b211d', outfit: '#f2772c', trim: '#c9571c', style: 0, prop: 'book', quote: 'Миша сидит с телефоном: «Книги — это скучно. Там надо долго. А тут всё быстро»' },
-  { room: 'archive', x: 690, y: 300, name: 'Гриша', arc: 'grisha', skin: '#d9a982', hair: '#8a8078', outfit: '#7a5a3a', trim: '#5a4028', style: 0, beard: true, prop: 'folder', scale: 0.465, quote: 'Гриша подметает у стеллажей: «Я тут просто убираю. Истории — не моё. Я и в школе-то не дочитал ни одной»' },
-  { room: 'admin', x: 740, y: 280, name: 'Заведующая Ада', secret: true, skin: '#e6c2a2', hair: '#6a6a72', outfit: '#5a3a4a', trim: '#3e2632', style: 3, glasses: true, scarf: '#b08a52', prop: 'folder', scale: 0.68, quote: 'Ада смотрит поверх очков: «В каталоге пять историй. Но у библиотеки есть и седьмая полка. Она не для читателей»' }
+  { room: 'vestibule', x: 225, y: 214, name: 'Библиотекарь Борис', skin: '#e8c3a0', hair: '#7a726a', outfit: '#6a4a5a', trim: '#4a3240', style: 1, glasses: true, prop: 'book', scale: 0.63, quote: 'Борис поправляет очки: «Читальный зал откроется в восемь. Пропуск — у секретаря за правой стойкой. А ещё... присмотрись к людям здесь. У каждого своя история»' },
+  { room: 'computer_class', x: 760, y: 230, name: 'Егор', arc: 'egor', skin: '#e8bd98', hair: '#2f2a28', outfit: '#4f6d7a', trim: '#36505a', style: 0, glasses: true, prop: 'tablet', scale: 0.61, quote: 'Егор не отрывается от планшета: «Книги? Это медленный интерфейс. У меня каталог падает третий день»' },
+  { room: 'buffet', x: 460, y: 230, name: 'Клара', arc: 'klara', skin: '#c98a5a', hair: '#3a2a22', outfit: '#a05a6a', trim: '#7a3e4c', style: 2, scarf: '#c9a23a', prop: 'tray', scale: 0.61, quote: 'Клара вытирает руки: «У меня потерялись страницы из книги рецептов. Внучка говорит, что я всё равно всё помню. А я уже не уверена»' },
+  { room: 'abonement', x: 740, y: 250, name: 'Библиотекарша Вера', arc: 'vera', skin: '#f0c9a6', hair: '#a05a6a', outfit: '#c9a23a', trim: '#8a6a24', style: 3, scarf: '#8a3a4a', prop: 'books', scale: 0.62, quote: 'Вера перебирает формуляры: «Редкую книгу просит мальчик. А я не могу её отдать — это единственный экземпляр»' },
+  { room: 'hall_universal', x: 760, y: 360, name: 'Миша', arc: 'misha', scale: 0.54, skin: '#f2b487', hair: '#2b211d', outfit: '#f2772c', trim: '#c9571c', style: 0, prop: 'book', quote: 'Миша сидит с телефоном: «Книги — это скучно. Там надо долго. А тут всё быстро»' },
+  { room: 'archive', x: 690, y: 300, name: 'Гриша', arc: 'grisha', skin: '#d9a982', hair: '#8a8078', outfit: '#7a5a3a', trim: '#5a4028', style: 0, beard: true, prop: 'folder', scale: 0.43, quote: 'Гриша подметает у стеллажей: «Я тут просто убираю. Истории — не моё. Я и в школе-то не дочитал ни одной»' },
+  { room: 'admin', x: 740, y: 280, name: 'Заведующая Ада', secret: true, skin: '#e6c2a2', hair: '#6a6a72', outfit: '#5a3a4a', trim: '#3e2632', style: 3, glasses: true, scarf: '#b08a52', prop: 'folder', scale: 0.63, quote: 'Ада смотрит поверх очков: «В каталоге пять историй. Но у библиотеки есть и седьмая полка. Она не для читателей»' }
 ];
 for (const n of npcs) {
   n.chat = { room: n.room, x: n.x, y: n.y, icon: 'npc', title: n.name, text: n.quote, npc: n };
@@ -6063,7 +6063,7 @@ function drawVeraNpc(n, t) {
 }
 
 function drawKlaraNpc(n, t) {
-  const skin = '#eac3a1';
+  const skin = '#eec7a6';
   const bounce = Math.abs(Math.sin(t * 2.2)) * 1.1;
   const fist = Math.sin(t * 3.1) * 1.2;
 
@@ -6077,7 +6077,7 @@ function drawKlaraNpc(n, t) {
   npcShoe(4.6, -2.6, -1, '#f0ede4', '#b8b4a8');
 
   // long skirt — женский силуэт
-  ctx.fillStyle = '#4a3f52';
+  ctx.fillStyle = '#6f3f4e';
   ctx.beginPath();
   ctx.moveTo(-8.8, -19);
   ctx.lineTo(8.8, -19);
@@ -6105,8 +6105,8 @@ function drawKlaraNpc(n, t) {
 
   // orange tee (как на портрете)
   const jacket = ctx.createLinearGradient(0, -43, 0, -16);
-  jacket.addColorStop(0, '#f4894a');
-  jacket.addColorStop(1, '#cf5f27');
+  jacket.addColorStop(0, '#efd7b4');
+  jacket.addColorStop(1, '#cfb08a');
   ctx.fillStyle = jacket;
   ctx.beginPath();
   ctx.moveTo(-7.6, -43);
@@ -6158,7 +6158,7 @@ function drawKlaraNpc(n, t) {
   ctx.stroke();
 
   // цветастый платок на плечах (как на портрете)
-  ctx.fillStyle = '#b5493a';
+  ctx.fillStyle = '#c25a3a';
   ctx.beginPath();
   ctx.moveTo(-11, -43);
   ctx.quadraticCurveTo(-15.5, -33, -10, -27);
@@ -6185,7 +6185,7 @@ function drawKlaraNpc(n, t) {
   ctx.fill();
 
   // sleeves
-  ctx.strokeStyle = '#e8793c';
+  ctx.strokeStyle = '#d9bd97';
   ctx.lineWidth = 5.6;
   ctx.lineCap = 'round';
   ctx.beginPath();
@@ -6224,42 +6224,57 @@ function drawKlaraNpc(n, t) {
   ctx.fillStyle = skin;
   ctx.fillRect(-2.8, -46, 5.6, 5);
 
-  // седые волосы и пучок
+  // каштановые волосы
   const hx = 0, hy = -54.5, hr = 9;
-  ctx.fillStyle = '#cfc7b8';
+  ctx.fillStyle = '#6b4630';
   ctx.beginPath();
-  ctx.ellipse(hx, hy - hr * 1.06, hr * 0.5, hr * 0.44, 0, 0, Math.PI * 2);
-  ctx.fill();
-  ctx.strokeStyle = 'rgba(120,108,92,.5)';
-  ctx.lineWidth = 0.8;
-  ctx.beginPath();
-  ctx.ellipse(hx, hy - hr * 1.06, hr * 0.5, hr * 0.44, 0, 0, Math.PI * 2);
-  ctx.stroke();
-  ctx.fillStyle = 'rgba(255,255,255,.45)';
-  ctx.beginPath();
-  ctx.ellipse(hx - hr * 0.14, hy - hr * 1.2, hr * 0.2, hr * 0.1, -0.3, 0, Math.PI * 2);
-  ctx.fill();
-  ctx.beginPath();
-  ctx.ellipse(hx, hy - hr * 0.3, hr * 1.05, hr * 0.78, 0, Math.PI * 0.95, Math.PI * 2.05);
-  ctx.fill();
-  ctx.beginPath();
-  ctx.ellipse(hx - hr * 0.94, hy + hr * 0.05, hr * 0.22, hr * 0.4, -0.12, 0, Math.PI * 2);
-  ctx.ellipse(hx + hr * 0.94, hy + hr * 0.05, hr * 0.22, hr * 0.4, 0.12, 0, Math.PI * 2);
-  ctx.fill();
-  ctx.fillStyle = 'rgba(255,255,255,.4)';
-  ctx.beginPath();
-  ctx.ellipse(hx - hr * 0.3, hy - hr * 0.74, hr * 0.4, hr * 0.1, -0.25, 0, Math.PI * 2);
+  ctx.ellipse(hx, hy + hr * 0.35, hr * 1.02, hr * 1.15, 0, 0, Math.PI * 2);
   ctx.fill();
 
-  npcFace(skin, hx, hy + 0.4, hr, { seed: 2.1, eyeColor: '#3a2b20', blush: true, mouth: 'smile', mouthColor: '#a04e3e', age: true, female: true, lipColor: 'rgba(186,88,78,.5)' });
+  npcFace(skin, hx, hy + 0.4, hr, { seed: 2.1, eyeColor: '#3a2b20', blush: true, mouth: 'smile', mouthColor: '#a04e3e', female: true, lipColor: 'rgba(186,88,78,.55)' });
 
-  // warm smile lines
-  ctx.strokeStyle = 'rgba(150,90,60,.35)';
-  ctx.lineWidth = 0.8;
+  // пряди у лица
+  ctx.fillStyle = '#6b4630';
   ctx.beginPath();
-  ctx.arc(hx - hr * 0.52, hy + hr * 0.38, hr * 0.18, 0.15 * Math.PI, 0.7 * Math.PI);
-  ctx.arc(hx + hr * 0.52, hy + hr * 0.38, hr * 0.18, 0.3 * Math.PI, 0.85 * Math.PI);
-  ctx.stroke();
+  ctx.ellipse(hx - hr * 0.95, hy + hr * 0.42, hr * 0.26, hr * 0.7, 0.1, 0, Math.PI * 2);
+  ctx.ellipse(hx + hr * 0.95, hy + hr * 0.42, hr * 0.26, hr * 0.7, -0.1, 0, Math.PI * 2);
+  ctx.fill();
+
+  // косынка поверх волос
+  ctx.fillStyle = '#c25a3a';
+  ctx.beginPath();
+  ctx.moveTo(hx - hr * 1.02, hy - hr * 0.5);
+  ctx.quadraticCurveTo(hx - hr * 1.15, hy - hr * 1.5, hx, hy - hr * 1.55);
+  ctx.quadraticCurveTo(hx + hr * 1.15, hy - hr * 1.5, hx + hr * 1.02, hy - hr * 0.5);
+  ctx.quadraticCurveTo(hx + hr * 0.35, hy - hr * 0.98, hx - hr * 1.02, hy - hr * 0.5);
+  ctx.closePath();
+  ctx.fill();
+
+  // узел и хвостики косынки сзади
+  ctx.fillStyle = '#a8462c';
+  ctx.beginPath();
+  ctx.ellipse(hx + hr * 1.02, hy - hr * 0.72, hr * 0.24, hr * 0.18, 0.4, 0, Math.PI * 2);
+  ctx.fill();
+  ctx.beginPath();
+  ctx.moveTo(hx + hr * 1.05, hy - hr * 0.6);
+  ctx.lineTo(hx + hr * 1.55, hy - hr * 0.22);
+  ctx.lineTo(hx + hr * 1.1, hy - hr * 0.15);
+  ctx.closePath();
+  ctx.fill();
+  ctx.beginPath();
+  ctx.moveTo(hx + hr * 1.02, hy - hr * 0.82);
+  ctx.lineTo(hx + hr * 1.48, hy - hr * 1.28);
+  ctx.lineTo(hx + hr * 1.0, hy - hr * 0.98);
+  ctx.closePath();
+  ctx.fill();
+
+  // горошек на косынке
+  ctx.fillStyle = 'rgba(255,238,214,.85)';
+  for (const dot of [[-0.55, -1.05], [-0.15, -1.28], [0.3, -1.12], [-0.35, -0.82], [0.15, -0.9]]) {
+    ctx.beginPath();
+    ctx.arc(hx + hr * dot[0], hy + hr * dot[1], 0.8, 0, Math.PI * 2);
+    ctx.fill();
+  }
 
   ctx.restore();
 }
@@ -7146,45 +7161,31 @@ const decor = {
   vestibule() {
     drawRug(170, 265, 250, 140, '#84442c');
     drawLockers(180, 64, 5);
-    drawSecretary(742, 112, 0.72);
-    drawCounter(640, 116, 160, 44);
-    ctx.save();
-    ctx.translate(0, 46);
+    drawCounter(672, 150, 108, 30);
+    drawSecretary(742, 118, 0.85);
+    ctx.fillStyle = '#f3e3c2';
+    roundRect(694, 143, 24, 8, 1.5);
+    ctx.fill();
+    ctx.fillStyle = 'rgba(90,60,40,.45)';
+    for (let i = 0; i < 2; i++) ctx.fillRect(697, 145 + i * 3, 18 - i * 5, 1);
+    ctx.fillStyle = PALETTE.brass;
+    ctx.beginPath();
+    ctx.arc(676, 146, 4, Math.PI, Math.PI * 2);
+    ctx.fill();
     ctx.fillStyle = '#3a2a20';
-    roundRect(652, 86, 66, 15, 2); ctx.fill();
-    ctx.strokeStyle = 'rgba(224,178,92,.55)';
+    roundRect(676, 160, 60, 12, 2);
+    ctx.fill();
+    ctx.strokeStyle = 'rgba(224,178,92,.6)';
     ctx.lineWidth = 1;
+    roundRect(676, 160, 60, 12, 2);
     ctx.stroke();
     ctx.fillStyle = PALETTE.gold;
-    ctx.font = '9px ' + SERIF;
+    ctx.font = '7.5px ' + SERIF;
     ctx.textAlign = 'center';
     ctx.textBaseline = 'middle';
-    ctx.fillText('СЕКРЕТАРЬ', 685, 93.5);
-    ctx.fillStyle = '#e8d5ae';
-    ctx.beginPath();
-    ctx.ellipse(727, 107, 7, 2.4, 0, 0, Math.PI * 2);
-    ctx.fill();
-    ctx.fillStyle = '#f3e3c2';
-    roundRect(722, 99, 10, 7, 2); ctx.fill();
-    ctx.strokeStyle = 'rgba(243,227,194,.4)';
-    ctx.lineWidth = 1;
-    ctx.beginPath();
-    ctx.moveTo(725, 97);
-    ctx.quadraticCurveTo(723, 93, 726, 90);
-    ctx.moveTo(729, 97);
-    ctx.quadraticCurveTo(727, 93, 730, 90);
-    ctx.stroke();
-    ctx.fillStyle = '#f3e3c2';
-    ctx.fillRect(744, 78, 38, 24);
-    ctx.strokeStyle = 'rgba(90,60,40,.45)';
-    ctx.lineWidth = 1;
-    for (let i = 0; i < 3; i++) {
-      ctx.beginPath();
-      ctx.moveTo(748, 84 + i * 5);
-      ctx.lineTo(777 - i * 5, 84 + i * 5);
-      ctx.stroke();
-    }
-    ctx.restore();
+    ctx.fillText('СЕКРЕТАРЬ', 706, 166.4);
+    ctx.textAlign = 'left';
+    ctx.textBaseline = 'alphabetic';
     drawCounter(140, 160, 150, 44);
     ctx.fillStyle = '#f3e3c2';
     ctx.fillRect(170, 150, 30, 13);
@@ -10090,7 +10091,7 @@ function draw() {
 
   ctx.save();
   ctx.translate(player.x, player.y + 11);
-  ctx.scale(0.88, 0.88);
+  ctx.scale(0.96, 0.96);
   ctx.translate(-player.x, -player.y - 11);
   drawCat(player);
   ctx.restore();
