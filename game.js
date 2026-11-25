@@ -3061,23 +3061,23 @@ const floors = {
 };
 
 const PALETTE = {
-  bg: '#120608',
-  wall: '#481a23',
-  wallLine: '#2c0e13',
-  wallLight: 'rgba(255,210,190,.07)',
-  base: '#260c10',
-  door: '#65251e',
-  doorHot: '#85402a',
-  doorLocked: '#431312',
-  frame: '#3c1714',
+  bg: '#13050b',
+  wall: '#3f1024',
+  wallLine: '#260814',
+  wallLight: 'rgba(255,196,205,.07)',
+  base: '#1f0710',
+  door: '#5b1c26',
+  doorHot: '#7a2f36',
+  doorLocked: '#3a0f18',
+  frame: '#340f17',
   brass: '#e0b45c',
   parchment: '#f0dfba',
   parchmentDark: '#3b2018',
   gold: '#ecc174',
-  wine: '#7e2233',
-  velvet: '#6b1e2a',
-  velvetDeep: '#3a0d15',
-  crimson: '#9b3a3a',
+  wine: '#7d1a3a',
+  velvet: '#651631',
+  velvetDeep: '#320a18',
+  crimson: '#a03052',
   emerald: '#1f4a3a',
   cream: '#f6ecd8',
   dim: '#b39a80'
@@ -3833,9 +3833,9 @@ const FURNITURE = {
   body: '#54221b',
   top: '#763425',
   light: '#9a4d33',
-  velvet: '#7c2635',
-  velvetDark: '#4e141f',
-  velvetLight: '#9c3d46',
+  velvet: '#6f1a33',
+  velvetDark: '#420d1e',
+  velvetLight: '#8f2c48',
   grain: 'rgba(22,5,8,.26)',
   brass: 'rgba(224,178,92,.66)',
   brassSoft: 'rgba(224,178,92,.32)',
@@ -8284,21 +8284,58 @@ function drawSaveSlotLarge(r, index, save, hot) {
   ctx.fillText(formatSaveDate(save.ts), r.x + r.w - 16, r.y + 64);
 }
 
+const MENU_SPARKS = Array.from({ length: 46 }, (_, i) => ({
+  x: 24 + (i * 197) % 912,
+  y: 18 + (i * 173) % 504,
+  r: 0.7 + (i % 5) * 0.22,
+  sp: 0.55 + (i % 8) * 0.21,
+  ph: i * 1.7,
+  dx: 0.18 + (i % 4) * 0.11,
+  dy: 0.14 + (i % 3) * 0.09
+}));
+
+function drawMenuSparks(t) {
+  for (const s of MENU_SPARKS) {
+    const x = s.x + Math.sin(t * s.dx + s.ph) * 13;
+    const y = s.y + Math.cos(t * s.dy + s.ph * 1.3) * 9;
+    const pulse = Math.max(0, Math.sin(t * s.sp + s.ph));
+    const tw = Math.pow(pulse, 5);
+    if (tw < 0.03) continue;
+    const r = s.r * (0.7 + tw * 1.1);
+    const g = ctx.createRadialGradient(x, y, 0, x, y, r * 7);
+    g.addColorStop(0, 'rgba(255,236,182,' + (0.5 * tw).toFixed(3) + ')');
+    g.addColorStop(0.42, 'rgba(255,208,116,' + (0.16 * tw).toFixed(3) + ')');
+    g.addColorStop(1, 'rgba(255,190,90,0)');
+    ctx.fillStyle = g;
+    ctx.beginPath();
+    ctx.arc(x, y, r * 7, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.strokeStyle = 'rgba(255,246,214,' + (0.45 * tw).toFixed(3) + ')';
+    ctx.lineWidth = 0.6;
+    ctx.beginPath();
+    ctx.moveTo(x - r * 2.6, y);
+    ctx.lineTo(x + r * 2.6, y);
+    ctx.moveTo(x, y - r * 2.6);
+    ctx.lineTo(x, y + r * 2.6);
+    ctx.stroke();
+  }
+}
+
 function drawMainMenu() {
   const L = menuLayout();
   const t = performance.now() / 1000;
   const bg = ctx.createRadialGradient(290, 240, 20, 290, 240, 640);
-  bg.addColorStop(0, '#3d0d17');
-  bg.addColorStop(0.45, '#1d060c');
-  bg.addColorStop(1, '#070204');
+  bg.addColorStop(0, '#4a1024');
+  bg.addColorStop(0.45, '#200612');
+  bg.addColorStop(1, '#070107');
   ctx.fillStyle = bg;
   ctx.fillRect(0, 0, W, H);
 
   ctx.save();
   const glow = ctx.createRadialGradient(280, 220, 8, 280, 220, 310);
-  glow.addColorStop(0, 'rgba(156,40,54,.25)');
-  glow.addColorStop(0.55, 'rgba(110,24,36,.09)');
-  glow.addColorStop(1, 'rgba(110,24,36,0)');
+  glow.addColorStop(0, 'rgba(178,34,78,.26)');
+  glow.addColorStop(0.55, 'rgba(120,20,52,.1)');
+  glow.addColorStop(1, 'rgba(120,20,52,0)');
   ctx.fillStyle = glow;
   ctx.fillRect(0, 0, W, H);
   ctx.restore();
@@ -8313,6 +8350,8 @@ function drawMainMenu() {
       ctx.fill();
     }
   }
+
+  drawMenuSparks(t);
 
   ctx.save();
   const vg = ctx.createRadialGradient(W / 2, H / 2, 150, W / 2, H / 2, 640);
@@ -9358,9 +9397,9 @@ function drawAuthScreen() {
   const L = authLayout();
   const p = L.panel;
   const bg = ctx.createRadialGradient(290, 240, 20, 290, 240, 640);
-  bg.addColorStop(0, '#3d0d17');
-  bg.addColorStop(0.45, '#1d060c');
-  bg.addColorStop(1, '#070204');
+  bg.addColorStop(0, '#4a1024');
+  bg.addColorStop(0.45, '#200612');
+  bg.addColorStop(1, '#070107');
   ctx.fillStyle = bg;
   ctx.fillRect(0, 0, W, H);
 
