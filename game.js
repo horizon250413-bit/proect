@@ -280,7 +280,7 @@ const npcs = [
   { room: 'computer_class', x: 760, y: 230, name: 'Егор', arc: 'egor', skin: '#e8bd98', hair: '#2f2a28', outfit: '#4f6d7a', trim: '#36505a', style: 0, glasses: true, prop: 'tablet', quote: 'Егор не отрывается от планшета: «Книги? Это медленный интерфейс. У меня каталог падает третий день»' },
   { room: 'buffet', x: 460, y: 230, name: 'Клара', arc: 'klara', skin: '#c98a5a', hair: '#3a2a22', outfit: '#a05a6a', trim: '#7a3e4c', style: 2, scarf: '#c9a23a', prop: 'tray', quote: 'Клара вытирает руки: «У меня потерялись страницы из книги рецептов. Внучка говорит, что я всё равно всё помню. А я уже не уверена»' },
   { room: 'abonement', x: 740, y: 250, name: 'Библиотекарша Вера', arc: 'vera', skin: '#f0c9a6', hair: '#a05a6a', outfit: '#c9a23a', trim: '#8a6a24', style: 3, scarf: '#8a3a4a', prop: 'books', quote: 'Вера перебирает формуляры: «Редкую книгу просит мальчик. А я не могу её отдать — это единственный экземпляр»' },
-  { room: 'hall_universal', x: 760, y: 360, name: 'Миша', arc: 'misha', scale: 0.6, skin: '#f2b487', hair: '#2b211d', outfit: '#f2772c', trim: '#c9571c', style: 0, prop: 'book', quote: 'Миша сидит с телефоном: «Книги — это скучно. Там надо долго. А тут всё быстро»' },
+  { room: 'hall_universal', x: 760, y: 360, name: 'Миша', arc: 'misha', scale: 0.55, skin: '#f2b487', hair: '#2b211d', outfit: '#f2772c', trim: '#c9571c', style: 0, prop: 'book', quote: 'Миша сидит с телефоном: «Книги — это скучно. Там надо долго. А тут всё быстро»' },
   { room: 'archive', x: 690, y: 300, name: 'Гриша', arc: 'grisha', skin: '#d9a982', hair: '#8a8078', outfit: '#7a5a3a', trim: '#5a4028', style: 0, beard: true, prop: 'folder', quote: 'Гриша подметает у стеллажей: «Я тут просто убираю. Истории — не моё. Я и в школе-то не дочитал ни одной»' },
   { room: 'admin', x: 740, y: 280, name: 'Заведующая Ада', secret: true, skin: '#e6c2a2', hair: '#6a6a72', outfit: '#5a3a4a', trim: '#3e2632', style: 3, glasses: true, scarf: '#b08a52', prop: 'folder', quote: 'Ада смотрит поверх очков: «В каталоге пять историй. Но у библиотеки есть и седьмая полка. Она не для читателей»' }
 ];
@@ -511,6 +511,7 @@ let searchProgress = 0;
 let searchTarget = null;
 let mouseDown = false;
 let mouseX = null, mouseY = null;
+let touchTarget = null;
 
 const UI = {
   tasks: { x: 4, y: 3, w: 34, h: 34 },
@@ -1698,6 +1699,7 @@ function restartGame() {
   storyLocked = false;
   lockedEndingKey = null;
   havePass = false;
+  touchTarget = null;
 
   items.length = 0;
   INITIAL_ITEMS.forEach(it => items.push({ ...it }));
@@ -1867,6 +1869,27 @@ canvas.addEventListener('mouseup', () => {
     searchProgress = 0;
   }
 });
+canvas.addEventListener('touchstart', e => {
+  if (!e.touches || !e.touches.length) return;
+  const t0 = e.touches[0];
+  const r = canvas.getBoundingClientRect();
+  const mx = (t0.clientX - r.left) * W / r.width;
+  const my = (t0.clientY - r.top) * H / r.height;
+  mouseX = mx; mouseY = my;
+  const free = screen === 'game' && !overlay && !nameEdit && !dialog && !ending && !mapOpen && !quoteCard && !storyTask && !mini.active;
+  if (free) {
+    e.preventDefault();
+    touchTarget = { x: mx, y: my };
+  }
+}, { passive: false });
+canvas.addEventListener('touchmove', e => {
+  if (!touchTarget || !e.touches || !e.touches.length) return;
+  e.preventDefault();
+  const t0 = e.touches[0];
+  const r = canvas.getBoundingClientRect();
+  touchTarget = { x: (t0.clientX - r.left) * W / r.width, y: (t0.clientY - r.top) * H / r.height };
+}, { passive: false });
+canvas.addEventListener('touchend', () => { mouseX = null; mouseY = null; });
 canvas.addEventListener('mouseleave', () => {
   brightnessDrag = false;
   mouseDown = false;
@@ -1897,6 +1920,7 @@ function travelToRoom(id) {
     return;
   }
   const from = currentRoom;
+  touchTarget = null;
   currentRoom = id;
   visited[id] = true;
   const entry = rooms[id].doors.find(d => d.to === from) || rooms[id].doors[0];
@@ -2022,6 +2046,14 @@ function update(dt) {
   if (mini.active) { updateMini(dt); return; }
   if (mapOpen || taskOpen || quoteCard || dialog || ending) return;
   let dx = 0, dy = 0;
+  if (touchTarget) {
+    const tdx = touchTarget.x - player.x;
+    const tdy = touchTarget.y - player.y;
+    const d = Math.hypot(tdx, tdy);
+    if (d < 8) touchTarget = null;
+    else { dx = tdx / d; dy = tdy / d; }
+  }
+  if (!touchTarget) {
   if (keys['KeyW'] || keys['ArrowUp']) dy -= 1;
   if (keys['KeyS'] || keys['ArrowDown']) dy += 1;
   if (keys['KeyA'] || keys['ArrowLeft']) dx -= 1;
@@ -2029,6 +2061,7 @@ function update(dt) {
   if (dx && dy) {
     dx *= Math.SQRT1_2;
     dy *= Math.SQRT1_2;
+  }
   }
   player.x += dx * PLAYER_SPEED * dt;
   player.y += dy * PLAYER_SPEED * dt;
@@ -10057,7 +10090,7 @@ function draw() {
 
   ctx.save();
   ctx.translate(player.x, player.y + 11);
-  ctx.scale(1.06, 1.5);
+  ctx.scale(1.2, 1.2);
   ctx.translate(-player.x, -player.y - 11);
   drawCat(player);
   ctx.restore();
@@ -10105,7 +10138,8 @@ function draw() {
     ctx.fillText('История завершена. Можно исследовать библиотеку или начать заново.', W / 2, H - 20);
   } else {
     ctx.fillStyle = PALETTE.dim;
-    ctx.fillText('WASD — движение, подойди к двери и кликни · Esc — пауза', W / 2, H - 20);
+    const touchHint = ('ontouchstart' in window) || (navigator.maxTouchPoints || 0) > 0;
+  ctx.fillText(touchHint ? 'Тапни, куда идти · тапни по предмету или двери' : 'WASD — движение, подойди к двери и кликни · Esc — пауза', W / 2, H - 20);
   }
 
   drawCornerButton(UI.tasks, inRect(UI.tasks, mouseX, mouseY), iconTasks);
