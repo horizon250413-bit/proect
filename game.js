@@ -913,14 +913,21 @@ const mini = {
   redDur: 1.05,
   grace: 0,
   status: '',
-  statusUntil: 0
+  statusUntil: 0,
+  attempt: 1
 };
 
 const meme = {
   fails: 0,
-  showUntil: 0,
+  open: false,
   img: null
 };
+
+function closeMini() {
+  mini.active = false;
+  resetMiniFails();
+  mini.attempt++;
+}
 
 function memePic() {
   if (!meme.img) {
@@ -945,6 +952,7 @@ function openMini() {
 }
 
 function updateMini(dt) {
+  if (meme.open) return;
   const now = performance.now();
   if (mini.status === 'caught') {
     if (now >= mini.statusUntil) mini.status = '';
@@ -969,14 +977,13 @@ function updateMini(dt) {
       meme.fails++;
       if (meme.fails === 67) {
         memePic();
-        meme.showUntil = performance.now() + 2000;
+        meme.open = true;
       }
       if (meme.fails >= 100) {
         havePass = true;
         const passIdx = items.findIndex(i => i.id === 'pass');
         if (passIdx >= 0) items.splice(passIdx, 1);
-        mini.active = false;
-        resetMiniFails();
+        closeMini();
         showToast('Бро, ну ты чего? Настолько нубасик… Ладно, держи пропуск бесплатно', 5200);
       }
       return;
@@ -984,11 +991,10 @@ function updateMini(dt) {
     mini.progress = Math.min(100, mini.progress + dt * 32);
   }
   if (mini.progress >= 100) {
-    resetMiniFails();
+    closeMini();
     havePass = true;
     const idx = items.findIndex(i => i.id === 'pass');
     if (idx >= 0) items.splice(idx, 1);
-    mini.active = false;
     showToast('Пропуск получен! Теперь доступен служебный блок');
   }
 }
@@ -1624,25 +1630,23 @@ function openFinalBook() {
   if (unresolved.length) {
     const names = unresolved.map(a => ARCS[a.id].name).join(', ');
     openDialog('Книга пяти страниц', `Пять страниц ещё не готовы. Осталось поговорить или вернуться к: ${names}.`, [
-      { label: 'Закрыть книгу', action: closeDialog }
+      { label: 'Закрыть книгу', action: closeDialog },
+      { label: 'Закрыть книгу и уйти', action: () => showEnding('empty') }
     ]);
     return;
   }
   const done = storyDoneCount();
   if (done === 0) {
-    openDialog('Книга пяти страниц', 'Пять страниц пусты. Ты никого не впустил в свою историю — и никто не впустил тебя. Но библиотека всё ещё здесь.', [
-      { label: 'Остаться и прочитать тишину', action: () => showEnding('quiet') },
-      { label: 'Закрыть книгу и уйти', action: () => showEnding('empty') }
+    openDialog('Книга пяти страниц', 'Все пять историй прошли мимо. Книга осталась такой, какой была: тихой, аккуратной и чужой. Библиотека всё ещё здесь — и однажды кто-то снова откроет дверь.', [
+      { label: 'Открыть книгу', action: () => showEnding('quiet') }
     ]);
   } else if (done === 1) {
-    openDialog('Книга пяти страниц', 'Только одна страница заполнена. Одна история, один человек. Этого достаточно, чтобы книга не была пустой.', [
-      { label: 'Прочитать одну страницу', action: () => showEnding('one') },
-      { label: 'Закрыть книгу', action: closeDialog }
+    openDialog('Книга пяти страниц', 'Заполнена одна страница из пяти. Одна история, один человек. Этого достаточно, чтобы книга не была пустой.', [
+      { label: 'Открыть книгу', action: () => showEnding('one') }
     ]);
   } else if (done < 5) {
-    openDialog('Книга пяти страниц', `Собрано ${done} из 5 страниц. Книга получилась неровной: где-то есть голоса, где-то — пустые места. Это тоже история.`, [
-      { label: 'Прочитать то, что есть', action: () => showEnding('crossroads') },
-      { label: 'Закрыть книгу', action: closeDialog }
+    openDialog('Книга пяти страниц', `Заполнено ${done} из 5 страниц. Книга получилась неровной: где-то есть голоса, где-то — пустые места. Это тоже история.`, [
+      { label: 'Открыть книгу', action: () => showEnding('crossroads') }
     ]);
   } else {
     openDialog('Книга пяти страниц', 'Все пять страниц на месте. Последняя — пустая. Кто её подпишет?', [
@@ -1754,6 +1758,13 @@ const keys = {};
 addEventListener('keydown', e => {
   if (e.repeat) return;
 
+  if (meme.open) {
+    if (e.code === 'Escape' || e.code === 'Enter' || e.code === 'Space') {
+      e.preventDefault();
+      meme.open = false;
+    }
+    return;
+  }
   if (collectionPreview) {
     if (e.code === 'Escape' || e.code === 'Enter' || e.code === 'NumpadEnter' || e.code === 'Space') {
       collectionPreview = null;
@@ -1830,7 +1841,7 @@ addEventListener('keydown', e => {
     return;
   }
   if (mini.active) {
-    if (e.code === 'Escape') { mini.active = false; resetMiniFails(); }
+    if (e.code === 'Escape') { closeMini(); }
     if (e.code === 'Space' || e.code.startsWith('Arrow')) e.preventDefault();
     return;
   }
@@ -1970,6 +1981,7 @@ function travelToRoom(id) {
 
 canvas.addEventListener('click', e => {
   e = e || {};
+  if (meme.open) { meme.open = false; return; }
 
   const rect = canvas.getBoundingClientRect();
   const mx = e.clientX != null ? (e.clientX - rect.left) * W / rect.width : -1;
@@ -1980,7 +1992,7 @@ canvas.addEventListener('click', e => {
   if (nameEdit) { handleNameEditClick(mx, my); return; }
   if (overlay) { handleOverlayClick(mx, my); return; }
 
-  if (mini.active) { mini.active = false; resetMiniFails(); return; }
+  if (mini.active) { closeMini(); return; }
   if (quoteCard) {
     const L = quoteCardLayout();
     if (inRect(L.add, mx, my)) {
@@ -2916,6 +2928,12 @@ function drawMiniGame() {
   ctx.fillStyle = PALETTE.dim;
   ctx.fillText('«Тише едешь — дальше будешь»', W / 2, p.y + 52);
 
+  ctx.textAlign = 'right';
+  ctx.fillStyle = 'rgba(224,178,92,.72)';
+  ctx.font = '11px ' + SERIF;
+  ctx.fillText('Попытка ' + mini.attempt, p.x + p.w - 42, p.y + 34);
+  ctx.textAlign = 'center';
+
   drawSecretary(p.x + 120, p.y + 100, 1);
 
   const deskX = p.x + 60, deskY = p.y + 138, deskW = 180, deskH = 50;
@@ -3033,6 +3051,10 @@ function drawMeme67() {
     ctx.strokeStyle = 'rgba(224,178,92,.6)';
     ctx.lineWidth = 2;
     ctx.strokeRect((W - iw) / 2, (H - ih) / 2, iw, ih);
+    ctx.fillStyle = 'rgba(232,213,174,.75)';
+    ctx.font = '12px ' + SERIF;
+    ctx.textAlign = 'center';
+    ctx.fillText('Кликни, чтобы вернуться', W / 2, (H + ih) / 2 + 24);
   } else {
     ctx.fillStyle = PALETTE.gold;
     ctx.font = 'bold 96px ' + SERIF;
@@ -9226,6 +9248,13 @@ function handleMenuClick(mx, my) {
 }
 
 function handleCollectionClick(mx, my, mode) {
+  if (meme.open) {
+    if (e.code === 'Escape' || e.code === 'Enter' || e.code === 'Space') {
+      e.preventDefault();
+      meme.open = false;
+    }
+    return;
+  }
   if (collectionPreview) {
     collectionPreview = null;
     return;
@@ -10280,7 +10309,7 @@ function draw() {
   if (mapOpen) drawMap();
   if (taskOpen) drawTaskPanel();
   if (mini.active) drawMiniGame();
-  if (performance.now() < meme.showUntil) drawMeme67();
+  if (meme.open) drawMeme67();
   if (quoteCard) drawQuoteCard();
   if (dialog) drawDialog();
   if (ending) drawEnding();
