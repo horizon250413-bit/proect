@@ -1045,11 +1045,13 @@ function nearItem() {
 }
 
 function nearInteract() {
+  let best = null, bestD = 45;
   for (const it of interactables) {
     if (it.room !== currentRoom) continue;
-    if (Math.hypot(player.x - it.x, player.y - it.y) < 45) return it;
+    const d = Math.hypot(player.x - it.x, player.y - it.y);
+    if (d < bestD) { bestD = d; best = it; }
   }
-  return null;
+  return best;
 }
 
 function nearStoryItem() {
@@ -2053,14 +2055,18 @@ canvas.addEventListener('click', e => {
   }
 
   const obj = nearInteract();
-  if (obj) {
+  const door = nearDoor();
+  const doorDist = door
+    ? (() => { const r = doorRect(door); return Math.hypot(player.x - (r.x + r.w / 2), player.y - (r.y + r.h / 2)); })()
+    : Infinity;
+  const objDist = obj ? Math.hypot(player.x - obj.x, player.y - obj.y) : Infinity;
+  if (obj && (obj.npc || obj.id === 'final_book' || objDist <= doorDist)) {
     if (obj.id === 'final_book') { openFinalBook(); return; }
     if (obj.npc) { talkToNpc(obj.npc); return; }
     if (obj.quoteData) { quoteCard = obj.quoteData; return; }
     showToast(obj.text);
     return;
   }
-  const door = nearDoor();
   if (!door) return;
   if (isLocked(door)) {
     showToast('Нужен пропуск сотрудника — получи его у секретаря в вестибюле');
@@ -6906,6 +6912,31 @@ function npcSilhouette(n) {
   return NPC_SILHOUETTES[key];
 }
 
+const NPC_SPRITE_CACHE = new Map();
+
+function npcSprite(n, art) {
+  const key = (n.arc || n.name) + '|' + (n.scale || 1);
+  const cached = NPC_SPRITE_CACHE.get(key);
+  if (cached) return cached;
+  const size = 260, ox = 130, oy = 200;
+  const c = document.createElement('canvas');
+  c.width = size;
+  c.height = size;
+  const g = c.getContext('2d');
+  g.translate(ox, oy);
+  if (g.filter !== undefined) g.filter = 'saturate(.87) sepia(.10) brightness(.99)';
+  const real = ctx;
+  ctx = g;
+  try {
+    art(n, 1.2);
+  } finally {
+    ctx = real;
+  }
+  const sprite = { canvas: c, ox: ox, oy: oy };
+  NPC_SPRITE_CACHE.set(key, sprite);
+  return sprite;
+}
+
 function drawNpc(n, hot) {
   const customArt = NPC_CUSTOM_ART[n.arc] || NPC_CUSTOM_ART[n.name];
   if (customArt) {
@@ -6936,11 +6967,11 @@ function drawNpc(n, hot) {
       ctx.drawImage(sil.canvas, x - sil.ox * sk, y - sil.oy * sk, sil.size * sk, sil.size * sk);
       ctx.restore();
     }
+    const spr = npcSprite(n, customArt);
     ctx.save();
     ctx.translate(x, y);
     ctx.scale(scale, scale);
-    if (ctx.filter !== undefined) ctx.filter = 'saturate(.87) sepia(.10) brightness(.99)';
-    customArt(n, t);
+    ctx.drawImage(spr.canvas, -spr.ox, -spr.oy);
     ctx.restore();
 
     if (sil && sil.light) {
